@@ -347,7 +347,7 @@
    "fighter_1": {
     "name": "Tommy McMillen",
     "slug": "tommy_mcmillen",
-    "photo": false,
+    "photo": true,
     "nickname": null,
     "record": null,
     "ufc_record": [
@@ -389,7 +389,7 @@
    "fighter_2": {
     "name": "Marwan Rahiki",
     "slug": "marwan_rahiki",
-    "photo": false,
+    "photo": true,
     "nickname": null,
     "record": null,
     "ufc_record": [
@@ -1783,5 +1783,5 @@
    "result": null
   }
  ],
- "generated_at": "2026-09-11T19:31:37+00:00"
+ "generated_at": "2026-09-11T19:35:05+00:00"
 }
