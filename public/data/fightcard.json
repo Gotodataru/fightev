@@ -13,9 +13,9 @@
    "title_fight": false,
    "p_win_f1": 0.5612,
    "models": {
-    "catboost": 0.562,
-    "lightgbm": 0.562,
-    "xgboost": 0.559
+    "catboost": 0.5622,
+    "lightgbm": 0.5621,
+    "xgboost": 0.5594
    },
    "fighter_1": {
     "name": "Jean Silva",
@@ -180,8 +180,8 @@
    "title_fight": false,
    "p_win_f1": 0.5651,
    "models": {
-    "catboost": 0.589,
-    "lightgbm": 0.549,
+    "catboost": 0.5893,
+    "lightgbm": 0.5488,
     "xgboost": 0.557
    },
    "fighter_1": {
@@ -340,9 +340,9 @@
    "title_fight": false,
    "p_win_f1": 0.574,
    "models": {
-    "catboost": 0.555,
-    "lightgbm": 0.573,
-    "xgboost": 0.594
+    "catboost": 0.5554,
+    "lightgbm": 0.5729,
+    "xgboost": 0.5935
    },
    "fighter_1": {
     "name": "Tommy McMillen",
@@ -437,9 +437,9 @@
    "title_fight": false,
    "p_win_f1": 0.4887,
    "models": {
-    "catboost": 0.494,
-    "lightgbm": 0.476,
-    "xgboost": 0.496
+    "catboost": 0.4935,
+    "lightgbm": 0.4764,
+    "xgboost": 0.4961
    },
    "fighter_1": {
     "name": "Manon Fiorot",
@@ -605,8 +605,8 @@
    "p_win_f1": 0.6506,
    "models": {
     "catboost": 0.659,
-    "lightgbm": 0.653,
-    "xgboost": 0.639
+    "lightgbm": 0.6534,
+    "xgboost": 0.6393
    },
    "fighter_1": {
     "name": "Waldo Cortes Acosta",
@@ -757,9 +757,9 @@
    "title_fight": false,
    "p_win_f1": 0.5722,
    "models": {
-    "catboost": 0.567,
-    "lightgbm": 0.578,
-    "xgboost": 0.572
+    "catboost": 0.5666,
+    "lightgbm": 0.5779,
+    "xgboost": 0.5722
    },
    "fighter_1": {
     "name": "David Martinez",
@@ -911,8 +911,8 @@
    "p_win_f1": 0.5364,
    "models": {
     "catboost": 0.51,
-    "lightgbm": 0.554,
-    "xgboost": 0.546
+    "lightgbm": 0.5536,
+    "xgboost": 0.5456
    },
    "fighter_1": {
     "name": "Tim Elliott",
@@ -1077,9 +1077,9 @@
    "title_fight": false,
    "p_win_f1": 0.647,
    "models": {
-    "catboost": 0.642,
-    "lightgbm": 0.652,
-    "xgboost": 0.648
+    "catboost": 0.6417,
+    "lightgbm": 0.6517,
+    "xgboost": 0.6477
    },
    "fighter_1": {
     "name": "Ignacio Bahamondes",
@@ -1244,9 +1244,9 @@
    "title_fight": false,
    "p_win_f1": 0.5091,
    "models": {
-    "catboost": 0.484,
-    "lightgbm": 0.525,
-    "xgboost": 0.519
+    "catboost": 0.4836,
+    "lightgbm": 0.5252,
+    "xgboost": 0.5186
    },
    "fighter_1": {
     "name": "Yousri Belgaroui",
@@ -1376,9 +1376,9 @@
    "title_fight": false,
    "p_win_f1": 0.3849,
    "models": {
-    "catboost": 0.366,
-    "lightgbm": 0.395,
-    "xgboost": 0.393
+    "catboost": 0.3663,
+    "lightgbm": 0.3952,
+    "xgboost": 0.3931
    },
    "fighter_1": {
     "name": "Drakkar Klose",
@@ -1497,9 +1497,9 @@
    "title_fight": false,
    "p_win_f1": 0.548,
    "models": {
-    "catboost": 0.481,
-    "lightgbm": 0.568,
-    "xgboost": 0.594
+    "catboost": 0.4814,
+    "lightgbm": 0.5684,
+    "xgboost": 0.5943
    },
    "fighter_1": {
     "name": "Rafa Garcia",
@@ -1664,9 +1664,9 @@
    "title_fight": false,
    "p_win_f1": 0.4713,
    "models": {
-    "catboost": 0.434,
+    "catboost": 0.4344,
     "lightgbm": 0.487,
-    "xgboost": 0.492
+    "xgboost": 0.4924
    },
    "fighter_1": {
     "name": "JJ Aldrich",
@@ -1783,5 +1783,5 @@
    "result": null
   }
  ],
- "generated_at": "2026-09-11T19:35:05+00:00"
+ "generated_at": "2026-09-11T19:42:00+00:00"
 }
