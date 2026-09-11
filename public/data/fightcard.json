@@ -1,0 +1,1787 @@
+{
+ "event": {
+  "name": "Noche UFC: Silva vs. Delgado",
+  "date": "2026-09-12",
+  "start_utc": "2026-09-12T00:00:00+00:00",
+  "time_accurate": false
+ },
+ "fights": [
+  {
+   "order": 0,
+   "main_event": true,
+   "num_rounds": 5,
+   "title_fight": false,
+   "p_win_f1": 0.5612,
+   "models": {
+    "catboost": 0.562,
+    "lightgbm": 0.562,
+    "xgboost": 0.559
+   },
+   "fighter_1": {
+    "name": "Jean Silva",
+    "slug": "jean_silva",
+    "photo": true,
+    "nickname": "Lord",
+    "record": [
+     17,
+     3,
+     0
+    ],
+    "ufc_record": null,
+    "ufc_fights": 7,
+    "form": [
+     {
+      "date": "2026-01-24",
+      "opp": "Arnold Allen",
+      "res": "W",
+      "method": "DEC",
+      "round": 3
+     },
+     {
+      "date": "2025-09-13",
+      "opp": "Diego Lopes",
+      "res": "L",
+      "method": "KO",
+      "round": 2
+     },
+     {
+      "date": "2025-04-12",
+      "opp": "Bryce Mitchell",
+      "res": "W",
+      "method": "SUB",
+      "round": 2
+     },
+     {
+      "date": "2025-02-22",
+      "opp": "Melsik Baghdasaryan",
+      "res": "W",
+      "method": "KO",
+      "round": 1
+     },
+     {
+      "date": "2024-07-13",
+      "opp": "Drew Dober",
+      "res": "W",
+      "method": "KO",
+      "round": 3
+     }
+    ],
+    "stats": {
+     "height_in": 67,
+     "reach_in": 69,
+     "stance": "Orthodox",
+     "age": 29,
+     "slpm": 4.82,
+     "str_acc": 51.0,
+     "sapm": 4.5,
+     "str_def": 53.0,
+     "td_avg": 1.2,
+     "td_acc": 60.0,
+     "td_def": 78.0,
+     "sub_avg": 0.6
+    },
+    "zones": {
+     "head": 49,
+     "body": 29,
+     "leg": 22
+    },
+    "ufc_wins": {
+     "KO": 3,
+     "SUB": 1,
+     "DEC": 1
+    },
+    "layoff_months": 7.6,
+    "finish_fights": 5,
+    "decided_fights": 7
+   },
+   "fighter_2": {
+    "name": "Jose Delgado",
+    "slug": "jose_delgado",
+    "photo": true,
+    "nickname": null,
+    "record": [
+     11,
+     2,
+     0
+    ],
+    "ufc_record": null,
+    "ufc_fights": 5,
+    "form": [
+     {
+      "date": "2026-07-18",
+      "opp": "Austin Bashi",
+      "res": "W",
+      "method": "DEC",
+      "round": 3
+     },
+     {
+      "date": "2026-03-14",
+      "opp": "Andre Fili",
+      "res": "W",
+      "method": "DEC",
+      "round": 3
+     },
+     {
+      "date": "2025-10-25",
+      "opp": "Nathaniel Wood",
+      "res": "L",
+      "method": "DEC",
+      "round": 3
+     },
+     {
+      "date": "2025-06-28",
+      "opp": "Hyder Amil",
+      "res": "W",
+      "method": "KO",
+      "round": 1
+     },
+     {
+      "date": "2025-02-15",
+      "opp": "Connor Matthews",
+      "res": "W",
+      "method": "KO",
+      "round": 1
+     }
+    ],
+    "stats": {
+     "height_in": 71,
+     "reach_in": 74,
+     "stance": "Switch",
+     "age": 28,
+     "slpm": 7.48,
+     "str_acc": 54.0,
+     "sapm": 4.95,
+     "str_def": 50.0,
+     "td_avg": 1.51,
+     "td_acc": 40.0,
+     "td_def": 50.0,
+     "sub_avg": 0.0
+    },
+    "zones": {
+     "head": 70,
+     "body": 22,
+     "leg": 7
+    },
+    "ufc_wins": {
+     "KO": 2,
+     "SUB": 0,
+     "DEC": 2
+    },
+    "layoff_months": 1.8,
+    "finish_fights": 2,
+    "decided_fights": 5
+   },
+   "result": null
+  },
+  {
+   "order": 1,
+   "main_event": false,
+   "num_rounds": 3,
+   "title_fight": false,
+   "p_win_f1": 0.5651,
+   "models": {
+    "catboost": 0.589,
+    "lightgbm": 0.549,
+    "xgboost": 0.557
+   },
+   "fighter_1": {
+    "name": "Brandon Moreno",
+    "slug": "brandon_moreno",
+    "photo": true,
+    "nickname": "The Assassin Baby",
+    "record": [
+     23,
+     10,
+     2
+    ],
+    "ufc_record": null,
+    "ufc_fights": 16,
+    "form": [
+     {
+      "date": "2026-02-28",
+      "opp": "Lone'er Kavanagh",
+      "res": "L",
+      "method": "DEC",
+      "round": 5
+     },
+     {
+      "date": "2025-12-06",
+      "opp": "Tatsuro Taira",
+      "res": "L",
+      "method": "KO",
+      "round": 2
+     },
+     {
+      "date": "2025-03-29",
+      "opp": "Steve Erceg",
+      "res": "W",
+      "method": "DEC",
+      "round": 5
+     },
+     {
+      "date": "2024-11-02",
+      "opp": "Amir Albazi",
+      "res": "W",
+      "method": "DEC",
+      "round": 5
+     },
+     {
+      "date": "2024-02-24",
+      "opp": "Brandon Royval",
+      "res": "L",
+      "method": "DEC",
+      "round": 5
+     }
+    ],
+    "stats": {
+     "height_in": 67,
+     "reach_in": 70,
+     "stance": "Orthodox",
+     "age": 32,
+     "slpm": 3.84,
+     "str_acc": 44.0,
+     "sapm": 3.64,
+     "str_def": 59.0,
+     "td_avg": 1.36,
+     "td_acc": 39.0,
+     "td_def": 65.0,
+     "sub_avg": 0.4
+    },
+    "zones": {
+     "head": 67,
+     "body": 19,
+     "leg": 14
+    },
+    "ufc_wins": {
+     "KO": 2,
+     "SUB": 3,
+     "DEC": 4
+    },
+    "layoff_months": 6.4,
+    "finish_fights": 6,
+    "decided_fights": 16
+   },
+   "fighter_2": {
+    "name": "Joseph Morales",
+    "slug": "joseph_morales",
+    "photo": true,
+    "nickname": "Bopo",
+    "record": [
+     15,
+     2,
+     0
+    ],
+    "ufc_record": null,
+    "ufc_fights": 4,
+    "form": [
+     {
+      "date": "2025-11-08",
+      "opp": "Matt Schnell",
+      "res": "W",
+      "method": "SUB",
+      "round": 1
+     },
+     {
+      "date": "2025-08-16",
+      "opp": "Alibi Idiris",
+      "res": "W",
+      "method": "SUB",
+      "round": 2
+     },
+     {
+      "date": "2018-11-10",
+      "opp": "Eric Shelton",
+      "res": "L",
+      "method": "DEC",
+      "round": 3
+     },
+     {
+      "date": "2018-02-03",
+      "opp": "Deiveson Figueiredo",
+      "res": "L",
+      "method": "KO",
+      "round": 2
+     }
+    ],
+    "stats": {
+     "height_in": 66,
+     "reach_in": 69,
+     "stance": "Switch",
+     "age": 32,
+     "slpm": 2.0,
+     "str_acc": 40.0,
+     "sapm": 2.05,
+     "str_def": 57.0,
+     "td_avg": 1.14,
+     "td_acc": 42.0,
+     "td_def": 26.0,
+     "sub_avg": 3.0
+    },
+    "zones": {
+     "head": 39,
+     "body": 44,
+     "leg": 18
+    },
+    "ufc_wins": {
+     "KO": 0,
+     "SUB": 2,
+     "DEC": 0
+    },
+    "layoff_months": 10.1,
+    "finish_fights": 3,
+    "decided_fights": 4
+   },
+   "result": null
+  },
+  {
+   "order": 2,
+   "main_event": false,
+   "num_rounds": 3,
+   "title_fight": false,
+   "p_win_f1": 0.574,
+   "models": {
+    "catboost": 0.555,
+    "lightgbm": 0.573,
+    "xgboost": 0.594
+   },
+   "fighter_1": {
+    "name": "Tommy McMillen",
+    "slug": "tommy_mcmillen",
+    "photo": false,
+    "nickname": null,
+    "record": null,
+    "ufc_record": [
+     2,
+     0
+    ],
+    "ufc_fights": 2,
+    "form": [
+     {
+      "date": "2026-07-18",
+      "opp": "Alberto Montes",
+      "res": "W",
+      "method": "KO",
+      "round": 3
+     },
+     {
+      "date": "2026-04-04",
+      "opp": "Manolo Zecchini",
+      "res": "W",
+      "method": "KO",
+      "round": 1
+     }
+    ],
+    "stats": null,
+    "zones": {
+     "head": 72,
+     "body": 23,
+     "leg": 5
+    },
+    "ufc_wins": {
+     "KO": 2,
+     "SUB": 0,
+     "DEC": 0
+    },
+    "layoff_months": 1.8,
+    "finish_fights": 2,
+    "decided_fights": 2
+   },
+   "fighter_2": {
+    "name": "Marwan Rahiki",
+    "slug": "marwan_rahiki",
+    "photo": false,
+    "nickname": null,
+    "record": null,
+    "ufc_record": [
+     2,
+     0
+    ],
+    "ufc_fights": 2,
+    "form": [
+     {
+      "date": "2026-05-02",
+      "opp": "Ollie Schmid",
+      "res": "W",
+      "method": "KO",
+      "round": 1
+     },
+     {
+      "date": "2026-03-14",
+      "opp": "Harry Hardwick",
+      "res": "W",
+      "method": "KO",
+      "round": 2
+     }
+    ],
+    "stats": null,
+    "zones": {
+     "head": 66,
+     "body": 18,
+     "leg": 16
+    },
+    "ufc_wins": {
+     "KO": 2,
+     "SUB": 0,
+     "DEC": 0
+    },
+    "layoff_months": 4.4,
+    "finish_fights": 2,
+    "decided_fights": 2
+   },
+   "result": null
+  },
+  {
+   "order": 3,
+   "main_event": false,
+   "num_rounds": 3,
+   "title_fight": false,
+   "p_win_f1": 0.4887,
+   "models": {
+    "catboost": 0.494,
+    "lightgbm": 0.476,
+    "xgboost": 0.496
+   },
+   "fighter_1": {
+    "name": "Manon Fiorot",
+    "slug": "manon_fiorot",
+    "photo": true,
+    "nickname": "The Beast",
+    "record": [
+     13,
+     2,
+     0
+    ],
+    "ufc_record": null,
+    "ufc_fights": 8,
+    "form": [
+     {
+      "date": "2025-10-18",
+      "opp": "Jasmine Jasudavicius",
+      "res": "W",
+      "method": "KO",
+      "round": 1
+     },
+     {
+      "date": "2025-05-10",
+      "opp": "Valentina Shevchenko",
+      "res": "L",
+      "method": "DEC",
+      "round": 5
+     },
+     {
+      "date": "2023-09-02",
+      "opp": "Rose Namajunas",
+      "res": "W",
+      "method": "DEC",
+      "round": 3
+     },
+     {
+      "date": "2022-10-22",
+      "opp": "Katlyn Cerminara",
+      "res": "W",
+      "method": "DEC",
+      "round": 3
+     },
+     {
+      "date": "2022-03-26",
+      "opp": "Jennifer Maia",
+      "res": "W",
+      "method": "DEC",
+      "round": 3
+     }
+    ],
+    "stats": {
+     "height_in": 67,
+     "reach_in": 65,
+     "stance": "Orthodox",
+     "age": 36,
+     "slpm": 5.66,
+     "str_acc": 42.0,
+     "sapm": 3.58,
+     "str_def": 66.0,
+     "td_avg": 1.05,
+     "td_acc": 29.0,
+     "td_def": 87.0,
+     "sub_avg": 0.0
+    },
+    "zones": {
+     "head": 59,
+     "body": 28,
+     "leg": 13
+    },
+    "ufc_wins": {
+     "KO": 3,
+     "SUB": 0,
+     "DEC": 4
+    },
+    "layoff_months": 10.8,
+    "finish_fights": 3,
+    "decided_fights": 8
+   },
+   "fighter_2": {
+    "name": "Alexa Grasso",
+    "slug": "alexa_grasso",
+    "photo": true,
+    "nickname": null,
+    "record": [
+     17,
+     5,
+     1
+    ],
+    "ufc_record": null,
+    "ufc_fights": 14,
+    "form": [
+     {
+      "date": "2026-03-28",
+      "opp": "Maycee Barber",
+      "res": "W",
+      "method": "KO",
+      "round": 1
+     },
+     {
+      "date": "2025-05-10",
+      "opp": "Natalia Silva",
+      "res": "L",
+      "method": "DEC",
+      "round": 3
+     },
+     {
+      "date": "2024-09-14",
+      "opp": "Valentina Shevchenko",
+      "res": "L",
+      "method": "DEC",
+      "round": 5
+     },
+     {
+      "date": "2023-03-04",
+      "opp": "Valentina Shevchenko",
+      "res": "W",
+      "method": "SUB",
+      "round": 4
+     },
+     {
+      "date": "2022-10-15",
+      "opp": "Viviane Araujo",
+      "res": "W",
+      "method": "DEC",
+      "round": 5
+     }
+    ],
+    "stats": {
+     "height_in": 65,
+     "reach_in": 66,
+     "stance": "Orthodox",
+     "age": 33,
+     "slpm": 4.11,
+     "str_acc": 41.0,
+     "sapm": 3.71,
+     "str_def": 58.0,
+     "td_avg": 0.4,
+     "td_acc": 35.0,
+     "td_def": 54.0,
+     "sub_avg": 0.7
+    },
+    "zones": {
+     "head": 70,
+     "body": 19,
+     "leg": 11
+    },
+    "ufc_wins": {
+     "KO": 1,
+     "SUB": 2,
+     "DEC": 6
+    },
+    "layoff_months": 5.5,
+    "finish_fights": 4,
+    "decided_fights": 14
+   },
+   "result": null
+  },
+  {
+   "order": 4,
+   "main_event": false,
+   "num_rounds": 3,
+   "title_fight": false,
+   "p_win_f1": 0.6506,
+   "models": {
+    "catboost": 0.659,
+    "lightgbm": 0.653,
+    "xgboost": 0.639
+   },
+   "fighter_1": {
+    "name": "Waldo Cortes Acosta",
+    "slug": "waldo_cortes_acosta",
+    "photo": true,
+    "nickname": null,
+    "record": null,
+    "ufc_record": [
+     10,
+     3
+    ],
+    "ufc_fights": 13,
+    "form": [
+     {
+      "date": "2026-05-09",
+      "opp": "Alexander Volkov",
+      "res": "L",
+      "method": "DEC",
+      "round": 3
+     },
+     {
+      "date": "2026-01-24",
+      "opp": "Derrick Lewis",
+      "res": "W",
+      "method": "KO",
+      "round": 2
+     },
+     {
+      "date": "2025-11-22",
+      "opp": "Shamil Gaziev",
+      "res": "W",
+      "method": "KO",
+      "round": 1
+     },
+     {
+      "date": "2025-11-01",
+      "opp": "Ante Delija",
+      "res": "W",
+      "method": "KO",
+      "round": 1
+     },
+     {
+      "date": "2025-08-23",
+      "opp": "Sergei Pavlovich",
+      "res": "L",
+      "method": "DEC",
+      "round": 3
+     }
+    ],
+    "stats": null,
+    "zones": {
+     "head": 62,
+     "body": 18,
+     "leg": 20
+    },
+    "ufc_wins": {
+     "KO": 5,
+     "SUB": 0,
+     "DEC": 5
+    },
+    "layoff_months": 4.1,
+    "finish_fights": 5,
+    "decided_fights": 13
+   },
+   "fighter_2": {
+    "name": "Curtis Blaydes",
+    "slug": "curtis_blaydes",
+    "photo": true,
+    "nickname": "Razor",
+    "record": [
+     19,
+     6,
+     0
+    ],
+    "ufc_record": null,
+    "ufc_fights": 17,
+    "form": [
+     {
+      "date": "2026-04-11",
+      "opp": "Josh Hokit",
+      "res": "L",
+      "method": "DEC",
+      "round": 3
+     },
+     {
+      "date": "2025-06-21",
+      "opp": "Rizvan Kuniev",
+      "res": "W",
+      "method": "DEC",
+      "round": 3
+     },
+     {
+      "date": "2024-07-27",
+      "opp": "Tom Aspinall",
+      "res": "L",
+      "method": "KO",
+      "round": 1
+     },
+     {
+      "date": "2024-03-09",
+      "opp": "Jailton Almeida",
+      "res": "W",
+      "method": "KO",
+      "round": 2
+     },
+     {
+      "date": "2023-04-22",
+      "opp": "Sergei Pavlovich",
+      "res": "L",
+      "method": "KO",
+      "round": 1
+     }
+    ],
+    "stats": {
+     "height_in": 76,
+     "reach_in": 80,
+     "stance": "Orthodox",
+     "age": 35,
+     "slpm": 4.18,
+     "str_acc": 52.0,
+     "sapm": 2.76,
+     "str_def": 53.0,
+     "td_avg": 5.12,
+     "td_acc": 47.0,
+     "td_def": 35.0,
+     "sub_avg": 0.0
+    },
+    "zones": {
+     "head": 75,
+     "body": 8,
+     "leg": 17
+    },
+    "ufc_wins": {
+     "KO": 8,
+     "SUB": 0,
+     "DEC": 5
+    },
+    "layoff_months": 5.1,
+    "finish_fights": 11,
+    "decided_fights": 17
+   },
+   "result": null
+  },
+  {
+   "order": 5,
+   "main_event": false,
+   "num_rounds": 3,
+   "title_fight": false,
+   "p_win_f1": 0.5722,
+   "models": {
+    "catboost": 0.567,
+    "lightgbm": 0.578,
+    "xgboost": 0.572
+   },
+   "fighter_1": {
+    "name": "David Martinez",
+    "slug": "david_martinez",
+    "photo": true,
+    "nickname": null,
+    "record": [
+     14,
+     1,
+     0
+    ],
+    "ufc_record": null,
+    "ufc_fights": 3,
+    "form": [
+     {
+      "date": "2026-02-28",
+      "opp": "Marlon Vera",
+      "res": "W",
+      "method": "DEC",
+      "round": 3
+     },
+     {
+      "date": "2025-09-13",
+      "opp": "Rob Font",
+      "res": "W",
+      "method": "DEC",
+      "round": 3
+     },
+     {
+      "date": "2025-03-29",
+      "opp": "Saimon Oliveira",
+      "res": "W",
+      "method": "KO",
+      "round": 1
+     }
+    ],
+    "stats": {
+     "height_in": 65,
+     "reach_in": 67,
+     "stance": "Orthodox",
+     "age": 28,
+     "slpm": 4.82,
+     "str_acc": 46.0,
+     "sapm": 2.9,
+     "str_def": 69.0,
+     "td_avg": 0.6,
+     "td_acc": 25.0,
+     "td_def": 100.0,
+     "sub_avg": 0.0
+    },
+    "zones": {
+     "head": 74,
+     "body": 16,
+     "leg": 10
+    },
+    "ufc_wins": {
+     "KO": 1,
+     "SUB": 0,
+     "DEC": 2
+    },
+    "layoff_months": 6.4,
+    "finish_fights": 1,
+    "decided_fights": 3
+   },
+   "fighter_2": {
+    "name": "Dan Ige",
+    "slug": "dan_ige",
+    "photo": true,
+    "nickname": "100K",
+    "record": [
+     19,
+     11,
+     0
+    ],
+    "ufc_record": null,
+    "ufc_fights": 22,
+    "form": [
+     {
+      "date": "2026-02-21",
+      "opp": "Melquizael Costa",
+      "res": "L",
+      "method": "KO",
+      "round": 1
+     },
+     {
+      "date": "2025-07-19",
+      "opp": "Patricio Freire",
+      "res": "L",
+      "method": "OTHER",
+      "round": 0
+     },
+     {
+      "date": "2025-07-19",
+      "opp": "Patricio Pitbull",
+      "res": "L",
+      "method": "DEC",
+      "round": 3
+     },
+     {
+      "date": "2025-04-12",
+      "opp": "Sean Woodson",
+      "res": "W",
+      "method": "KO",
+      "round": 3
+     },
+     {
+      "date": "2024-10-26",
+      "opp": "Lerone Murphy",
+      "res": "L",
+      "method": "DEC",
+      "round": 3
+     }
+    ],
+    "stats": {
+     "height_in": 67,
+     "reach_in": 71,
+     "stance": "Orthodox",
+     "age": 35,
+     "slpm": 3.6,
+     "str_acc": 45.0,
+     "sapm": 3.56,
+     "str_def": 56.0,
+     "td_avg": 0.93,
+     "td_acc": 26.0,
+     "td_def": 56.0,
+     "sub_avg": 0.2
+    },
+    "zones": {
+     "head": 68,
+     "body": 21,
+     "leg": 11
+    },
+    "ufc_wins": {
+     "KO": 5,
+     "SUB": 1,
+     "DEC": 5
+    },
+    "layoff_months": 6.7,
+    "finish_fights": 7,
+    "decided_fights": 22
+   },
+   "result": null
+  },
+  {
+   "order": 6,
+   "main_event": false,
+   "num_rounds": 3,
+   "title_fight": false,
+   "p_win_f1": 0.5364,
+   "models": {
+    "catboost": 0.51,
+    "lightgbm": 0.554,
+    "xgboost": 0.546
+   },
+   "fighter_1": {
+    "name": "Tim Elliott",
+    "slug": "tim_elliott",
+    "photo": true,
+    "nickname": null,
+    "record": [
+     22,
+     14,
+     1
+    ],
+    "ufc_record": null,
+    "ufc_fights": 22,
+    "form": [
+     {
+      "date": "2026-05-02",
+      "opp": "Steve Erceg",
+      "res": "L",
+      "method": "DEC",
+      "round": 3
+     },
+     {
+      "date": "2025-08-16",
+      "opp": "Kai Asakura",
+      "res": "W",
+      "method": "SUB",
+      "round": 2
+     },
+     {
+      "date": "2023-12-09",
+      "opp": "Sumudaerji",
+      "res": "W",
+      "method": "SUB",
+      "round": 1
+     },
+     {
+      "date": "2023-10-21",
+      "opp": "Muhammad Mokaev",
+      "res": "L",
+      "method": "SUB",
+      "round": 3
+     },
+     {
+      "date": "2023-06-03",
+      "opp": "Victor Altamirano",
+      "res": "W",
+      "method": "DEC",
+      "round": 3
+     }
+    ],
+    "stats": {
+     "height_in": 67,
+     "reach_in": 66,
+     "stance": "Southpaw",
+     "age": 39,
+     "slpm": 3.51,
+     "str_acc": 43.0,
+     "sapm": 3.0,
+     "str_def": 56.0,
+     "td_avg": 3.61,
+     "td_acc": 45.0,
+     "td_def": 59.0,
+     "sub_avg": 1.1
+    },
+    "zones": {
+     "head": 67,
+     "body": 18,
+     "leg": 15
+    },
+    "ufc_wins": {
+     "KO": 0,
+     "SUB": 3,
+     "DEC": 7
+    },
+    "layoff_months": 4.4,
+    "finish_fights": 8,
+    "decided_fights": 22
+   },
+   "fighter_2": {
+    "name": "Edgar Chairez",
+    "slug": "edgar_chairez",
+    "photo": true,
+    "nickname": "Puro Chicali",
+    "record": [
+     14,
+     6,
+     0
+    ],
+    "ufc_record": null,
+    "ufc_fights": 6,
+    "form": [
+     {
+      "date": "2026-06-06",
+      "opp": "Bruno Silva",
+      "res": "W",
+      "method": "SUB",
+      "round": 1
+     },
+     {
+      "date": "2026-02-28",
+      "opp": "Felipe Bunes",
+      "res": "W",
+      "method": "DEC",
+      "round": 3
+     },
+     {
+      "date": "2025-03-29",
+      "opp": "Cj Vergara",
+      "res": "W",
+      "method": "SUB",
+      "round": 1
+     },
+     {
+      "date": "2024-09-14",
+      "opp": "Joshua Van",
+      "res": "L",
+      "method": "DEC",
+      "round": 3
+     },
+     {
+      "date": "2024-02-24",
+      "opp": "Daniel Lacerda",
+      "res": "W",
+      "method": "SUB",
+      "round": 1
+     }
+    ],
+    "stats": {
+     "height_in": 67,
+     "reach_in": 71,
+     "stance": "Orthodox",
+     "age": 30,
+     "slpm": 3.76,
+     "str_acc": 46.0,
+     "sapm": 4.71,
+     "str_def": 46.0,
+     "td_avg": 0.0,
+     "td_acc": 0.0,
+     "td_def": 47.0,
+     "sub_avg": 1.4
+    },
+    "zones": {
+     "head": 65,
+     "body": 21,
+     "leg": 14
+    },
+    "ufc_wins": {
+     "KO": 0,
+     "SUB": 3,
+     "DEC": 1
+    },
+    "layoff_months": 3.2,
+    "finish_fights": 3,
+    "decided_fights": 6
+   },
+   "result": null
+  },
+  {
+   "order": 7,
+   "main_event": false,
+   "num_rounds": 3,
+   "title_fight": false,
+   "p_win_f1": 0.647,
+   "models": {
+    "catboost": 0.642,
+    "lightgbm": 0.652,
+    "xgboost": 0.648
+   },
+   "fighter_1": {
+    "name": "Ignacio Bahamondes",
+    "slug": "ignacio_bahamondes",
+    "photo": true,
+    "nickname": "La Jaula",
+    "record": [
+     17,
+     7,
+     0
+    ],
+    "ufc_record": null,
+    "ufc_fights": 10,
+    "form": [
+     {
+      "date": "2026-03-28",
+      "opp": "Tofiq Musayev",
+      "res": "L",
+      "method": "DEC",
+      "round": 3
+     },
+     {
+      "date": "2025-06-21",
+      "opp": "Rafael Fiziev",
+      "res": "L",
+      "method": "OTHER",
+      "round": 0
+     },
+     {
+      "date": "2025-03-08",
+      "opp": "Jalin Turner",
+      "res": "W",
+      "method": "SUB",
+      "round": 1
+     },
+     {
+      "date": "2024-09-14",
+      "opp": "Manuel Torres",
+      "res": "W",
+      "method": "KO",
+      "round": 1
+     },
+     {
+      "date": "2024-04-06",
+      "opp": "Christos Giagos",
+      "res": "W",
+      "method": "KO",
+      "round": 1
+     }
+    ],
+    "stats": {
+     "height_in": 75,
+     "reach_in": 75,
+     "stance": "Orthodox",
+     "age": 29,
+     "slpm": 5.99,
+     "str_acc": 46.0,
+     "sapm": 4.07,
+     "str_def": 55.0,
+     "td_avg": 0.0,
+     "td_acc": 0.0,
+     "td_def": 70.0,
+     "sub_avg": 0.6
+    },
+    "zones": {
+     "head": 61,
+     "body": 21,
+     "leg": 18
+    },
+    "ufc_wins": {
+     "KO": 3,
+     "SUB": 2,
+     "DEC": 1
+    },
+    "layoff_months": 5.5,
+    "finish_fights": 5,
+    "decided_fights": 10
+   },
+   "fighter_2": {
+    "name": "Muslim Salikhov",
+    "slug": "muslim_salikhov",
+    "photo": true,
+    "nickname": "King of Kung Fu",
+    "record": [
+     22,
+     6,
+     0
+    ],
+    "ufc_record": null,
+    "ufc_fights": 13,
+    "form": [
+     {
+      "date": "2025-11-08",
+      "opp": "Uros Medic",
+      "res": "L",
+      "method": "KO",
+      "round": 1
+     },
+     {
+      "date": "2025-07-26",
+      "opp": "Carlos Leal",
+      "res": "W",
+      "method": "KO",
+      "round": 1
+     },
+     {
+      "date": "2024-11-23",
+      "opp": "Song Kenan",
+      "res": "W",
+      "method": "KO",
+      "round": 1
+     },
+     {
+      "date": "2024-07-13",
+      "opp": "Santiago Ponzinibbio",
+      "res": "W",
+      "method": "DEC",
+      "round": 3
+     },
+     {
+      "date": "2024-02-03",
+      "opp": "Randy Brown",
+      "res": "L",
+      "method": "KO",
+      "round": 1
+     }
+    ],
+    "stats": {
+     "height_in": 71,
+     "reach_in": 70,
+     "stance": "Orthodox",
+     "age": 42,
+     "slpm": 3.37,
+     "str_acc": 49.0,
+     "sapm": 2.96,
+     "str_def": 62.0,
+     "td_avg": 1.07,
+     "td_acc": 32.0,
+     "td_def": 72.0,
+     "sub_avg": 0.0
+    },
+    "zones": {
+     "head": 59,
+     "body": 23,
+     "leg": 18
+    },
+    "ufc_wins": {
+     "KO": 5,
+     "SUB": 0,
+     "DEC": 3
+    },
+    "layoff_months": 10.1,
+    "finish_fights": 9,
+    "decided_fights": 13
+   },
+   "result": null
+  },
+  {
+   "order": 8,
+   "main_event": false,
+   "num_rounds": 3,
+   "title_fight": false,
+   "p_win_f1": 0.5091,
+   "models": {
+    "catboost": 0.484,
+    "lightgbm": 0.525,
+    "xgboost": 0.519
+   },
+   "fighter_1": {
+    "name": "Yousri Belgaroui",
+    "slug": "yousri_belgaroui",
+    "photo": true,
+    "nickname": null,
+    "record": [
+     10,
+     3,
+     0
+    ],
+    "ufc_record": null,
+    "ufc_fights": 2,
+    "form": [
+     {
+      "date": "2026-03-28",
+      "opp": "Mansur Abdul-malik",
+      "res": "W",
+      "method": "KO",
+      "round": 3
+     },
+     {
+      "date": "2025-10-18",
+      "opp": "Azamat Bekoev",
+      "res": "W",
+      "method": "KO",
+      "round": 3
+     }
+    ],
+    "stats": {
+     "height_in": 78,
+     "reach_in": 79,
+     "stance": "Orthodox",
+     "age": 34,
+     "slpm": 6.1,
+     "str_acc": 64.0,
+     "sapm": 2.17,
+     "str_def": 63.0,
+     "td_avg": 0.29,
+     "td_acc": 100.0,
+     "td_def": 66.0,
+     "sub_avg": 0.0
+    },
+    "zones": {
+     "head": 70,
+     "body": 18,
+     "leg": 12
+    },
+    "ufc_wins": {
+     "KO": 2,
+     "SUB": 0,
+     "DEC": 0
+    },
+    "layoff_months": 5.5,
+    "finish_fights": 2,
+    "decided_fights": 2
+   },
+   "fighter_2": {
+    "name": "Djorden Santos",
+    "slug": "djorden_santos",
+    "photo": true,
+    "nickname": "Shakur",
+    "record": [
+     11,
+     3,
+     0
+    ],
+    "ufc_record": null,
+    "ufc_fights": 3,
+    "form": [
+     {
+      "date": "2026-05-09",
+      "opp": "Baisangur Susurkaev",
+      "res": "L",
+      "method": "SUB",
+      "round": 3
+     },
+     {
+      "date": "2025-10-18",
+      "opp": "Danny Barlow",
+      "res": "W",
+      "method": "DEC",
+      "round": 3
+     },
+     {
+      "date": "2025-03-08",
+      "opp": "Ozzy Diaz",
+      "res": "L",
+      "method": "DEC",
+      "round": 3
+     }
+    ],
+    "stats": {
+     "height_in": 72,
+     "reach_in": 75,
+     "stance": "Orthodox",
+     "age": 29,
+     "slpm": 6.64,
+     "str_acc": 42.0,
+     "sapm": 6.35,
+     "str_def": 48.0,
+     "td_avg": 0.51,
+     "td_acc": 28.0,
+     "td_def": 85.0,
+     "sub_avg": 0.0
+    },
+    "zones": {
+     "head": 80,
+     "body": 8,
+     "leg": 12
+    },
+    "ufc_wins": {
+     "KO": 0,
+     "SUB": 0,
+     "DEC": 1
+    },
+    "layoff_months": 4.1,
+    "finish_fights": 1,
+    "decided_fights": 3
+   },
+   "result": null
+  },
+  {
+   "order": 9,
+   "main_event": false,
+   "num_rounds": 3,
+   "title_fight": false,
+   "p_win_f1": 0.3849,
+   "models": {
+    "catboost": 0.366,
+    "lightgbm": 0.395,
+    "xgboost": 0.393
+   },
+   "fighter_1": {
+    "name": "Drakkar Klose",
+    "slug": "drakkar_klose",
+    "photo": true,
+    "nickname": null,
+    "record": [
+     16,
+     3,
+     1
+    ],
+    "ufc_record": null,
+    "ufc_fights": 13,
+    "form": [
+     {
+      "date": "2025-08-16",
+      "opp": "Edson Barboza",
+      "res": "W",
+      "method": "DEC",
+      "round": 3
+     },
+     {
+      "date": "2024-12-14",
+      "opp": "Joel Alvarez",
+      "res": "L",
+      "method": "OTHER",
+      "round": 0
+     },
+     {
+      "date": "2024-05-04",
+      "opp": "Joaquim Silva",
+      "res": "W",
+      "method": "DEC",
+      "round": 3
+     },
+     {
+      "date": "2023-12-02",
+      "opp": "Joe Solecki",
+      "res": "W",
+      "method": "KO",
+      "round": 1
+     },
+     {
+      "date": "2022-07-30",
+      "opp": "Rafa Garcia",
+      "res": "W",
+      "method": "DEC",
+      "round": 3
+     }
+    ],
+    "stats": {
+     "height_in": 69,
+     "reach_in": 70,
+     "stance": "Orthodox",
+     "age": 38,
+     "slpm": 4.25,
+     "str_acc": 55.0,
+     "sapm": 3.65,
+     "str_def": 49.0,
+     "td_avg": 1.49,
+     "td_acc": 26.0,
+     "td_def": 69.0,
+     "sub_avg": 0.0
+    },
+    "zones": {
+     "head": 49,
+     "body": 34,
+     "leg": 18
+    },
+    "ufc_wins": {
+     "KO": 2,
+     "SUB": 0,
+     "DEC": 8
+    },
+    "layoff_months": 12.9,
+    "finish_fights": 3,
+    "decided_fights": 13
+   },
+   "fighter_2": {
+    "name": "Tommy Gantt",
+    "slug": "tommy_gantt",
+    "photo": false,
+    "nickname": null,
+    "record": null,
+    "ufc_record": [
+     1,
+     0
+    ],
+    "ufc_fights": 1,
+    "form": [
+     {
+      "date": "2026-05-16",
+      "opp": "Artur Minev",
+      "res": "W",
+      "method": "KO",
+      "round": 2
+     }
+    ],
+    "stats": null,
+    "zones": null,
+    "ufc_wins": {
+     "KO": 1,
+     "SUB": 0,
+     "DEC": 0
+    },
+    "layoff_months": 3.9,
+    "finish_fights": 1,
+    "decided_fights": 1
+   },
+   "result": null
+  },
+  {
+   "order": 10,
+   "main_event": false,
+   "num_rounds": 3,
+   "title_fight": false,
+   "p_win_f1": 0.548,
+   "models": {
+    "catboost": 0.481,
+    "lightgbm": 0.568,
+    "xgboost": 0.594
+   },
+   "fighter_1": {
+    "name": "Rafa Garcia",
+    "slug": "rafa_garcia",
+    "photo": true,
+    "nickname": "Gifted",
+    "record": [
+     19,
+     4,
+     0
+    ],
+    "ufc_record": null,
+    "ufc_fights": 10,
+    "form": [
+     {
+      "date": "2026-04-25",
+      "opp": "Alexander Hernandez",
+      "res": "W",
+      "method": "DEC",
+      "round": 3
+     },
+     {
+      "date": "2025-09-13",
+      "opp": "Jared Gordon",
+      "res": "W",
+      "method": "KO",
+      "round": 3
+     },
+     {
+      "date": "2024-10-12",
+      "opp": "Grant Dawson",
+      "res": "L",
+      "method": "KO",
+      "round": 2
+     },
+     {
+      "date": "2023-04-15",
+      "opp": "Clay Guida",
+      "res": "W",
+      "method": "DEC",
+      "round": 3
+     },
+     {
+      "date": "2022-12-17",
+      "opp": "Maheshate",
+      "res": "W",
+      "method": "DEC",
+      "round": 3
+     }
+    ],
+    "stats": {
+     "height_in": 67,
+     "reach_in": 70,
+     "stance": "Orthodox",
+     "age": 32,
+     "slpm": 4.28,
+     "str_acc": 44.0,
+     "sapm": 4.42,
+     "str_def": 61.0,
+     "td_avg": 3.22,
+     "td_acc": 45.0,
+     "td_def": 77.0,
+     "sub_avg": 0.4
+    },
+    "zones": {
+     "head": 75,
+     "body": 14,
+     "leg": 11
+    },
+    "ufc_wins": {
+     "KO": 1,
+     "SUB": 1,
+     "DEC": 4
+    },
+    "layoff_months": 4.6,
+    "finish_fights": 3,
+    "decided_fights": 10
+   },
+   "fighter_2": {
+    "name": "Rongzhu",
+    "slug": "rongzhu",
+    "photo": true,
+    "nickname": null,
+    "record": [
+     28,
+     6,
+     0
+    ],
+    "ufc_record": null,
+    "ufc_fights": 6,
+    "form": [
+     {
+      "date": "2025-08-23",
+      "opp": "Austin Hubbard",
+      "res": "W",
+      "method": "DEC",
+      "round": 3
+     },
+     {
+      "date": "2025-02-08",
+      "opp": "Kody Steele",
+      "res": "W",
+      "method": "DEC",
+      "round": 3
+     },
+     {
+      "date": "2024-09-07",
+      "opp": "Chris Padilla",
+      "res": "L",
+      "method": "KO",
+      "round": 2
+     },
+     {
+      "date": "2022-02-26",
+      "opp": "Ignacio Bahamondes",
+      "res": "L",
+      "method": "SUB",
+      "round": 3
+     },
+     {
+      "date": "2021-09-18",
+      "opp": "Brandon Jenkins",
+      "res": "W",
+      "method": "KO",
+      "round": 3
+     }
+    ],
+    "stats": {
+     "height_in": 69,
+     "reach_in": 70,
+     "stance": "Orthodox",
+     "age": 26,
+     "slpm": 6.05,
+     "str_acc": 51.0,
+     "sapm": 5.38,
+     "str_def": 53.0,
+     "td_avg": 1.34,
+     "td_acc": 62.0,
+     "td_def": 84.0,
+     "sub_avg": 0.1
+    },
+    "zones": {
+     "head": 74,
+     "body": 12,
+     "leg": 14
+    },
+    "ufc_wins": {
+     "KO": 1,
+     "SUB": 0,
+     "DEC": 2
+    },
+    "layoff_months": 12.7,
+    "finish_fights": 3,
+    "decided_fights": 6
+   },
+   "result": null
+  },
+  {
+   "order": 11,
+   "main_event": false,
+   "num_rounds": 3,
+   "title_fight": false,
+   "p_win_f1": 0.4713,
+   "models": {
+    "catboost": 0.434,
+    "lightgbm": 0.487,
+    "xgboost": 0.492
+   },
+   "fighter_1": {
+    "name": "JJ Aldrich",
+    "slug": "jj_aldrich",
+    "photo": true,
+    "nickname": null,
+    "record": [
+     15,
+     7,
+     0
+    ],
+    "ufc_record": null,
+    "ufc_fights": 16,
+    "form": [
+     {
+      "date": "2026-04-18",
+      "opp": "Jamey-lyn Horth",
+      "res": "W",
+      "method": "DEC",
+      "round": 3
+     },
+     {
+      "date": "2025-03-01",
+      "opp": "Andrea Lee",
+      "res": "W",
+      "method": "DEC",
+      "round": 3
+     },
+     {
+      "date": "2024-05-11",
+      "opp": "Veronica Hardy",
+      "res": "L",
+      "method": "DEC",
+      "round": 3
+     },
+     {
+      "date": "2023-10-07",
+      "opp": "Montana De La Rosa",
+      "res": "W",
+      "method": "DEC",
+      "round": 3
+     },
+     {
+      "date": "2023-08-26",
+      "opp": "Liang Na",
+      "res": "W",
+      "method": "KO",
+      "round": 2
+     }
+    ],
+    "stats": {
+     "height_in": 65,
+     "reach_in": 67,
+     "stance": "Southpaw",
+     "age": 33,
+     "slpm": 3.92,
+     "str_acc": 46.0,
+     "sapm": 4.34,
+     "str_def": 61.0,
+     "td_avg": 0.7,
+     "td_acc": 25.0,
+     "td_def": 67.0,
+     "sub_avg": 0.0
+    },
+    "zones": {
+     "head": 69,
+     "body": 18,
+     "leg": 13
+    },
+    "ufc_wins": {
+     "KO": 1,
+     "SUB": 0,
+     "DEC": 10
+    },
+    "layoff_months": 4.8,
+    "finish_fights": 2,
+    "decided_fights": 16
+   },
+   "fighter_2": {
+    "name": "Regina Tarin",
+    "slug": "regina_tarin",
+    "photo": false,
+    "nickname": null,
+    "record": null,
+    "ufc_record": [
+     1,
+     0
+    ],
+    "ufc_fights": 1,
+    "form": [
+     {
+      "date": "2026-02-28",
+      "opp": "Ernesta Kareckaite",
+      "res": "W",
+      "method": "DEC",
+      "round": 3
+     }
+    ],
+    "stats": null,
+    "zones": {
+     "head": 67,
+     "body": 30,
+     "leg": 4
+    },
+    "ufc_wins": {
+     "KO": 0,
+     "SUB": 0,
+     "DEC": 1
+    },
+    "layoff_months": 6.4,
+    "finish_fights": 0,
+    "decided_fights": 1
+   },
+   "result": null
+  }
+ ],
+ "generated_at": "2026-09-11T19:31:37+00:00"
+}
