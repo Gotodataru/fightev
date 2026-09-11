@@ -29,9 +29,17 @@ function LangSwitch({ className }: { className?: string }) {
 export function Layout({ children }: { children: ReactNode }) {
   const { t } = useI18n()
   const [menu, setMenu] = useState(false)
-  const { pathname } = useLocation()
+  const { pathname, key } = useLocation()
   useEffect(() => setMenu(false), [pathname])
   useEffect(() => { window.scrollTo(0, 0) }, [pathname])
+  // With a basename the router writes the home URL as /fightev?fight=3; keep the canonical
+  // /fightev/?fight=3 so a copied link doesn't depend on the host's slash redirect.
+  useEffect(() => {
+    const base = import.meta.env.BASE_URL
+    if (window.location.pathname === base.replace(/\/$/, '')) {
+      window.history.replaceState(window.history.state, '', base + window.location.search + window.location.hash)
+    }
+  }, [key])   // every navigation, including a repeat of the same URL
 
   const links = [
     { to: '/', label: t.nav.fights, end: true },
