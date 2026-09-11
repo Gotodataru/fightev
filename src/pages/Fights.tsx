@@ -1,12 +1,11 @@
-import { useCallback, useEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useRef, useState, type CSSProperties } from 'react'
 import { Link, useSearchParams } from 'react-router-dom'
 import { FightCard } from '../components/FightCard'
 import { Portrait } from '../components/ui'
 import { useData, useMedia, type Card, type Track } from '../data'
 import { useI18n } from '../i18n'
 import { BRAND, capitalize, daysUntil, formatDate, split, verdict, favourite } from '../lib/fight'
-
-const reducedMotion = () => window.matchMedia('(prefers-reduced-motion: reduce)').matches
+import { Reveal, SplitWords, reducedMotion, useParallax } from '../lib/motion'
 
 // ── hero ───────────────────────────────────────────────────────────────────────
 
@@ -18,6 +17,7 @@ function Hero({ card, onBreakdown, wide }: { card: Card; onBreakdown: (i: number
   const main = card.fights[heroIndex]
   const days = daysUntil(ev.date)
   const finished = card.fights.some(f => f.result)
+  const upcoming = days >= 0 && !finished
   const eyebrow = days > 0 ? `${t.nextEvent} · ${t.inDays(days)}`
     : days === 0 ? `${t.nextEvent} · ${t.today}`
     : finished ? t.eventDone : t.eventPast
@@ -28,24 +28,40 @@ function Hero({ card, onBreakdown, wide }: { card: Card; onBreakdown: (i: number
     ? `${main.title_fight ? t.titleFight : t.mainEvent} · ${t.rounds(main.num_rounds)}`
     : t.rounds(main.num_rounds)
   const cta = main.main_event ? t.ctaBreakdown : t.ctaFight
+  const parallax = useParallax(0.1, wide)
+  const d = (ms: number) => ({ '--d': `${ms}ms` }) as CSSProperties
+  const words = ev.name.split(' ').length
+
+  // face-off: the two fighters slide in from their own sides
   const portraits = (w: number, overlap: number) => (
-    <div className="mask-x flex w-full items-end justify-center">
-      <div className="min-w-0" style={{ width: w, marginRight: -overlap }}><Portrait f={main.fighter_1} fav={p1 > 0.5} w={w} fade="#080808" eager /></div>
-      <div className="min-w-0" style={{ width: w }}><Portrait f={main.fighter_2} fav={p1 < 0.5} w={w} fade="#080808" eager /></div>
+    <div className="mask-x flex w-full items-end justify-center" style={{ transform: `translateY(${parallax}px)` }}>
+      <div className="from-left min-w-0" style={{ width: w, marginRight: -overlap, ...d(150) }}>
+        <Portrait f={main.fighter_1} fav={p1 > 0.5} w={w} fade="#080808" eager animate={false} />
+      </div>
+      <div className="from-right min-w-0" style={{ width: w, ...d(250) }}>
+        <Portrait f={main.fighter_2} fav={p1 < 0.5} w={w} fade="#080808" eager animate={false} />
+      </div>
     </div>
   )
+  const eyebrowEl = (cls: string) => (
+    <div className={`eyebrow hero-in flex items-center gap-2 text-brand ${cls}`} style={d(0)}>
+      {upcoming && <span className="live-dot" aria-hidden />}{eyebrow}
+    </div>
+  )
+  const glow = 'radial-gradient(closest-side, rgba(0,239,92,0.12), transparent)'
 
   if (!wide) {
     return (
       <section className="relative overflow-hidden px-4 pb-[22px] pt-6" aria-labelledby="event-title">
-        <div className="pointer-events-none absolute left-1/2 top-10 h-[300px] w-[420px] -translate-x-1/2"
-          style={{ background: 'radial-gradient(closest-side, rgba(0,239,92,0.10), transparent)' }} />
+        <div className="breathe pointer-events-none absolute left-1/2 top-10 -ml-[210px] h-[300px] w-[420px]" style={{ background: glow }} />
         <div className="relative mx-auto max-w-[400px]">{portraits(170, 18)}</div>
-        <div className="eyebrow relative mb-2.5 mt-[18px] text-brand">{eyebrow}</div>
-        <h1 id="event-title" className="relative m-0 text-[28px] font-bold leading-[1.12] tracking-[-0.02em]">{ev.name}</h1>
-        <div className="relative mt-2.5 text-[13px] text-zinc-400">{dateLine}</div>
-        <button type="button" onClick={() => onBreakdown(heroIndex)}
-          className="relative mt-[18px] flex h-12 w-full items-center justify-center rounded-[10px] bg-brand text-sm font-bold text-bg transition-colors hover:bg-brand-hover">
+        {eyebrowEl('relative mb-2.5 mt-[18px]')}
+        <h1 id="event-title" className="relative m-0 text-[28px] font-bold leading-[1.12] tracking-[-0.02em]">
+          <SplitWords text={ev.name} delay={120} />
+        </h1>
+        <div className="hero-in relative mt-2.5 text-[13px] text-zinc-400" style={d(200 + words * 55)}>{dateLine}</div>
+        <button type="button" onClick={() => onBreakdown(heroIndex)} style={d(300 + words * 55)}
+          className="btn btn-brand hero-in relative mt-[18px] flex h-12 w-full items-center justify-center rounded-[10px] bg-brand text-sm font-bold text-bg hover:bg-brand-hover">
           {cta}
         </button>
       </section>
@@ -54,28 +70,30 @@ function Hero({ card, onBreakdown, wide }: { card: Card; onBreakdown: (i: number
 
   return (
     <section className="relative overflow-hidden border-b border-white/5" aria-labelledby="event-title">
-      <div className="pointer-events-none absolute -bottom-40 -right-20 h-[520px] w-[720px]"
-        style={{ background: 'radial-gradient(closest-side, rgba(0,239,92,0.10), transparent)' }} />
+      <div className="breathe pointer-events-none absolute -bottom-40 -right-20 h-[520px] w-[720px]" style={{ background: glow }} />
       <div className="relative mx-auto grid max-w-[1024px] grid-cols-[minmax(0,1fr)_380px] items-end gap-6 px-6 pt-11 lg:grid-cols-[minmax(0,1fr)_460px]">
         <div className="pb-11">
-          <div className="eyebrow mb-3.5 text-brand">{eyebrow}</div>
-          <h1 id="event-title" className="m-0 text-[36px] font-bold leading-[1.08] tracking-[-0.025em] lg:text-[44px]">{ev.name}</h1>
-          <div className="mt-3.5 text-sm text-zinc-400">{dateLine}</div>
-          <div className="mt-7 flex flex-col gap-1.5 border-t border-zinc-800 pt-5">
-            <span className="eyebrow text-zinc-500">{mainLabel}</span>
-            <span className="text-xl font-semibold text-zinc-50">
+          {eyebrowEl('mb-3.5')}
+          <h1 id="event-title" className="m-0 text-[36px] font-bold leading-[1.08] tracking-[-0.025em] lg:text-[44px]">
+            <SplitWords text={ev.name} delay={100} />
+          </h1>
+          <div className="hero-in mt-3.5 text-sm text-zinc-400" style={d(180 + words * 55)}>{dateLine}</div>
+          <div className="relative mt-7 flex flex-col gap-1.5 pt-5">
+            <span className="line-in absolute inset-x-0 top-0 h-px bg-zinc-800" style={d(300 + words * 55)} aria-hidden />
+            <span className="eyebrow hero-in text-zinc-500" style={d(380 + words * 55)}>{mainLabel}</span>
+            <span className="hero-in text-xl font-semibold text-zinc-50" style={d(440 + words * 55)}>
               {main.fighter_1.name} <span className="font-normal text-zinc-600">vs</span> {main.fighter_2.name}
             </span>
-            <span className="text-[13px] text-zinc-400">
+            <span className="hero-in text-[13px] text-zinc-400" style={d(500 + words * 55)}>
               {t.modelSays(v, favourite(main).name, Math.max(...split(p1)))}
             </span>
           </div>
-          <div className="mt-[22px] flex flex-wrap gap-2.5">
+          <div className="hero-in mt-[22px] flex flex-wrap gap-2.5" style={d(580 + words * 55)}>
             <button type="button" onClick={() => onBreakdown(heroIndex)}
-              className="rounded-lg bg-brand px-[18px] py-[11px] text-[13px] font-bold text-bg transition-colors hover:bg-brand-hover">
+              className="btn btn-brand rounded-lg bg-brand px-[18px] py-[11px] text-[13px] font-bold text-bg hover:bg-brand-hover">
               {cta}
             </button>
-            <Link to="/accuracy" className="rounded-lg border border-zinc-800 px-[18px] py-[11px] text-[13px] font-semibold text-zinc-300 transition-colors hover:border-zinc-600 hover:text-zinc-50">
+            <Link to="/accuracy" className="btn rounded-lg border border-zinc-800 px-[18px] py-[11px] text-[13px] font-semibold text-zinc-300 hover:border-zinc-600 hover:text-zinc-50">
               {t.ctaAccuracy}
             </Link>
           </div>
@@ -155,8 +173,12 @@ function useOpenFight(card: Card | null, desktopPanel: boolean) {
   const refs = useRef<(HTMLDivElement | null)[]>([])
   const pendingScroll = useRef<'nav' | 'open' | null>(null)
   const [tick, setTick] = useState(0)   // re-run the scroll even when the same fight is selected again
+  // only an explicit "collapse this fight" animates the close; when another fight takes over,
+  // the old panel disappears at once so the scroll target doesn't move under the animation
+  const [animatedClose, setAnimatedClose] = useState(false)
 
   const select = useCallback((i: number, why: 'nav' | 'open') => {
+    setAnimatedClose(i < 0)
     setOpen(i)
     setTick(x => x + 1)
     pendingScroll.current = i >= 0 ? why : null
@@ -172,35 +194,40 @@ function useOpenFight(card: Card | null, desktopPanel: boolean) {
     pendingScroll.current = null
     const el = current >= 0 ? refs.current[current] : null
     if (!el || !why) return
-    const top = el.getBoundingClientRect().top
+    // a card that hasn't scrolled into view yet still sits 18px low (reveal transform) — measure its final spot
+    const shift = el.parentElement ? new DOMMatrixReadOnly(getComputedStyle(el.parentElement).transform).m42 : 0
+    const top = el.getBoundingClientRect().top - shift
     if (why === 'nav' || top < 0 || top > window.innerHeight * 0.6) {
-      el.scrollIntoView({ block: 'start', behavior: reducedMotion() ? 'auto' : 'smooth' })
+      window.scrollTo({ top: window.scrollY + top - 12, behavior: reducedMotion() ? 'auto' : 'smooth' })
     }
   }, [current, tick])
 
-  return { open: current, select, refs }
+  return { open: current, select, refs, animatedClose }
 }
 
 function CardList({ card, track, desktopRow, desktopPanel, nav }: {
   card: Card; track: Track; desktopRow: boolean; desktopPanel: boolean; nav: ReturnType<typeof useOpenFight>
 }) {
   const { t } = useI18n()
-  const { open, select, refs } = nav
+  const { open, select, refs, animatedClose } = nav
   const n = card.fights.length
   return (
     <div className="mx-auto max-w-[1024px] px-3 pb-20 pt-2 md:px-6 md:pt-9">
-      <div className="mb-3 flex flex-wrap items-center justify-between gap-x-4 gap-y-2 px-1 md:px-0">
+      <Reveal className="mb-3 flex flex-wrap items-center justify-between gap-x-4 gap-y-2 px-1 md:px-0">
         <h2 className="m-0 text-xs font-medium text-zinc-300">{t.card}</h2>
         <span className="flex items-center gap-2 text-[11px] text-zinc-500">
           <span className="h-2.5 w-2.5 rounded-[3px]" style={{ background: BRAND }} aria-hidden />{t.legend}
         </span>
-      </div>
+      </Reveal>
       <div className="flex flex-col gap-2">
         {card.fights.map((f, i) => (
-          <FightCard key={`${f.fighter_1.slug}-${f.fighter_2.slug}`} ref={el => { refs.current[i] = el }}
-            fight={f} index={i} total={n} open={open === i} track={track}
-            desktopRow={desktopRow} desktopPanel={desktopPanel}
-            onToggle={() => select(open === i ? -1 : i, 'open')} onGo={i2 => select(i2, 'nav')} />
+          // cards rise in one after another; bars and percentages inside wait for their card
+          <Reveal key={`${f.fighter_1.slug}-${f.fighter_2.slug}`} delay={Math.min(i, 6) * 60}>
+            <FightCard ref={el => { refs.current[i] = el }}
+              fight={f} index={i} total={n} open={open === i} track={track}
+              desktopRow={desktopRow} desktopPanel={desktopPanel} instantClose={!animatedClose}
+              onToggle={() => select(open === i ? -1 : i, 'open')} onGo={i2 => select(i2, 'nav')} />
+          </Reveal>
         ))}
       </div>
       <p className="mt-6 px-1 text-[11px] text-zinc-600 md:px-0">

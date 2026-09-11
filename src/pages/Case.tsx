@@ -1,5 +1,6 @@
 import { useEffect, type ReactNode } from 'react'
 import { useData } from '../data'
+import { CountUp, Reveal, SplitWords } from '../lib/motion'
 import { useI18n } from '../i18n'
 
 /** Placeholder the author fills in later — rendered visibly so it can't ship by accident unnoticed. */
@@ -7,32 +8,35 @@ function Ph({ children }: { children: ReactNode }) {
   return <span className="whitespace-nowrap rounded-md border border-dashed border-brand/50 px-[7px] py-px text-brand">[{children}]</span>
 }
 
-function Stat({ value, label, sub }: { value: ReactNode; label: string; sub: string }) {
+function Stat({ value, label, sub, delay = 0 }: { value: number | null; label: string; sub: string; delay?: number }) {
   return (
-    <div className="flex flex-col gap-1.5">
-      <span className="text-4xl font-bold leading-none tracking-[-0.02em] text-zinc-50">{value}</span>
+    <Reveal delay={delay} className="flex flex-col gap-1.5">
+      {value
+        ? <CountUp value={value} delay={delay} className="text-4xl font-bold leading-none tracking-[-0.02em] text-zinc-50" />
+        : <span className="text-4xl font-bold leading-none tracking-[-0.02em] text-zinc-50">—</span>}
       <span className="text-[13px] text-zinc-300">{label}</span>
       <span className="text-xs leading-normal text-zinc-500">{sub}</span>
-    </div>
+    </Reveal>
   )
 }
 
 function Para({ title, children }: { title: string; children: ReactNode }) {
   return (
-    <div className="grid grid-cols-1 gap-2 border-t border-zinc-800 py-6 md:grid-cols-[200px_minmax(0,1fr)] md:gap-8 md:py-7">
+    <Reveal className="relative grid grid-cols-1 gap-2 py-6 md:grid-cols-[200px_minmax(0,1fr)] md:gap-8 md:py-7">
+      <span className="line-in absolute inset-x-0 top-0 h-px bg-zinc-800" aria-hidden />
       <h2 className="m-0 text-[13px] font-semibold text-zinc-300">{title}</h2>
       <div className="text-[15px] leading-[1.7] text-zinc-400">{children}</div>
-    </div>
+    </Reveal>
   )
 }
 
 function Decision({ n, title, children }: { n: number; title: string; children: ReactNode }) {
   return (
-    <div className="flex flex-col gap-2 rounded-xl border border-line bg-card p-[22px]">
+    <Reveal delay={((n - 1) % 2) * 90} className="flex flex-col gap-2 rounded-xl border border-line bg-card p-[22px] transition-colors duration-300 hover:border-zinc-700">
       <span className="font-mono text-xs text-brand">{String(n).padStart(2, '0')}</span>
       <h3 className="m-0 text-base font-semibold text-zinc-50">{title}</h3>
       <p className="m-0 text-[13px] leading-relaxed text-zinc-400">{children}</p>
-    </div>
+    </Reveal>
   )
 }
 
@@ -56,31 +60,31 @@ export default function Case() {
 
   return (
     <article className="mx-auto max-w-[880px] px-4 pb-[90px] pt-10 md:px-6 md:pt-14">
-      <div className="eyebrow mb-3.5 text-brand">{ru ? 'О проекте · кейс' : 'About · case study'}</div>
+      <div className="eyebrow hero-in mb-3.5 text-brand">{ru ? 'О проекте · кейс' : 'About · case study'}</div>
       <h1 className="m-0 text-[32px] font-bold leading-[1.1] tracking-[-0.025em] md:text-[44px]">
-        {ru ? 'Как показать прогноз, которому не стоит верить вслепую' : "How to show a forecast you shouldn't trust blindly"}
+        <SplitWords text={ru ? 'Как показать прогноз, которому не стоит верить вслепую' : "How to show a forecast you shouldn't trust blindly"} delay={80} step={45} />
       </h1>
-      <p className="mb-0 mt-[18px] text-base leading-[1.65] text-zinc-400">
+      <p className="hero-in mb-0 mt-[18px] text-base leading-[1.65] text-zinc-400" style={{ '--d': '420ms' } as React.CSSProperties}>
         {ru
           ? 'fightev — аналитика боёв UFC на реальных данных: кард ближайшего турнира, статистика бойцов и прогноз ML-модели с честной историей точности.'
           : 'fightev is UFC fight analytics on real data: the next event’s card, fighter stats and an ML forecast with an honest accuracy record.'}
       </p>
-      <div className="mt-[22px] flex flex-wrap gap-x-7 gap-y-2.5 text-[13px] text-zinc-500">
+      <div className="hero-in mt-[22px] flex flex-wrap gap-x-7 gap-y-2.5 text-[13px] text-zinc-500" style={{ '--d': '520ms' } as React.CSSProperties}>
         <span>{ru ? 'Роль' : 'Role'}: <Ph>{ru ? 'твоя роль' : 'your role'}</Ph></span>
         <span>{ru ? 'Сроки' : 'Timeline'}: <Ph>{ru ? 'сроки' : 'timeline'}</Ph></span>
         <span>{ru ? 'Стек' : 'Stack'}: React, Tailwind, Python, SQLite</span>
       </div>
 
       <div className="mt-10 grid grid-cols-2 gap-x-4 gap-y-7 md:grid-cols-4">
-        <Stat value={nFights || dash} label={ru ? 'боёв в карде' : 'fights on the card'} sub={ru ? 'с данными из базы UFCStats' : 'with data from the UFCStats base'} />
-        <Stat value={n || dash} label={ru ? 'прогнозов сверено' : 'forecasts checked'} sub={ru ? 'с результатами, до боя' : 'against results, recorded pre-fight'} />
-        <Stat value={withPhoto || dash} label={ru ? 'фото выровнены' : 'photos aligned'} sub={ru ? 'по лицу автоматически' : 'to the face, automatically'} />
-        <Stat value="7" label={ru ? 'состояний' : 'states'} sub={ru ? 'от «нет фото» до промаха модели' : 'from “no photo” to a model miss'} />
+        <Stat value={nFights || null} label={ru ? 'боёв в карде' : 'fights on the card'} sub={ru ? 'с данными из базы UFCStats' : 'with data from the UFCStats base'} />
+        <Stat value={n || null} delay={80} label={ru ? 'прогнозов сверено' : 'forecasts checked'} sub={ru ? 'с результатами, до боя' : 'against results, recorded pre-fight'} />
+        <Stat value={withPhoto || null} delay={160} label={ru ? 'фото выровнены' : 'photos aligned'} sub={ru ? 'по лицу автоматически' : 'to the face, automatically'} />
+        <Stat value={7} delay={240} label={ru ? 'состояний' : 'states'} sub={ru ? 'от «нет фото» до промаха модели' : 'from “no photo” to a model miss'} />
       </div>
 
-      <div className="mt-11 flex h-[220px] items-center justify-center rounded-xl border border-dashed border-zinc-700 text-[13px] text-zinc-500 md:h-[300px]">
+      <Reveal className="mt-11 flex h-[220px] items-center justify-center rounded-xl border border-dashed border-zinc-700 text-[13px] text-zinc-500 md:h-[300px]">
         <Ph>{ru ? 'скриншот: было → стало' : 'screenshot: before → after'}</Ph>
-      </div>
+      </Reveal>
 
       <div className="mt-11">
         <Para title={ru ? 'Задача' : 'Problem'}>
@@ -100,7 +104,7 @@ export default function Case() {
       </div>
 
       <section className="mt-5">
-        <h2 className="m-0 mb-[22px] text-[22px] font-bold tracking-[-0.015em] text-zinc-50">{ru ? 'Ключевые решения' : 'Key decisions'}</h2>
+        <Reveal><h2 className="m-0 mb-[22px] text-[22px] font-bold tracking-[-0.015em] text-zinc-50">{ru ? 'Ключевые решения' : 'Key decisions'}</h2></Reveal>
         <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
           <Decision n={1} title={ru ? 'Зелёный — это преимущество' : 'Green means the edge'}>
             {ru

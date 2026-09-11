@@ -18,8 +18,8 @@ export function ResultBadge({ fight }: { fight: Fight }) {
   }
   const hit = (fight.p_win_f1 >= 0.5) === (r.winner === 1)
   return (
-    <span className="inline-flex items-center gap-[5px] whitespace-nowrap rounded-full py-[3px] pl-[7px] pr-[9px] text-[11px] font-semibold"
-      style={{ background: hit ? BRAND : Z800, color: hit ? '#080808' : '#fafafa' }}>
+    <span className="pop inline-flex items-center gap-[5px] whitespace-nowrap rounded-full py-[3px] pl-[7px] pr-[9px] text-[11px] font-semibold"
+      style={{ background: hit ? BRAND : Z800, color: hit ? '#080808' : '#fafafa', '--d': '250ms' } as React.CSSProperties}>
       <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden>
         {hit
           ? <path d="M3 7.5l2.5 2.5L11 4.5" stroke="#080808" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
@@ -186,7 +186,7 @@ function FormChips({ f, align }: { f: Fighter; align: 'start' | 'end' }) {
   if (!f.form.length) return <span className="text-[11px] text-zinc-600">{t.noUfc}</span>
   return (
     <ul className={cx('flex gap-1.5', align === 'end' && 'justify-end')}>
-      {f.form.map(x => {
+      {f.form.map((x, k) => {
         const st = x.res === 'W' ? { background: BRAND, color: '#080808' }
           : x.res === 'L' ? { background: Z800, color: '#a1a1aa' }
           : { border: `1px solid ${Z700}`, color: '#a1a1aa' }
@@ -194,7 +194,8 @@ function FormChips({ f, align }: { f: Fighter; align: 'start' | 'end' }) {
         const label = `${x.res} ${t.vs} ${x.opp} · ${x.method !== 'OTHER' ? t.method[x.method] + ' · ' : ''}${date}`
         return (
           <li key={x.date + x.opp} title={label} aria-label={label} className="flex flex-col items-center gap-1">
-            <span className="flex h-7 w-7 items-center justify-center rounded-[7px] font-mono text-xs font-bold" style={st}>{x.res}</span>
+            <span className="pop flex h-7 w-7 items-center justify-center rounded-[7px] font-mono text-xs font-bold"
+              style={{ ...st, '--d': `${350 + k * 70}ms` } as unknown as React.CSSProperties}>{x.res}</span>
             <span className="font-mono text-[10px] text-zinc-600">{x.method !== 'OTHER' ? x.method : '—'}</span>
           </li>
         )

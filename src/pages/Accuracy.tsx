@@ -2,6 +2,7 @@ import { useEffect, useLayoutEffect, useRef, useState, type ReactNode } from 're
 import { useData, useMedia, type CalBin, type Track } from '../data'
 import { useI18n, type Lang } from '../i18n'
 import { BRAND, CARD, Z300, Z400, Z500, Z600, Z700, cx, formatDate } from '../lib/fight'
+import { CountUp, Reveal, SplitWords } from '../lib/motion'
 
 const pct = (v: number) => `${Math.round(v * 100)}%`
 
@@ -171,7 +172,7 @@ function CompareBars({ tr, c }: { tr: Track; c: Copy }) {
             )}
           </div>
           <div className="text-right">
-            <span className="text-[15px] font-semibold text-zinc-50">{pct(r)}</span>
+            <CountUp value={r * 100} delay={i * 80} format={v => `${Math.round(v)}%`} className="text-[15px] font-semibold text-zinc-50" />
             <span className="ml-1.5 whitespace-nowrap text-[11px] text-zinc-500">{sub}</span>
           </div>
         </div>
@@ -227,7 +228,8 @@ function CalibrationChart({ bins, c }: { bins: CalBin[]; c: Copy }) {
             </g>
           ))}
           {xs.map(v => <text key={v} x={X(v)} y={H - B + 20} textAnchor="middle" fill={Z500} style={mono}>{Math.round(v * 100)}%</text>)}
-          <line x1={X(0.5)} y1={Y(0.5)} x2={X(0.75)} y2={Y(0.75)} stroke={Z500} strokeWidth="1.5" />
+          <line className="draw" x1={X(0.5)} y1={Y(0.5)} x2={X(0.75)} y2={Y(0.75)} stroke={Z500} strokeWidth="1.5"
+            style={{ '--len': Math.hypot(X(0.75) - X(0.5), Y(0.75) - Y(0.5)) + 2 } as React.CSSProperties} />
           {!narrow && c.diag.map((s, i) => (
             <text key={s} x={X(0.75) + 8} y={Y(0.75) - 2 + i * 14} fill={Z500} style={{ ...sans, fontSize: 11 }}>{s}</text>
           ))}
@@ -237,10 +239,12 @@ function CalibrationChart({ bins, c }: { bins: CalBin[]; c: Copy }) {
               <g key={b.label} tabIndex={0} role="img" aria-label={c.binTip(b)} className="cursor-default outline-none"
                 onMouseEnter={() => setHover(i)} onMouseLeave={() => setHover(null)}
                 onFocus={() => setHover(i)} onBlur={() => setHover(null)}>
-                <line x1={cx_} x2={cx_} y1={Y(Math.min(b.ci95[1], 1))} y2={Y(Math.max(b.ci95[0], 0.3))}
+                <line className="draw" x1={cx_} x2={cx_} y1={Y(Math.min(b.ci95[1], 1))} y2={Y(Math.max(b.ci95[0], 0.3))}
+                  style={{ '--len': Math.abs(Y(Math.max(b.ci95[0], 0.3)) - Y(Math.min(b.ci95[1], 1))) + 2, '--d': `${500 + i * 120}ms` } as React.CSSProperties}
                   stroke={hover === i ? Z400 : Z600} strokeWidth="2" strokeLinecap="round" />
                 <circle cx={cx_} cy={cy} r="16" fill="transparent" />
-                <circle cx={cx_} cy={cy} r={hover === i ? 7 : 6} fill={BRAND} stroke={CARD} strokeWidth="2" />
+                <circle className="pop" cx={cx_} cy={cy} r={hover === i ? 7 : 6} fill={BRAND} stroke={CARD} strokeWidth="2"
+                  style={{ transformOrigin: 'center', transformBox: 'fill-box', transition: 'r .2s ease', '--d': `${700 + i * 120}ms` } as React.CSSProperties} />
                 <text x={cx_ + 11} y={cy + 4} fill={Z300} style={mono}>{b.hits}/{b.n}</text>
               </g>
             )
@@ -289,36 +293,37 @@ function CalibrationTable({ bins, c }: { bins: CalBin[]; c: Copy }) {
 
 function EventDots({ tr, c, lang }: { tr: Track; c: Copy; lang: Lang }) {
   const loc = lang === 'ru' ? 'ru-RU' : 'en-US'
-  const dot = (hit: boolean, k: number) => (
-    <span key={k} className="h-3 w-3 rounded-full"
-      style={hit ? { background: BRAND } : { boxShadow: `inset 0 0 0 2px ${Z700}` }} />
+  const dot = (hit: boolean, k: number, animate = true) => (
+    <span key={k} className={cx('h-3 w-3 rounded-full', animate && 'pop')}
+      style={{ ...(hit ? { background: BRAND } : { boxShadow: `inset 0 0 0 2px ${Z700}` }), '--d': `${150 + k * 45}ms` } as unknown as React.CSSProperties} />
   )
   return (
     <>
       <ul>
-        {[...tr.events].reverse().map(e => (
-          <li key={e.name} className="grid grid-cols-[minmax(0,1fr)_auto] items-center gap-x-4 gap-y-2 border-b border-zinc-900 py-3 md:h-11 md:grid-cols-[minmax(0,1fr)_64px_200px_64px] md:gap-4 md:py-0">
+        {[...tr.events].reverse().map((e, j) => (
+          <Reveal as="li" key={e.name} delay={Math.min(j, 8) * 50} className="grid grid-cols-[minmax(0,1fr)_auto] items-center gap-x-4 gap-y-2 border-b border-zinc-900 py-3 md:h-11 md:grid-cols-[minmax(0,1fr)_64px_200px_64px] md:gap-4 md:py-0">
             <span className="truncate text-[13px] text-zinc-300">{e.name}</span>
             <span className="font-mono text-xs text-zinc-500 md:order-none">{formatDate(e.date, loc, { day: '2-digit', month: '2-digit' })}</span>
             <div className="flex flex-wrap gap-[5px]" role="img" aria-label={`${c.of(e.hit, e.n)}`}>
               {Array.from({ length: e.n }, (_, k) => dot(k < e.hit, k))}
             </div>
             <span className="text-right font-mono text-[13px] text-zinc-50">{c.of(e.hit, e.n)}</span>
-          </li>
+          </Reveal>
         ))}
       </ul>
       <div className="mt-3.5 flex gap-[18px] text-xs text-zinc-400">
-        <span className="inline-flex items-center gap-[7px]">{dot(true, 0)}{c.hit}</span>
-        <span className="inline-flex items-center gap-[7px]">{dot(false, 1)}{c.miss}</span>
+        <span className="inline-flex items-center gap-[7px]">{dot(true, 0, false)}{c.hit}</span>
+        <span className="inline-flex items-center gap-[7px]">{dot(false, 1, false)}{c.miss}</span>
       </div>
     </>
   )
 }
 
-function Stat({ value, label, sub }: { value: string; label: string; sub: string }) {
+function Stat({ value, label, sub, delay = 0 }: { value: number; label: string; sub: string; delay?: number }) {
   return (
     <div className="flex flex-col gap-1.5">
-      <span className="text-4xl font-bold leading-none tracking-[-0.02em] text-zinc-50">{value}</span>
+      <CountUp value={value * 100} delay={delay} format={v => `${Math.round(v)}%`}
+        className="text-4xl font-bold leading-none tracking-[-0.02em] text-zinc-50" />
       <span className="text-[13px] text-zinc-300">{label}</span>
       <span className="text-xs leading-normal text-zinc-500">{sub}</span>
     </div>
@@ -348,13 +353,13 @@ export default function Accuracy() {
   const base = tr.ufc_finish_rate_24m.rate
   return (
     <div className="mx-auto max-w-[1024px] px-4 pb-[90px] pt-10 md:px-6 md:pt-[52px]">
-      <div className="eyebrow mb-3.5 text-brand">{c.eyebrow}</div>
-      <h1 className="m-0 text-[32px] font-bold leading-[1.08] tracking-[-0.025em] md:text-[44px]">{c.h1}</h1>
-      <p className="mb-0 mt-4 max-w-[640px] text-[15px] leading-relaxed text-zinc-400">{c.lead}</p>
+      <div className="eyebrow hero-in mb-3.5 text-brand">{c.eyebrow}</div>
+      <h1 className="m-0 text-[32px] font-bold leading-[1.08] tracking-[-0.025em] md:text-[44px]"><SplitWords text={c.h1} delay={80} /></h1>
+      <p className="hero-in mb-0 mt-4 max-w-[640px] text-[15px] leading-relaxed text-zinc-400" style={{ '--d': '300ms' } as React.CSSProperties}>{c.lead}</p>
 
-      <section className="mt-12"><H2 sub={c.s1sub}>{c.s1}</H2><Panel><CompareBars tr={tr} c={c} /></Panel></section>
+      <Reveal as="section" className="mt-12"><H2 sub={c.s1sub}>{c.s1}</H2><Panel><CompareBars tr={tr} c={c} /></Panel></Reveal>
 
-      <section className="mt-[52px]">
+      <Reveal as="section" className="mt-[52px]">
         <H2 sub={c.s2sub}>{c.s2}</H2>
         <Panel>
           <div className={cx('grid items-center gap-9', wide ? 'grid-cols-[560px_minmax(0,1fr)]' : 'grid-cols-1')}>
@@ -365,32 +370,32 @@ export default function Accuracy() {
             </div>
           </div>
         </Panel>
-      </section>
+      </Reveal>
 
-      <section className="mt-[52px]">
+      <Reveal as="section" className="mt-[52px]">
         <H2 sub={c.s3sub}>{c.s3}</H2>
         <Panel className="!pt-2 md:!pt-3"><EventDots tr={tr} c={c} lang={lang} /></Panel>
-      </section>
+      </Reveal>
 
       {fin.n > 0 && fin.model_rate !== null && fin.always_finish_rate !== null && (
-        <section className="mt-[52px]">
+        <Reveal as="section" className="mt-[52px]">
           <H2 sub={c.s4sub}>{c.s4}</H2>
           <Panel>
             <div className="grid grid-cols-1 gap-7 sm:grid-cols-3 sm:gap-8">
-              <Stat value={pct(fin.model_rate)} label={c.fin[0][0]} sub={c.fin[0][1]} />
-              <Stat value={pct(fin.always_finish_rate)} label={c.fin[1][0]} sub={c.fin[1][1]} />
-              {base !== null && <Stat value={pct(base)} label={c.fin[2][0]} sub={c.fin[2][1]} />}
+              <Stat value={fin.model_rate} label={c.fin[0][0]} sub={c.fin[0][1]} />
+              <Stat value={fin.always_finish_rate} label={c.fin[1][0]} sub={c.fin[1][1]} delay={150} />
+              {base !== null && <Stat value={base} label={c.fin[2][0]} sub={c.fin[2][1]} delay={300} />}
             </div>
           </Panel>
-        </section>
+        </Reveal>
       )}
 
-      <section className="mt-[52px]">
+      <Reveal as="section" className="mt-[52px]">
         <H2>{c.s5}</H2>
         <div className="grid grid-cols-1 gap-x-10 gap-y-3.5 text-[13px] leading-relaxed text-zinc-400 md:grid-cols-2">
           {c.method.map(([b, rest]) => <p key={b} className="m-0"><b className="font-semibold text-zinc-300">{b}</b> {rest}</p>)}
         </div>
-      </section>
+      </Reveal>
     </div>
   )
 }

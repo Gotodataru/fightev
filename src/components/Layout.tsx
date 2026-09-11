@@ -58,8 +58,8 @@ export function Layout({ children }: { children: ReactNode }) {
           <nav className="hidden items-center gap-7 text-[13px] md:flex" aria-label="Main">
             {links.map(l => (
               <NavLink key={l.to} to={l.to} end={l.end}
-                className={({ isActive }) => cx('border-b-2 pb-[17px] pt-[19px] transition-colors',
-                  isActive ? 'border-brand font-medium text-zinc-50 hover:text-zinc-50' : 'border-transparent text-zinc-500 hover:text-zinc-300')}>
+                className={({ isActive }) => cx('nav-link pb-[18px] pt-[19px] transition-colors',
+                  isActive ? 'active font-medium text-zinc-50 hover:text-zinc-50' : 'text-zinc-500 hover:text-zinc-300')}>
                 {l.label}
               </NavLink>
             ))}
@@ -76,7 +76,7 @@ export function Layout({ children }: { children: ReactNode }) {
           </button>
         </div>
         {menu && (
-          <div id="mobile-menu" className="fadein absolute inset-x-0 top-full border-b border-white/5 bg-bg px-4 pb-4 md:hidden">
+          <div id="mobile-menu" className="menu-in absolute inset-x-0 top-full border-b border-white/5 bg-bg px-4 pb-4 md:hidden">
             <nav className="flex flex-col" aria-label="Main">
               {links.map(l => (
                 <NavLink key={l.to} to={l.to} end={l.end}
@@ -90,7 +90,7 @@ export function Layout({ children }: { children: ReactNode }) {
           </div>
         )}
       </header>
-      <main id="main">{children}</main>
+      <main id="main" key={pathname} className="page-in">{children}</main>
     </div>
   )
 }

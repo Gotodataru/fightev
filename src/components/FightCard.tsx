@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import type { Fight, Fighter, Track } from '../data'
 import { useI18n } from '../i18n'
 import { Z600, cx, lowData, record, split, verdict } from '../lib/fight'
+import { Collapse } from '../lib/motion'
 import { PredictionBlock, ResultBadge, SidePanel, TapeDesktop, TapeMobile, resultText } from './FightDetails'
 import { Avatar, Chevron, Pct, Portrait, ProbBar, SectionLabel, Tag } from './ui'
 
@@ -14,6 +15,7 @@ interface Props {
   track: Track
   desktopRow: boolean      // >= 768px: one-line row
   desktopPanel: boolean    // >= 1024px: three-column panel instead of tabs
+  instantClose: boolean    // another fight took over: collapse without animating (keeps scroll stable)
   onToggle: () => void
   onGo: (i: number) => void
 }
@@ -66,7 +68,7 @@ function ProbCenter({ fight }: { fight: Fight }) {
         <span className="eyebrow text-zinc-600">{t.win}</span>
         <Pct v={b} fav={b > a} />
       </div>
-      <ProbBar p1={fight.p_win_f1} />
+      <ProbBar p1={fight.p_win_f1} animate delay={0.15} />
       <div className="flex flex-wrap items-center justify-center gap-x-2 gap-y-[5px] whitespace-nowrap text-[11px] text-zinc-500">
         <span>{t.verdict(verdict(fight.p_win_f1))}</span>
         {lowData(fight) && <Tag>{t.lowData}</Tag>}
@@ -85,7 +87,7 @@ function ResultCenter({ fight }: { fight: Fight }) {
         <span className="eyebrow text-zinc-600">{t.predictionWas}</span>
         <Pct v={b} fav={b > a} />
       </div>
-      <ProbBar p1={fight.p_win_f1} />
+      <ProbBar p1={fight.p_win_f1} animate delay={0.15} />
       <div className="mt-0.5 flex flex-col items-center gap-1.5">
         <ResultBadge fight={fight} />
         {resultText(fight, t) && <span className="text-[11px] text-zinc-400">{resultText(fight, t)}</span>}
@@ -186,12 +188,14 @@ function Tabs({ fight, track, desktopRow }: { fight: Fight; track: Track; deskto
   }
   return (
     <>
-      <div role="tablist" className="flex gap-1 rounded-[10px] bg-zinc-900 p-1" onKeyDown={onKey}>
+      <div role="tablist" className="relative flex gap-1 rounded-[10px] bg-zinc-900 p-1" onKeyDown={onKey}>
+        <span aria-hidden className="tab-pill absolute bottom-1 left-1 top-1 rounded-lg bg-zinc-800"
+          style={{ width: 'calc((100% - 16px) / 3)', transform: `translateX(calc(${keys.indexOf(tab)} * (100% + 4px)))` }} />
         {keys.map(k => (
           <button key={k} id={`${id}-tab-${k}`} type="button" role="tab" aria-selected={tab === k}
             aria-controls={`${id}-panel`} tabIndex={tab === k ? 0 : -1} onClick={() => setTab(k)}
-            className={cx('h-10 flex-1 rounded-lg text-[13px] font-medium transition-colors',
-              tab === k ? 'bg-zinc-800 text-zinc-50' : 'text-zinc-400 hover:text-zinc-200')}>
+            className={cx('relative h-10 flex-1 rounded-lg text-[13px] font-medium transition-colors duration-300',
+              tab === k ? 'text-zinc-50' : 'text-zinc-400 hover:text-zinc-200')}>
             {t.tabs[k]}
           </button>
         ))}
@@ -223,7 +227,7 @@ function CompactPanel({ fight, track, desktopRow }: { fight: Fight; track: Track
 // ── card ───────────────────────────────────────────────────────────────────────
 
 export const FightCard = forwardRef<HTMLDivElement, Props>(function FightCard(
-  { fight, index, total, open, track, desktopRow, desktopPanel, onToggle, onGo }, ref,
+  { fight, index, total, open, track, desktopRow, desktopPanel, instantClose, onToggle, onGo }, ref,
 ) {
   const { t } = useI18n()
   const panelId = useId()
@@ -239,8 +243,9 @@ export const FightCard = forwardRef<HTMLDivElement, Props>(function FightCard(
     : fight.result ? <ResultCenter fight={fight} /> : <ProbCenter fight={fight} />
 
   return (
-    <div ref={ref} id={`fight-${index + 1}`} className="scroll-mt-3 overflow-hidden rounded-xl bg-card transition-[border-color] duration-200"
-      style={{ border: `1px solid ${open ? 'rgba(0,239,92,0.28)' : 'rgba(39,39,42,0.6)'}` }}>
+    <div ref={ref} id={`fight-${index + 1}`} className={cx('fight-card scroll-mt-3 overflow-hidden rounded-xl bg-card', !open && 'closed')}
+      style={{ border: `1px solid ${open ? 'rgba(0,239,92,0.28)' : 'rgba(39,39,42,0.6)'}`,
+               boxShadow: open ? '0 0 0 1px rgba(0,239,92,0.06), 0 24px 60px -30px rgba(0,239,92,0.25)' : undefined }}>
       {label && <div className="eyebrow px-3.5 pt-3 text-zinc-500 md:px-5">{label}</div>}
 
       {desktopRow ? (
@@ -272,7 +277,7 @@ export const FightCard = forwardRef<HTMLDivElement, Props>(function FightCard(
             <div className="flex flex-col gap-3">
               <div className="flex items-center gap-2.5">
                 <Pct v={split(fight.p_win_f1)[0]} fav={split(fight.p_win_f1)[0] > 50} />
-                <div className="flex-1"><ProbBar p1={fight.p_win_f1} /></div>
+                <div className="flex-1"><ProbBar p1={fight.p_win_f1} animate delay={0.15} /></div>
                 <Pct v={split(fight.p_win_f1)[1]} fav={split(fight.p_win_f1)[1] > 50} />
               </div>
               <div className="flex items-center justify-between gap-2 text-[11px] text-zinc-500">
@@ -287,15 +292,13 @@ export const FightCard = forwardRef<HTMLDivElement, Props>(function FightCard(
         </div>
       )}
 
-      <div id={panelId}>
-        {open && (
-          <div className="xp border-t border-line">
-            {desktopPanel
-              ? <DesktopPanel fight={fight} track={track} />
-              : <CompactPanel fight={fight} track={track} desktopRow={desktopRow} />}
-          </div>
-        )}
-      </div>
+      <Collapse id={panelId} open={open} instantClose={instantClose}>
+        <div className="xp border-t border-line">
+          {desktopPanel
+            ? <DesktopPanel fight={fight} track={track} />
+            : <CompactPanel fight={fight} track={track} desktopRow={desktopRow} />}
+        </div>
+      </Collapse>
     </div>
   )
 })

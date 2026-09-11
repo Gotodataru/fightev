@@ -2,6 +2,7 @@ import { useState, type ReactNode } from 'react'
 import { photoUrl, type Fighter } from '../data'
 import { useI18n } from '../i18n'
 import { BRAND, CARD, Z400, Z500, Z700, cx, initials, split } from '../lib/fight'
+import { CountUp } from '../lib/motion'
 
 export function SectionLabel({ children, extra, className, end }: { children: ReactNode; extra?: ReactNode; className?: string; end?: boolean }) {
   return (
@@ -20,11 +21,12 @@ export function Tag({ children }: { children: ReactNode }) {
   )
 }
 
-export function Pct({ v, fav, size = 14, className }: { v: number; fav: boolean; size?: number; className?: string }) {
+/** Percentage that counts up from 0 when it scrolls into view. */
+export function Pct({ v, fav, size = 14, className, delay = 0 }: { v: number; fav: boolean; size?: number; className?: string; delay?: number }) {
   return (
-    <span className={cx('tnum font-mono font-semibold', className)} style={{ fontSize: size, color: fav ? BRAND : Z500 }}>
-      {v}%
-    </span>
+    <CountUp value={v} delay={delay} format={x => `${Math.round(x)}%`}
+      className={cx('tnum font-mono font-semibold transition-colors duration-500', className)}
+      style={{ fontSize: size, color: fav ? BRAND : Z500 }} />
   )
 }
 
@@ -57,14 +59,14 @@ export function Avatar({ f, size = 52 }: { f: Fighter; size?: number }) {
   const [broken, setBroken] = useState(false)
   if (f.photo && !broken) {
     return (
-      <div className="shrink-0 overflow-hidden rounded-[10px] bg-zinc-900" style={{ width: size, height: size }}>
+      <div className="avatar shrink-0 overflow-hidden rounded-[10px] bg-zinc-900" style={{ width: size, height: size }}>
         <img src={photoUrl(f.slug, true)} alt="" width={size} height={size} loading="lazy"
           className="block h-full w-full" onError={() => setBroken(true)} />
       </div>
     )
   }
   return (
-    <div aria-hidden className="flex shrink-0 items-center justify-center rounded-[10px] border border-dashed border-zinc-700 bg-zinc-900 font-semibold tracking-[0.02em] text-zinc-500"
+    <div aria-hidden className="avatar flex shrink-0 items-center justify-center rounded-[10px] border border-dashed border-zinc-700 bg-zinc-900 font-semibold tracking-[0.02em] text-zinc-500"
       style={{ width: size, height: size, fontSize: Math.round(size * 0.28) }}>
       {initials(f.name)}
     </div>
