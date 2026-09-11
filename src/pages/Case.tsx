@@ -129,8 +129,8 @@ export default function Case() {
           </Decision>
           <Decision n={6} title={ru ? 'Фото выровнены по лицу' : 'Photos aligned to the face'}>
             {ru
-              ? 'Снимки кадрированы по-разному. Скрипт находит лицо и приводит все портреты к одному масштабу и линии глаз.'
-              : 'Source shots are framed differently. A script finds the face and brings every portrait to the same scale and eye line.'}
+              ? 'Снимки кадрированы по-разному. Скрипт находит глаза и макушку: масштаб задаёт расстояние между глазами, а макушка у всех на одной линии — головы одного размера и не обрезаны.'
+              : 'Source shots are framed differently. A script finds the eyes and the crown: eye distance sets the scale and every crown sits on one line, so heads come out the same size and never cropped.'}
           </Decision>
         </div>
       </section>
