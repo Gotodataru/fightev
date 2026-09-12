@@ -74,7 +74,7 @@ function copy(lang: Lang, tr: Track) {
       finNote: `Обе полосы посчитаны на одной и той же выборке — ${fin.n} ${ruFights(fin.n)} ${range}. Отметка «среднее по UFC» приводится для масштаба.`,
       s6: 'Ответственность и статус проекта',
       liability: [
-        ['Проект исследовательский.', `Модель обучена на открытой статистике UFCStats, а её прогнозы проверяются на боях ${range}: ${tr.n_fights} ${ruFights(tr.n_fights)} на ${events(tr.n_events)}. Выборка маленькая, выводы предварительные.`],
+        ['Проект исследовательский.', `Модель обучена на открытой статистике боёв, а её прогнозы проверяются на боях ${range}: ${tr.n_fights} ${ruFights(tr.n_fights)} на ${events(tr.n_events)}. Выборка маленькая, выводы предварительные.`],
         ['Сервис аналитический и информационный.', 'Мы не принимаем ставок, не продаём прогнозы и не советуем, что делать с этими цифрами.'],
         ['Ответственность за решения — на том, кто их принимает.', 'Проект не отвечает за финансовые потери, возникшие из-за использования этих данных.'],
         ['Прошлая точность не гарантирует будущую.', 'Обе модели ошибаются, и все их ошибки показаны на этой странице.'],
@@ -82,7 +82,7 @@ function copy(lang: Lang, tr: Track) {
       s5: 'Как считаем',
       method: [
         ['Только то, что записано до боя.', 'Прогнозы берутся из журнала запусков, пересчёт задним числом не допускается.'],
-        ['Три модели, одно среднее.', 'CatBoost, LightGBM и XGBoost обучены на статистике UFCStats; на карточке — их среднее.'],
+        ['Три модели, одно среднее.', 'CatBoost, LightGBM и XGBoost обучены на официальной статистике боёв; на карточке — их среднее.'],
         ['Фаворит по линии — только ориентир.', 'Коэффициенты используются здесь для сравнения точности и больше нигде на сайте.'],
         ['Страница обновляется сама', 'после каждого турнира, когда в базе появляются результаты.'],
       ],
@@ -130,7 +130,7 @@ function copy(lang: Lang, tr: Track) {
     finNote: `Both bars are measured on the same sample — ${fin.n} fights, ${range}. The UFC average is there for scale.`,
     s6: 'Liability and project status',
     liability: [
-      ['This is a research project.', `The model is trained on public UFCStats data and its forecasts are checked on fights ${range}: ${tr.n_fights} fights across ${events(tr.n_events)}. The sample is small and the conclusions are provisional.`],
+      ['This is a research project.', `The model is trained on public fight statistics and its forecasts are checked on fights ${range}: ${tr.n_fights} fights across ${events(tr.n_events)}. The sample is small and the conclusions are provisional.`],
       ['The service is analytical and informational.', 'We take no bets, sell no picks and give no advice on what to do with these numbers.'],
       ['Decisions are the reader’s own.', 'The project accepts no responsibility for financial losses arising from the use of this data.'],
       ['Past accuracy does not guarantee future accuracy.', 'Both models get things wrong, and every miss is shown on this page.'],
@@ -138,7 +138,7 @@ function copy(lang: Lang, tr: Track) {
     s5: 'Method',
     method: [
       ['Only what was recorded before the fight.', 'Forecasts come from the run log; nothing is recalculated after the fact.'],
-      ['Three models, one average.', 'CatBoost, LightGBM and XGBoost are trained on UFCStats data; the card shows their average.'],
+      ['Three models, one average.', 'CatBoost, LightGBM and XGBoost are trained on official fight statistics; the card shows their average.'],
       ['The betting favourite is only a benchmark.', 'Odds are used here to compare accuracy and nowhere else on the site.'],
       ['The page updates itself', 'after every event, once the results reach the database.'],
     ],

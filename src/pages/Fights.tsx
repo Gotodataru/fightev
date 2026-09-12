@@ -4,7 +4,7 @@ import { FightCard } from '../components/FightCard'
 import { Portrait } from '../components/ui'
 import { useData, useMedia, type Card, type Track } from '../data'
 import { useI18n } from '../i18n'
-import { BRAND, capitalize, daysUntil, formatDate, split, verdict, favourite } from '../lib/fight'
+import { BRAND, capitalize, daysUntil, formatDate } from '../lib/fight'
 import { Reveal, SplitWords, reducedMotion, useParallax } from '../lib/motion'
 
 // ── hero ───────────────────────────────────────────────────────────────────────
@@ -23,10 +23,6 @@ function Hero({ card, onBreakdown, wide }: { card: Card; onBreakdown: (i: number
     : finished ? t.eventDone : t.eventPast
   const dateLine = `${capitalize(formatDate(ev.date, t.locale, { weekday: 'long', day: 'numeric', month: 'long' }))} · ${t.fights(card.fights.length)}`
   const p1 = main.p_win_f1
-  const v = verdict(p1)
-  const mainLabel = main.main_event
-    ? `${main.title_fight ? t.titleFight : t.mainEvent} · ${t.rounds(main.num_rounds)}`
-    : t.rounds(main.num_rounds)
   const cta = main.main_event ? t.ctaBreakdown : t.ctaFight
   const parallax = useParallax(0.1, wide)
   const d = (ms: number) => ({ '--d': `${ms}ms` }) as CSSProperties
@@ -78,17 +74,7 @@ function Hero({ card, onBreakdown, wide }: { card: Card; onBreakdown: (i: number
             <SplitWords text={ev.name} delay={100} />
           </h1>
           <div className="hero-in mt-3.5 text-sm text-zinc-400" style={d(180 + words * 55)}>{dateLine}</div>
-          <div className="relative mt-7 flex flex-col gap-1.5 pt-5">
-            <span className="line-in absolute inset-x-0 top-0 h-px bg-zinc-800" style={d(300 + words * 55)} aria-hidden />
-            <span className="eyebrow hero-in text-zinc-500" style={d(380 + words * 55)}>{mainLabel}</span>
-            <span className="hero-in text-xl font-semibold text-zinc-50" style={d(440 + words * 55)}>
-              {main.fighter_1.name} <span className="font-normal text-zinc-600">vs</span> {main.fighter_2.name}
-            </span>
-            <span className="hero-in text-[13px] text-zinc-400" style={d(500 + words * 55)}>
-              {t.modelSays(v, favourite(main).name, Math.max(...split(p1)))}
-            </span>
-          </div>
-          <div className="hero-in mt-[22px] flex flex-wrap gap-2.5" style={d(580 + words * 55)}>
+          <div className="hero-in mt-7 flex flex-wrap gap-2.5" style={d(300 + words * 55)}>
             <button type="button" onClick={() => onBreakdown(heroIndex)}
               className="btn btn-brand rounded-lg bg-brand px-[18px] py-[11px] text-[13px] font-bold text-bg hover:bg-brand-hover">
               {cta}

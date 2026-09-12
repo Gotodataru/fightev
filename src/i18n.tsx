@@ -77,7 +77,7 @@ const ru = {
   },
   stance: { Orthodox: 'Правша', Southpaw: 'Левша', Switch: 'Свитч', 'Open Stance': 'Открытая' } as Record<string, string>,
   cm: 'см',
-  noStats: 'Детальной статистики UFCStats пока нет ни у одного из бойцов — обычно это новички с одним-двумя боями в UFC. Прогноз опирается на общий профиль и менее надёжен.',
+  noStats: 'Детальной статистики пока нет ни у одного из бойцов — обычно это новички с одним-двумя боями в UFC. Прогноз опирается на общий профиль и менее надёжен.',
 
   // side panel
   lastFight: (m: number) => (m < 1 ? 'Последний бой меньше месяца назад' : `Последний бой ${Math.round(m)} мес назад`),
@@ -91,7 +91,7 @@ const ru = {
   vs: 'против',
   noPhoto: 'Фото пока нет',
   tabs: { p: 'Прогноз', c: 'Сравнение', s: 'Стиль' },
-  disclaimer: 'Прогноз — ансамбль из трёх ML-моделей по статистике UFCStats, записанный до боя. Модель ошибается, и мы показываем, насколько часто.',
+  disclaimer: 'Прогноз — ансамбль из трёх ML-моделей по официальной статистике боёв, записанный до боя. Модель ошибается, и мы показываем, насколько часто.',
   disclaimerShort: 'Прогноз — ансамбль из трёх ML-моделей, записанный до боя. Модель ошибается.',
   howPerformed: 'Как модель отработала →',
 
@@ -107,9 +107,9 @@ const ru = {
 
   // footer
   footer: {
-    what: 'fightev — исследовательский аналитический проект: прогнозы ML-модели по открытой статистике UFCStats публикуются как есть, вместе с историей ошибок.',
+    what: 'fightev — исследовательский аналитический проект: прогнозы ML-модели по открытой статистике боёв публикуются как есть, вместе с историей ошибок.',
     liability: 'Это информационный ресурс. Он не даёт советов по ставкам и не несёт ответственности за решения, принятые на основе этих данных, и за возможные финансовые потери. Прошлая точность не гарантирует будущую.',
-    data: 'Данные о боях и бойцах — UFCStats. Проект не связан с UFC и не представляет его.',
+    data: 'Проект не связан с UFC и не представляет его.',
     accuracy: 'Точность модели и выборка →',
   },
 }
@@ -183,7 +183,7 @@ const en: Dict = {
   },
   stance: { Orthodox: 'Orthodox', Southpaw: 'Southpaw', Switch: 'Switch', 'Open Stance': 'Open' },
   cm: 'cm',
-  noStats: 'Neither fighter has detailed UFCStats numbers yet — usually newcomers with one or two UFC bouts. The forecast leans on the general profile and is less reliable.',
+  noStats: 'Neither fighter has detailed numbers yet — usually newcomers with one or two UFC bouts. The forecast leans on the general profile and is less reliable.',
 
   lastFight: (m: number) => (m < 1 ? 'Last fought less than a month ago' : `Last fought ${Math.round(m)} mo ago`),
   howWins: 'How they win in the UFC',
@@ -196,7 +196,7 @@ const en: Dict = {
   vs: 'vs',
   noPhoto: 'No photo yet',
   tabs: { p: 'Forecast', c: 'Tape', s: 'Style' },
-  disclaimer: 'The forecast is an ensemble of three ML models trained on UFCStats data and recorded before the fight. The model makes mistakes — and we show how often.',
+  disclaimer: 'The forecast is an ensemble of three ML models trained on official fight statistics and recorded before the fight. The model makes mistakes — and we show how often.',
   disclaimerShort: 'An ensemble of three ML models, recorded before the fight. The model makes mistakes.',
   howPerformed: 'How the model performed →',
 
@@ -210,9 +210,9 @@ const en: Dict = {
   updated: (d: string) => `Data updated ${d}`,
 
   footer: {
-    what: 'fightev is a research project: forecasts from an ML model built on public UFCStats data, published as they are, together with the record of its misses.',
+    what: 'fightev is a research project: forecasts from an ML model built on public fight statistics, published as they are, together with the record of its misses.',
     liability: 'This is an information resource. It gives no betting advice and takes no responsibility for decisions made on this data or for any financial losses. Past accuracy does not guarantee future accuracy.',
-    data: 'Fight and fighter data comes from UFCStats. The project is not affiliated with UFC and does not represent it.',
+    data: 'The project is not affiliated with UFC and does not represent it.',
     accuracy: 'Model accuracy and sample →',
   },
 }

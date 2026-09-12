@@ -85,7 +85,7 @@ export default function Case() {
       </div>
 
       <div className="mt-10 grid grid-cols-2 gap-x-4 gap-y-7 md:grid-cols-4">
-        <Stat value={nFights || null} label={ru ? 'боёв в карде' : 'fights on the card'} sub={ru ? 'с данными из базы UFCStats' : 'with data from the UFCStats base'} />
+        <Stat value={nFights || null} label={ru ? 'боёв в карде' : 'fights on the card'} sub={ru ? 'с данными из базы боёв' : 'with data from the fight database'} />
         <Stat value={n || null} delay={80} label={ru ? 'прогнозов сверено' : 'forecasts checked'} sub={ru ? 'с результатами, до боя' : 'against results, recorded pre-fight'} />
         <Stat value={withPhoto || null} delay={160} label={ru ? 'фото выровнены' : 'photos aligned'} sub={ru ? 'по лицу автоматически' : 'to the face, automatically'} />
         <Stat value={7} delay={240} label={ru ? 'состояний' : 'states'} sub={ru ? 'от «нет фото» до промаха модели' : 'from “no photo” to a model miss'} />
