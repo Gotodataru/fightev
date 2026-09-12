@@ -104,10 +104,10 @@ export default function Case() {
           src={`${import.meta.env.BASE_URL}case/after.webp`}
           delay={90}
           tag={ru ? 'Стало' : 'After'}
-          alt={ru ? 'Нынешний сайт: главный бой турнира с фото соперников, вероятность 56 % и раскрытая карточка боя'
-                  : 'The current site: the main event with both fighters’ photos, a 56% probability and an opened fight card'}
-          caption={ru ? 'Кард ближайшего турнира: главный бой, вероятности словами и цифрами, рядом — сколько прогнозов модель уже угадала.'
-                      : 'The next event’s card: the main fight, probabilities in words and numbers, and how many forecasts the model has got right so far.'} />
+          alt={ru ? 'Нынешний сайт: афиша турнира, под ней четыре показателя модели и начало карда с раскрытым главным боем'
+                  : 'The current site: the event poster, four model figures under it and the card below, with the headliner already open'}
+          caption={ru ? 'Афиша турнира, счёт модели сразу под ней и кард ниже: каждый бой раскрывается в разбор с прогнозом и статистикой.'
+                      : 'The event poster, the model’s record right under it and the card below: every fight opens into a breakdown with its forecast and stats.'} />
       </div>
 
       <div className="mt-11">

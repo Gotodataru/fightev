@@ -65,24 +65,24 @@ function WinRow({ p1, f1, f2 }: { p1: number; f1: Fighter; f2: Fighter }) {
 
 /** A self-contained block of the panel. The stack animation makes each one slide
  *  out from under the block above it, so a long panel reads as a deck, not a wall. */
-function Module({ title, extra, children, i = 0 }: { title: string; extra?: ReactNode; children: ReactNode; i?: number }) {
+export function Module({ title, extra, children, i = 0, lead = false }: { title: string; extra?: ReactNode; children: ReactNode; i?: number; lead?: boolean }) {
   return (
-    <section className={cx('stack-item relative rounded-xl border border-line bg-mod px-4 py-3.5', i === 0 && 'lead')}
-      style={{ zIndex: 20 - i, animationDelay: `${i * 90}ms` } as React.CSSProperties}>
+    <section className={cx('stack-item relative rounded-xl border border-line bg-mod px-4 py-3.5', lead && 'lead')}
+      style={{ zIndex: 30 - i, animationDelay: `${i * 90}ms` } as React.CSSProperties}>
       <SectionLabel extra={extra}>{title}</SectionLabel>
       {children}
     </section>
   )
 }
 
-function FinishBlock({ fight, track }: { fight: Fight; track: Track }) {
+function FinishBlock({ fight, track, first = 1 }: { fight: Fight; track: Track; first?: number }) {
   const { t } = useI18n()
   const base = track.ufc_finish_rate_24m.rate !== null ? Math.round(track.ufc_finish_rate_24m.rate * 100) : null
   const fin = fight.p_finish !== null ? Math.round(fight.p_finish * 100) : null
   return (
     <>
       {fin !== null && (
-        <Module title={t.finishTitle} i={1}>
+        <Module title={t.finishTitle} i={first}>
           <div className="flex flex-col gap-1.5">
             {([[t.finishEarly, fin, fin >= 50], [t.finishDecision, 100 - fin, fin < 50]] as const).map(([label, v, lead], j) => (
               <div key={label} className="grid grid-cols-[minmax(0,1fr)_auto] items-center gap-3">
@@ -100,7 +100,7 @@ function FinishBlock({ fight, track }: { fight: Fight; track: Track }) {
           <p className="m-0 mt-2 text-xs leading-normal text-zinc-500">{t.finishModelNote}</p>
         </Module>
       )}
-      <Module title={fin !== null ? t.fightHistory : t.finishTitle} i={2}>
+      <Module title={fin !== null ? t.fightHistory : t.finishTitle} i={first + 1}>
       {[fight.fighter_1, fight.fighter_2].map((f, j) => {
         const n = f.decided_fights, k = f.finish_fights
         const pct = n ? Math.round((k / n) * 100) : 0
@@ -126,14 +126,14 @@ function FinishBlock({ fight, track }: { fight: Fight; track: Track }) {
   )
 }
 
-export function PredictionBlock({ fight, track }: { fight: Fight; track: Track }) {
+export function PredictionBlock({ fight, track, first = 0 }: { fight: Fight; track: Track; first?: number }) {
   const { t } = useI18n()
   const v = verdict(fight.p_win_f1)
   const fav = favourite(fight)
   const done = fight.result
   return (
     <div className="stack flex flex-col gap-2.5">
-      <Module i={0} title={done ? t.predictionWas : t.winForecast}
+      <Module i={first} lead title={done ? t.predictionWas : t.winForecast}
         extra={lowData(fight) ? <Tag>{t.lowDataLong}</Tag> : undefined}>
       <div className="mb-3.5 flex flex-wrap items-center gap-x-3 gap-y-2">
         <span className="text-[17px] font-semibold tracking-[-0.01em] text-zinc-50">
@@ -151,7 +151,7 @@ export function PredictionBlock({ fight, track }: { fight: Fight; track: Track }
         )}
       </div>
       </Module>
-      <FinishBlock fight={fight} track={track} />
+      <FinishBlock fight={fight} track={track} first={first + 1} />
     </div>
   )
 }

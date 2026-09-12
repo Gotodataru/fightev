@@ -4,8 +4,8 @@ import type { Fight, Fighter, Track } from '../data'
 import { useI18n } from '../i18n'
 import { Z600, cx, lowData, record, split, verdict } from '../lib/fight'
 import { Collapse } from '../lib/motion'
-import { PredictionBlock, ResultBadge, SidePanel, TapeDesktop, TapeMobile, resultText } from './FightDetails'
-import { Avatar, Chevron, Pct, Portrait, ProbBar, SectionLabel, Tag } from './ui'
+import { Module, PredictionBlock, ResultBadge, SidePanel, TapeDesktop, TapeMobile, resultText } from './FightDetails'
+import { Avatar, Chevron, Pct, Portrait, ProbBar, Tag } from './ui'
 
 interface Props {
   fight: Fight
@@ -112,7 +112,9 @@ function DesktopSide({ f, open, right }: { f: Fighter; open: boolean; right?: bo
   )
 }
 
-function DesktopPanel({ fight, track }: { fight: Fight; track: Track }) {
+function DesktopPanel({ fight, track, index, total, onGo }: {
+  fight: Fight; track: Track; index: number; total: number; onGo: (i: number) => void
+}) {
   const { t } = useI18n()
   const p1 = fight.p_win_f1
   return (
@@ -122,22 +124,21 @@ function DesktopPanel({ fight, track }: { fight: Fight; track: Track }) {
           <Portrait f={fight.fighter_1} fav={p1 > 0.5} />
           <SidePanel f={fight.fighter_1} />
         </div>
-        <div className="flex flex-col gap-2.5 pt-1">
-          <PredictionBlock fight={fight} track={track} />
-          <section className="stack-item relative rounded-xl border border-line bg-mod px-4 py-3.5"
-            style={{ zIndex: 17, animationDelay: '270ms' }}>
-            <SectionLabel>{t.tape}</SectionLabel>
-            <TapeDesktop fight={fight} />
-          </section>
+        <div className="stack flex flex-col gap-2.5 pt-1">
+          <Module i={0} title={t.tape}><TapeDesktop fight={fight} /></Module>
+          <PredictionBlock fight={fight} track={track} first={1} />
         </div>
         <div className="flex flex-col items-end gap-[18px]">
           <Portrait f={fight.fighter_2} fav={p1 < 0.5} />
           <SidePanel f={fight.fighter_2} align="end" />
         </div>
       </div>
-      <div className="flex items-center justify-between gap-6 border-t border-line px-5 py-3.5 text-[11px] leading-normal text-zinc-600">
-        <span>{t.disclaimer}</span>
-        <Link to="/accuracy" className="whitespace-nowrap font-medium">{t.howPerformed}</Link>
+      {/* the pager sits at the end: you read the fight, then move to the next one */}
+      <div className="flex items-center justify-between gap-6 border-t border-line px-5 py-3">
+        <span className="max-w-[620px] text-[11px] leading-normal text-zinc-600">
+          {t.disclaimer} <Link to="/accuracy" className="whitespace-nowrap font-medium">{t.howPerformed}</Link>
+        </span>
+        <FightNav index={index} total={total} onGo={onGo} size={32} />
       </div>
     </>
   )
@@ -212,7 +213,9 @@ function Tabs({ fight, track, desktopRow }: { fight: Fight; track: Track; deskto
   )
 }
 
-function CompactPanel({ fight, track, desktopRow }: { fight: Fight; track: Track; desktopRow: boolean }) {
+function CompactPanel({ fight, track, desktopRow, index, total, onGo }: {
+  fight: Fight; track: Track; desktopRow: boolean; index: number; total: number; onGo: (i: number) => void
+}) {
   const { t } = useI18n()
   const p1 = fight.p_win_f1
   return (
@@ -222,6 +225,7 @@ function CompactPanel({ fight, track, desktopRow }: { fight: Fight; track: Track
         <div className="flex justify-end"><Portrait f={fight.fighter_2} fav={p1 < 0.5} w={180} /></div>
       </div>
       <Tabs fight={fight} track={track} desktopRow={desktopRow} />
+      <div className="flex justify-center border-t border-line pt-4"><FightNav index={index} total={total} onGo={onGo} size={40} /></div>
       <p className="text-xs leading-normal text-zinc-500">
         {t.disclaimerShort} <Link to="/accuracy">{t.howPerformed}</Link>
       </p>
@@ -243,8 +247,8 @@ export const FightCard = forwardRef<HTMLDivElement, Props>(function FightCard(
       ? `${fight.title_fight ? t.titleFight : ''}${fight.title_fight ? ' · ' : ''}${t.rounds(fight.num_rounds)}`
       : null
 
-  const center = open && !solo
-    ? <FightNav index={index} total={total} onGo={onGo} size={desktopRow ? 32 : 40} />
+  const center = open
+    ? null
     : fight.result ? <ResultCenter fight={fight} /> : <ProbCenter fight={fight} />
   const toggle = solo ? undefined : onToggle
 
@@ -301,8 +305,8 @@ export const FightCard = forwardRef<HTMLDivElement, Props>(function FightCard(
       <Collapse id={panelId} open={open} instantClose={instantClose}>
         <div className="xp border-t border-line">
           {desktopPanel
-            ? <DesktopPanel fight={fight} track={track} />
-            : <CompactPanel fight={fight} track={track} desktopRow={desktopRow} />}
+            ? <DesktopPanel fight={fight} track={track} index={index} total={total} onGo={onGo} />
+            : <CompactPanel fight={fight} track={track} desktopRow={desktopRow} index={index} total={total} onGo={onGo} />}
         </div>
       </Collapse>
     </div>
