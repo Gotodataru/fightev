@@ -14,7 +14,8 @@ export type Verdict = 'even' | 'slight' | 'edge' | 'clear'
 
 const ru = {
   locale: 'ru-RU',
-  nav: { fights: 'Бои', accuracy: 'Точность модели', case: 'О проекте', menu: 'Меню', close: 'Закрыть меню', skip: 'К содержимому' },
+  nav: { fights: 'Бои', accuracy: 'Точность модели', case: 'О проекте', menu: 'Меню', close: 'Закрыть меню', skip: 'К содержимому',
+    toLight: 'Светлая тема', toDark: 'Тёмная тема' },
   langName: 'Русский',
   fights: (n: number) => `${n} ${ruPlural(n, 'бой', 'боя', 'боёв')}`,
   of: (k: number, n: number) => `${k} из ${n}`,
@@ -125,7 +126,8 @@ export type Dict = typeof ru
 
 const en: Dict = {
   locale: 'en-US',
-  nav: { fights: 'Fights', accuracy: 'Model accuracy', case: 'About', menu: 'Menu', close: 'Close menu', skip: 'Skip to content' },
+  nav: { fights: 'Fights', accuracy: 'Model accuracy', case: 'About', menu: 'Menu', close: 'Close menu', skip: 'Skip to content',
+    toLight: 'Light theme', toDark: 'Dark theme' },
   langName: 'English',
   fights: (n: number) => `${n} ${n === 1 ? 'fight' : 'fights'}`,
   of: (k: number, n: number) => `${k} of ${n}`,

@@ -155,3 +155,28 @@ export function Collapse({ open, instantClose = false, children, id }: {
     </div>
   )
 }
+
+/** A thin bar across the top showing how far down the page the reader is. */
+export function ReadingProgress() {
+  const ref = useRef<HTMLDivElement>(null)
+  useEffect(() => {
+    if (reducedMotion()) return
+    let frame = 0
+    const update = () => {
+      frame = 0
+      const max = document.documentElement.scrollHeight - window.innerHeight
+      const p = max > 0 ? Math.min(1, Math.max(0, window.scrollY / max)) : 0
+      ref.current?.style.setProperty('--p', String(p))
+    }
+    const onScroll = () => { frame ||= requestAnimationFrame(update) }
+    update()
+    window.addEventListener('scroll', onScroll, { passive: true })
+    window.addEventListener('resize', onScroll)
+    return () => {
+      if (frame) cancelAnimationFrame(frame)
+      window.removeEventListener('scroll', onScroll)
+      window.removeEventListener('resize', onScroll)
+    }
+  }, [])
+  return <div ref={ref} className="read-bar" aria-hidden />
+}

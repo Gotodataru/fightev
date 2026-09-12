@@ -4,7 +4,7 @@ import { FightCard } from '../components/FightCard'
 import { Portrait } from '../components/ui'
 import { useData, useMedia, type Card, type Track } from '../data'
 import { useI18n } from '../i18n'
-import { BRAND, capitalize, daysUntil, formatDate } from '../lib/fight'
+import { BRAND, Z600, capitalize, daysUntil, formatDate } from '../lib/fight'
 import { Reveal, SplitWords, reducedMotion, useParallax } from '../lib/motion'
 
 // ── hero ───────────────────────────────────────────────────────────────────────
@@ -32,10 +32,10 @@ function Hero({ card, onBreakdown, wide }: { card: Card; onBreakdown: (i: number
   const portraits = (w: number, overlap: number) => (
     <div className="mask-x flex w-full items-end justify-center" style={{ transform: `translateY(${parallax}px)` }}>
       <div className="from-left min-w-0" style={{ width: w, marginRight: -overlap, ...d(150) }}>
-        <Portrait f={main.fighter_1} fav={p1 > 0.5} w={w} fade="#080808" eager animate={false} />
+        <Portrait f={main.fighter_1} fav={p1 > 0.5} w={w} fade="var(--c-bg)" eager animate={false} />
       </div>
       <div className="from-right min-w-0" style={{ width: w, ...d(250) }}>
-        <Portrait f={main.fighter_2} fav={p1 < 0.5} w={w} fade="#080808" eager animate={false} />
+        <Portrait f={main.fighter_2} fav={p1 < 0.5} w={w} fade="var(--c-bg)" eager animate={false} />
       </div>
     </div>
   )
@@ -44,7 +44,7 @@ function Hero({ card, onBreakdown, wide }: { card: Card; onBreakdown: (i: number
       {upcoming && <span className="live-dot" aria-hidden />}{eyebrow}
     </div>
   )
-  const glow = 'radial-gradient(closest-side, rgba(0,239,92,0.12), transparent)'
+  const glow = 'radial-gradient(closest-side, rgb(var(--brand) / var(--glow-a)), transparent)'
 
   if (!wide) {
     return (
@@ -57,7 +57,7 @@ function Hero({ card, onBreakdown, wide }: { card: Card; onBreakdown: (i: number
         </h1>
         <div className="hero-in relative mt-2.5 text-[13px] text-zinc-400" style={d(200 + words * 55)}>{dateLine}</div>
         <button type="button" onClick={() => onBreakdown(heroIndex)} style={d(300 + words * 55)}
-          className="btn btn-brand hero-in relative mt-[18px] flex h-12 w-full items-center justify-center rounded-[10px] bg-brand text-sm font-bold text-bg hover:bg-brand-hover">
+          className="btn btn-brand hero-in relative mt-[18px] flex h-12 w-full items-center justify-center rounded-[10px] bg-brand text-sm font-bold text-onbrand hover:bg-brand-hover">
           {cta}
         </button>
       </section>
@@ -65,7 +65,7 @@ function Hero({ card, onBreakdown, wide }: { card: Card; onBreakdown: (i: number
   }
 
   return (
-    <section className="relative overflow-hidden border-b border-white/5" aria-labelledby="event-title">
+    <section className="relative overflow-hidden border-b border-hair" aria-labelledby="event-title">
       <div className="breathe pointer-events-none absolute -bottom-40 -right-20 h-[520px] w-[720px]" style={{ background: glow }} />
       <div className="relative mx-auto grid max-w-[1024px] grid-cols-[minmax(0,1fr)_380px] items-end gap-6 px-6 pt-11 lg:grid-cols-[minmax(0,1fr)_460px]">
         <div className="pb-11">
@@ -76,7 +76,7 @@ function Hero({ card, onBreakdown, wide }: { card: Card; onBreakdown: (i: number
           <div className="hero-in mt-3.5 text-sm text-zinc-400" style={d(180 + words * 55)}>{dateLine}</div>
           <div className="hero-in mt-7 flex flex-wrap gap-2.5" style={d(300 + words * 55)}>
             <button type="button" onClick={() => onBreakdown(heroIndex)}
-              className="btn btn-brand rounded-lg bg-brand px-[18px] py-[11px] text-[13px] font-bold text-bg hover:bg-brand-hover">
+              className="btn btn-brand rounded-lg bg-brand px-[18px] py-[11px] text-[13px] font-bold text-onbrand hover:bg-brand-hover">
               {cta}
             </button>
             <Link to="/accuracy" className="btn rounded-lg border border-zinc-800 px-[18px] py-[11px] text-[13px] font-semibold text-zinc-300 hover:border-zinc-600 hover:text-zinc-50">
@@ -133,8 +133,8 @@ function Message({ title, text, children }: { title: string; text: string; child
     <div className="mx-auto max-w-[1024px] px-3 pb-20 pt-9 md:px-6">
       <div className="flex flex-col items-center gap-3 rounded-xl border border-line bg-card px-6 py-11 text-center">
         <svg width="28" height="28" viewBox="0 0 28 28" fill="none" aria-hidden>
-          <rect x="4" y="6" width="20" height="18" rx="3" stroke="#7c7c86" strokeWidth="1.6" />
-          <path d="M4 11h20M10 3v5M18 3v5" stroke="#7c7c86" strokeWidth="1.6" strokeLinecap="round" />
+          <rect x="4" y="6" width="20" height="18" rx="3" stroke={Z600} strokeWidth="1.6" />
+          <path d="M4 11h20M10 3v5M18 3v5" stroke={Z600} strokeWidth="1.6" strokeLinecap="round" />
         </svg>
         <h1 className="m-0 text-[15px] font-semibold text-zinc-50">{title}</h1>
         <p className="m-0 max-w-[420px] text-xs leading-normal text-zinc-500">{text}</p>
@@ -237,7 +237,7 @@ export default function Fights() {
     return (
       <Message title={t.errorTitle} text={t.errorText}>
         <button type="button" onClick={data.retry}
-          className="mt-1.5 rounded-lg bg-brand px-4 py-2 text-xs font-bold text-bg hover:bg-brand-hover">{t.retry}</button>
+          className="btn btn-brand mt-1.5 rounded-lg bg-brand px-4 py-2 text-xs font-bold text-onbrand hover:bg-brand-hover">{t.retry}</button>
       </Message>
     )
   }
@@ -247,7 +247,7 @@ export default function Fights() {
     return (
       <Message title={t.emptyTitle} text={t.emptyText}>
         {last && (
-          <Link to="/accuracy" className="mt-1.5 rounded-lg bg-brand px-4 py-2 text-xs font-bold text-bg hover:bg-brand-hover hover:text-bg">
+          <Link to="/accuracy" className="btn btn-brand mt-1.5 rounded-lg bg-brand px-4 py-2 text-xs font-bold text-onbrand hover:bg-brand-hover hover:text-bg">
             {t.emptyCta(last.name)}
           </Link>
         )}

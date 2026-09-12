@@ -1,10 +1,17 @@
 import type { Fight, Fighter, Stats } from '../data'
 import type { Dict, Verdict } from '../i18n'
 
-export const BRAND = '#00ef5c'
-export const CARD = '#09090b'
-export const Z300 = '#d4d4d8', Z400 = '#a1a1aa', Z500 = '#84848e', Z600 = '#7c7c86'
-export const Z700 = '#3f3f46', Z800 = '#27272a', Z900 = '#18181b'
+// SVG attributes and inline styles read the same tokens as the classes, so a theme
+// switch repaints them without React re-rendering anything
+export const BRAND = 'var(--c-brand)'
+export const ON_BRAND = 'var(--c-on-brand)'
+export const CARD = 'var(--c-card)'
+export const BG = 'var(--c-bg)'
+export const FG = 'var(--c-z50)'
+export const Z300 = 'var(--c-z300)', Z400 = 'var(--c-z400)', Z500 = 'var(--c-z500)', Z600 = 'var(--c-z600)'
+export const Z700 = 'var(--c-z700)', Z800 = 'var(--c-z800)', Z900 = 'var(--c-z900)'
+/** Bars and segments painted on a surface — readable on both themes. */
+export const FILL = 'var(--c-fill)', FILL_DIM = 'var(--c-fill-dim)'
 
 export const cx = (...c: (string | false | null | undefined)[]) => c.filter(Boolean).join(' ')
 

@@ -243,9 +243,9 @@ export const FightCard = forwardRef<HTMLDivElement, Props>(function FightCard(
     : fight.result ? <ResultCenter fight={fight} /> : <ProbCenter fight={fight} />
 
   return (
-    <div ref={ref} id={`fight-${index + 1}`} className={cx('fight-card scroll-mt-3 overflow-hidden rounded-xl bg-card', !open && 'closed')}
-      style={{ border: `1px solid ${open ? 'rgba(0,239,92,0.28)' : 'rgba(39,39,42,0.6)'}`,
-               boxShadow: open ? '0 0 0 1px rgba(0,239,92,0.06), 0 24px 60px -30px rgba(0,239,92,0.25)' : undefined }}>
+    <div ref={ref} id={`fight-${index + 1}`} className={cx('fight-card surface scroll-mt-3 overflow-hidden rounded-xl bg-card', !open && 'closed')}
+      style={{ border: `1px solid ${open ? 'rgb(var(--brand) / 0.28)' : 'var(--c-line)'}`,
+               boxShadow: open ? '0 0 0 1px rgb(var(--brand) / 0.06), 0 24px 60px -30px rgb(var(--brand) / 0.25)' : undefined }}>
       {label && <div className="eyebrow px-3.5 pt-3 text-zinc-500 md:px-5">{label}</div>}
 
       {desktopRow ? (

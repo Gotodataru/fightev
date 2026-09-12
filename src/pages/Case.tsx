@@ -1,13 +1,13 @@
 import { useEffect, type ReactNode } from 'react'
 import { useData } from '../data'
-import { CountUp, Reveal, SplitWords } from '../lib/motion'
+import { CountUp, ReadingProgress, Reveal, SplitWords } from '../lib/motion'
 import { useI18n } from '../i18n'
 
 function Shot({ src, alt, tag, caption, delay = 0 }: { src: string; alt: string; tag: string; caption: string; delay?: number }) {
   return (
     <Reveal delay={delay} className="flex flex-col gap-2.5">
       <figure className="m-0 flex flex-col gap-2.5">
-        <div className="overflow-hidden rounded-xl border border-line bg-card">
+        <div className="surface overflow-hidden rounded-xl border border-line bg-card">
           <img src={src} alt={alt} width={1440} height={900} loading="lazy" decoding="async" className="block w-full" />
         </div>
         <figcaption className="text-[13px] leading-normal text-zinc-400">
@@ -42,7 +42,7 @@ function Para({ title, children }: { title: string; children: ReactNode }) {
 
 function Decision({ n, title, children }: { n: number; title: string; children: ReactNode }) {
   return (
-    <Reveal delay={((n - 1) % 2) * 90} className="flex flex-col gap-2 rounded-xl border border-line bg-card p-[22px] transition-colors duration-300 hover:border-zinc-700">
+    <Reveal delay={((n - 1) % 2) * 90} className="surface flex flex-col gap-2 rounded-xl border border-line bg-card p-[22px] transition-colors duration-300 hover:border-zinc-700">
       <span className="font-mono text-xs text-brand">{String(n).padStart(2, '0')}</span>
       <h3 className="m-0 text-base font-semibold text-zinc-50">{title}</h3>
       <p className="m-0 text-[13px] leading-relaxed text-zinc-400">{children}</p>
@@ -70,6 +70,7 @@ export default function Case() {
 
   return (
     <article className="mx-auto max-w-[880px] px-4 pb-[90px] pt-10 md:px-6 md:pt-14">
+      <ReadingProgress />
       <div className="eyebrow hero-in mb-3.5 text-brand">{ru ? 'О проекте · кейс' : 'About · case study'}</div>
       <h1 className="m-0 text-[32px] font-bold leading-[1.1] tracking-[-0.025em] md:text-[44px]">
         <SplitWords text={ru ? 'Как показать прогноз, которому не стоит верить вслепую' : "How to show a forecast you shouldn't trust blindly"} delay={80} step={45} />
@@ -112,8 +113,8 @@ export default function Case() {
       <div className="mt-11">
         <Para title={ru ? 'Задача' : 'Problem'}>
           {ru
-            ? 'Сайт был витриной платной подписки: статистика ставок и ссылки в Telegram. Проект стал бесплатным, и задача изменилась: болельщик за несколько секунд видит кард турнира, раскрывает любой бой и понимает, насколько можно доверять прогнозу.'
-            : 'The site used to be a storefront for a paid subscription: betting stats and Telegram links. The project became free, and the job changed: a fan sees the event card in seconds, opens any fight and understands how far the forecast can be trusted.'}
+            ? 'Сайт был витриной платной подписки: статистика доходности и ссылки в Telegram. Проект стал бесплатным, и задача изменилась: болельщик за несколько секунд видит кард турнира, раскрывает любой бой и понимает, насколько можно доверять прогнозу.'
+            : 'The site used to be a storefront for a paid subscription: profit stats and Telegram links. The project became free, and the job changed: a fan sees the event card in seconds, opens any fight and understands how far the forecast can be trusted.'}
         </Para>
         <Para title={ru ? 'Для кого' : 'Audience'}>
           {ru
@@ -122,8 +123,8 @@ export default function Case() {
         </Para>
         <Para title={ru ? 'Ограничения' : 'Constraints'}>
           {ru
-            ? <>Данные неполные: в текущем карде у {noStats} из {fighters.length} бойцов нет подробной статистики, у {noPhoto} — фото. Модель угадывает {rate ?? dash}% победителей{trails ? ' и уступает фаворитам по линии' : ''}. Интерфейс должен работать с этим, а не прятать.</>
-            : <>The data is incomplete: on the current card {noStats} of {fighters.length} fighters have no detailed stats and {noPhoto} have no photo. The model picks {rate ?? dash}% of winners{trails ? ' and trails the betting favourites' : ''}. The interface has to work with that, not hide it.</>}
+            ? <>Данные неполные: в текущем карде у {noStats} из {fighters.length} бойцов нет подробной статистики, у {noPhoto} — фото. Модель угадывает {rate ?? dash}% победителей{trails ? ' и пока уступает рыночному ориентиру' : ''}. Интерфейс должен работать с этим, а не прятать.</>
+            : <>The data is incomplete: on the current card {noStats} of {fighters.length} fighters have no detailed stats and {noPhoto} have no photo. The model picks {rate ?? dash}% of winners{trails ? ' and still trails the market benchmark' : ''}. The interface has to work with that, not hide it.</>}
         </Para>
       </div>
 
@@ -152,8 +153,8 @@ export default function Case() {
           </Decision>
           <Decision n={5} title={ru ? 'Без ставок' : 'No betting'}>
             {ru
-              ? 'Коэффициенты остались только ориентиром на странице точности. В карточках — модель и статистика.'
-              : 'Odds remain only as a benchmark on the accuracy page. The cards show the model and the stats.'}
+              ? 'Оценка рынка осталась только точкой отсчёта на странице точности. В карточках — модель и статистика бойцов.'
+              : 'The market view stays a reference point on the accuracy page. The cards show the model and the fighters’ stats.'}
           </Decision>
           <Decision n={6} title={ru ? 'Фото выровнены по лицу' : 'Photos aligned to the face'}>
             {ru

@@ -1,7 +1,7 @@
 import { useState, type ReactNode } from 'react'
 import { photoUrl, type Fighter } from '../data'
 import { useI18n } from '../i18n'
-import { BRAND, CARD, Z400, Z500, Z700, cx, initials, split } from '../lib/fight'
+import { BRAND, CARD, FILL, FILL_DIM, Z500, Z800, cx, initials, split } from '../lib/fight'
 import { CountUp } from '../lib/motion'
 
 export function SectionLabel({ children, extra, className, end }: { children: ReactNode; extra?: ReactNode; className?: string; end?: boolean }) {
@@ -31,12 +31,12 @@ export function Pct({ v, fav, size = 14, className, delay = 0 }: { v: number; fa
 }
 
 /** Two-sided probability bar: green = the side with the higher probability, not a corner colour. */
-export function ProbBar({ p1, height = 6, animate = false, delay = 0.1, other = Z700 }: {
+export function ProbBar({ p1, height = 6, animate = false, delay = 0.1, other = FILL_DIM }: {
   p1: number; height?: number; animate?: boolean; delay?: number; other?: string
 }) {
   const [a, b] = split(p1)
   let c1 = a > b ? BRAND : other, c2 = b > a ? BRAND : other
-  if (a === b) c1 = c2 = Z400
+  if (a === b) c1 = c2 = FILL
   return (
     <div className={cx('flex gap-0.5 overflow-hidden rounded-full', animate && 'a-grow')}
       style={{ height, animationDelay: animate ? `${delay}s` : undefined }} aria-hidden>
@@ -76,8 +76,8 @@ export function Avatar({ f, size = 52 }: { f: Fighter; size?: number }) {
 function Silhouette() {
   return (
     <svg width="96" height="120" viewBox="0 0 96 120" fill="none" aria-hidden className="max-w-[55%]">
-      <circle cx="48" cy="36" r="22" fill="#27272a" />
-      <path d="M6 120c0-26 19-44 42-44s42 18 42 44z" fill="#27272a" />
+      <circle cx="48" cy="36" r="22" fill={Z800} />
+      <path d="M6 120c0-26 19-44 42-44s42 18 42 44z" fill={Z800} />
     </svg>
   )
 }
@@ -91,7 +91,7 @@ export function Portrait({ f, fav, w = 200, fade = CARD, animate = true, eager =
 }) {
   const { t } = useI18n()
   const [broken, setBroken] = useState(false)
-  const glow = fav ? 'radial-gradient(circle at 50% 62%, rgba(0,239,92,0.16), transparent 62%)' : 'none'
+  const glow = fav ? 'radial-gradient(circle at 50% 62%, rgb(var(--brand) / var(--glow-b)), transparent 62%)' : 'none'
   return (
     <div className={cx('relative w-full overflow-hidden', animate && 'pin')}
       style={{ maxWidth: w, aspectRatio: '220 / 261', background: glow }}>

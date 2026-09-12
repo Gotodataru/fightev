@@ -2,20 +2,182 @@
 @tailwind components;
 @tailwind utilities;
 
-:root { --ease: cubic-bezier(.16, 1, .3, 1); }
+/* ── theme tokens ──────────────────────────────────────────────────────────────
+   Colours live here as "R G B" triples so Tailwind can add an alpha to any of
+   them; the zinc scale keeps its dark-theme meaning (50 = loudest text,
+   900 = quietest surface) and simply inverts in the light theme, which is why
+   the markup needs no per-theme classes. */
+:root {
+  --ease: cubic-bezier(.16, 1, .3, 1);
 
-html { background: #080808; color-scheme: dark; }
+  --bg: 8 8 8;
+  --card: 9 9 11;
+  --line-c: 39 39 42;
+  --line-a: 0.6;
+  --hair-c: 255 255 255;
+  --hair-a: 0.05;
+  --brand: 0 239 92;
+  --brand-hover: 107 255 159;
+  --on-brand: 8 8 8;
+
+  --z50: 250 250 250;
+  --z200: 228 228 231;
+  --z300: 212 212 216;
+  --z400: 161 161 170;
+  --z500: 132 132 142;
+  --z600: 124 124 134;
+  --z700: 63 63 70;
+  --z800: 39 39 42;
+  --z900: 24 24 27;
+  --z950: 9 9 11;
+
+  --grid: 31 31 35;          /* chart gridlines */
+  --fill: 161 161 170;       /* neutral bar on a surface */
+  --fill-dim: 63 63 70;      /* the quietest bar */
+  --wash: 255 255 255;       /* hover wash over a surface */
+  --wash-a: 0.025;
+  --shadow: 0 0 0;
+  --shadow-a: 0.8;
+  --sk1: #141416;
+  --sk2: #1f1f23;
+  --glow-a: 0.12;            /* brand glow behind the hero */
+  --glow-b: 0.16;            /* brand glow behind a favourite's portrait */
+  --hairline-hover: 82 82 91;
+  --amb-a: 0.07;             /* ambient brand wash */
+  --sheen: 255 255 255;      /* lit upper edge of a surface */
+  --sheen-a: 0.035;
+
+  /* ready-made colours for SVG attributes and inline styles */
+  --c-bg: rgb(var(--bg));
+  --c-card: rgb(var(--card));
+  --c-brand: rgb(var(--brand));
+  --c-on-brand: rgb(var(--on-brand));
+  --c-z50: rgb(var(--z50));
+  --c-z300: rgb(var(--z300));
+  --c-z400: rgb(var(--z400));
+  --c-z500: rgb(var(--z500));
+  --c-z600: rgb(var(--z600));
+  --c-z700: rgb(var(--z700));
+  --c-z800: rgb(var(--z800));
+  --c-z900: rgb(var(--z900));
+  --c-grid: rgb(var(--grid));
+  --c-fill: rgb(var(--fill));
+  --c-fill-dim: rgb(var(--fill-dim));
+  --c-line: rgb(var(--line-c) / var(--line-a));
+}
+
+:root[data-theme="light"] {
+  color-scheme: light;
+
+  --bg: 255 255 255;
+  --card: 250 250 251;
+  --line-c: 24 24 27;
+  --line-a: 0.12;
+  --hair-c: 0 0 0;
+  --hair-a: 0.08;
+  --brand: 0 150 70;
+  --brand-hover: 0 122 57;
+  --on-brand: 255 255 255;
+
+  --z50: 24 24 27;
+  --z200: 39 39 42;
+  --z300: 63 63 70;
+  --z400: 82 82 91;
+  --z500: 95 95 105;
+  --z600: 110 110 120;
+  --z700: 212 212 216;
+  --z800: 228 228 231;
+  --z900: 241 241 243;
+  --z950: 255 255 255;
+
+  --grid: 228 228 231;
+  --fill: 161 161 170;
+  --fill-dim: 212 212 216;
+  --wash: 24 24 27;
+  --wash-a: 0.04;
+  --shadow: 24 24 27;
+  --shadow-a: 0.14;
+  --sk1: #f1f1f3;
+  --sk2: #e4e4e7;
+  --glow-a: 0.10;
+  --glow-b: 0.12;
+  --hairline-hover: 161 161 170;
+  --amb-a: 0.10;
+  --sheen: 255 255 255;
+  --sheen-a: 0.9;
+}
+
+html { background: rgb(var(--bg)); color-scheme: dark; }
+:root[data-theme="light"] { background: rgb(var(--bg)); }
 body {
   margin: 0;
-  background: #080808;
-  color: #fafafa;
+  background: rgb(var(--bg));
+  color: rgb(var(--z50));
   font-family: Inter, -apple-system, 'Segoe UI', sans-serif;
   -webkit-font-smoothing: antialiased;
 }
-a { color: #00ef5c; text-decoration: none; transition: color .15s ease; }
-a:hover { color: #6bff9f; }
-:focus-visible { outline: 2px solid #00ef5c; outline-offset: 2px; border-radius: 6px; }
+a { color: rgb(var(--brand)); text-decoration: none; transition: color .15s ease; }
+a:hover { color: rgb(var(--brand-hover)); }
+:focus-visible { outline: 2px solid rgb(var(--brand)); outline-offset: 2px; border-radius: 6px; }
 .tnum { font-variant-numeric: tabular-nums; }
+
+/* ── ambient gradients ────────────────────────────────────────────────────────
+   One fixed wash behind everything plus a per-surface sheen; both are built from
+   the brand token, so they follow the theme and cost nothing at runtime. */
+.ambient {
+  position: fixed; inset: 0; pointer-events: none; z-index: 0;
+  background:
+    radial-gradient(60% 42% at 78% -4%, rgb(var(--brand) / var(--amb-a)), transparent 70%),
+    radial-gradient(46% 34% at 4% 8%, rgb(var(--brand) / calc(var(--amb-a) * 0.55)), transparent 72%),
+    radial-gradient(80% 50% at 50% 108%, rgb(var(--brand) / calc(var(--amb-a) * 0.5)), transparent 72%);
+}
+.above { position: relative; z-index: 1; }
+
+/* surfaces get a top-down sheen and a lit upper edge */
+.surface {
+  background-image: linear-gradient(180deg, rgb(var(--sheen) / var(--sheen-a)) 0%, transparent 42%);
+  box-shadow: inset 0 1px 0 rgb(var(--sheen) / calc(var(--sheen-a) * 1.6));
+}
+
+/* brand button: a gradient fill and a sheen that sweeps across on hover */
+.btn-brand {
+  background-image: linear-gradient(135deg, rgb(var(--brand)) 0%, rgb(var(--brand-hover)) 100%);
+  position: relative; overflow: hidden; isolation: isolate;
+}
+.btn-brand::after {
+  content: ''; position: absolute; inset: 0; z-index: -1;
+  background: linear-gradient(100deg, transparent 20%, rgb(255 255 255 / .45) 50%, transparent 80%);
+  transform: translateX(-120%); transition: transform .7s var(--ease);
+}
+.btn-brand:hover::after { transform: translateX(120%); }
+
+/* sticky header that condenses once the page scrolls */
+.site-header {
+  position: sticky; top: 0; z-index: 30;
+  background: rgb(var(--bg) / .72);
+  backdrop-filter: blur(14px) saturate(1.4);
+  -webkit-backdrop-filter: blur(14px) saturate(1.4);
+  transition: background-color .3s ease, border-color .3s ease, box-shadow .3s ease;
+}
+.site-header.scrolled {
+  background: rgb(var(--bg) / .88);
+  box-shadow: 0 1px 0 rgb(var(--hair-c) / var(--hair-a)), 0 10px 30px -24px rgb(var(--shadow) / var(--shadow-a));
+}
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .site-header { background: rgb(var(--bg)); }
+}
+
+/* reading progress on the case study */
+.read-bar {
+  position: fixed; inset: 0 auto auto 0; height: 2px; z-index: 40; width: 100%;
+  transform-origin: left; transform: scaleX(var(--p, 0));
+  background: linear-gradient(90deg, rgb(var(--brand) / .5), rgb(var(--brand)));
+  transition: transform .1s linear;
+}
+
+/* the theme icon turns as it swaps */
+.theme-switch svg { transition: transform .45s var(--ease); }
+.theme-switch:hover svg { transform: rotate(35deg) scale(1.08); }
 
 /* eyebrow / section label */
 .eyebrow { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.12em; }
@@ -23,24 +185,24 @@ a:hover { color: #6bff9f; }
 /* ── interactive surfaces ─────────────────────────────────────────────────────── */
 
 .fight-card { transition: border-color .25s ease, transform .3s var(--ease), box-shadow .3s var(--ease); }
-.fight-card.closed:hover { transform: translateY(-2px); box-shadow: 0 10px 30px -12px rgba(0, 0, 0, .8), 0 0 0 1px rgba(255, 255, 255, .04); border-color: rgba(82, 82, 91, .7) !important; }
+.fight-card.closed:hover { transform: translateY(-2px); box-shadow: 0 10px 30px -12px rgb(var(--shadow) / var(--shadow-a)), 0 0 0 1px rgb(var(--hair-c) / calc(var(--hair-a) * 0.8)); border-color: rgb(var(--hairline-hover) / .7) !important; }
 .fight-row { cursor: pointer; transition: background-color .15s ease; }
-.fight-row:hover { background: rgba(255,255,255,0.025); }
+.fight-row:hover { background: rgb(var(--wash) / var(--wash-a)); }
 .fight-card .avatar { transition: transform .35s var(--ease); }
 .fight-card.closed:hover .avatar { transform: scale(1.06); }
 .navbtn { transition: border-color .15s ease, background-color .15s ease, transform .15s ease; }
-.navbtn:hover:not(:disabled) { border-color: #52525b; background: rgba(255,255,255,0.04); }
+.navbtn:hover:not(:disabled) { border-color: rgb(var(--hairline-hover)); background: rgb(var(--wash) / calc(var(--wash-a) * 1.6)); }
 .navbtn:active:not(:disabled) { transform: scale(.92); }
 .navbtn:disabled { opacity: .3; cursor: default; }
 .btn { transition: background-color .15s ease, border-color .15s ease, color .15s ease, transform .15s ease, box-shadow .25s ease; }
 .btn:hover { transform: translateY(-1px); }
 .btn:active { transform: translateY(0) scale(.98); }
-.btn-brand:hover { box-shadow: 0 8px 24px -8px rgba(0, 239, 92, .55); }
+.btn-brand:hover { box-shadow: 0 8px 24px -8px rgb(var(--brand) / .55); }
 
 /* header nav: underline draws from the left */
 .nav-link { position: relative; }
 .nav-link::after {
-  content: ''; position: absolute; left: 0; right: 0; bottom: -1px; height: 2px; background: #00ef5c;
+  content: ''; position: absolute; left: 0; right: 0; bottom: -1px; height: 2px; background: rgb(var(--brand));
   transform: scaleX(0); transform-origin: left; transition: transform .35s var(--ease);
 }
 .nav-link.active::after { transform: scaleX(1); }
@@ -92,7 +254,7 @@ a:hover { color: #6bff9f; }
 .menu-in > * > *:nth-child(3) { animation-delay: 80ms; }
 .line-in { transform-origin: left; animation: lineIn .9s var(--ease) both; animation-delay: var(--d, 0ms); }
 .sk {
-  background: linear-gradient(90deg, #141416 0%, #1f1f23 50%, #141416 100%);
+  background: linear-gradient(90deg, var(--sk1) 0%, var(--sk2) 50%, var(--sk1) 100%);
   background-size: 200% 100%;
   animation: sk 1.4s linear infinite;
 }
@@ -104,8 +266,8 @@ a:hover { color: #6bff9f; }
 .from-left { animation: fromLeft 1s var(--ease) both; animation-delay: var(--d, 0ms); }
 .from-right { animation: fromRight 1s var(--ease) both; animation-delay: var(--d, 0ms); }
 .breathe { animation: breathe 6s ease-in-out infinite; }
-.live-dot { position: relative; display: inline-block; width: 6px; height: 6px; border-radius: 99px; background: #00ef5c; }
-.live-dot::after { content: ''; position: absolute; inset: 0; border-radius: inherit; background: #00ef5c; animation: ping 1.8s ease-out infinite; }
+.live-dot { position: relative; display: inline-block; width: 6px; height: 6px; border-radius: 99px; background: rgb(var(--brand)); }
+.live-dot::after { content: ''; position: absolute; inset: 0; border-radius: inherit; background: rgb(var(--brand)); animation: ping 1.8s ease-out infinite; }
 
 /* tabs: the active pill slides between the three tabs */
 .tab-pill { transition: transform .35s var(--ease); }
@@ -119,6 +281,8 @@ a:hover { color: #6bff9f; }
 .io:not(.in) .rowin, .io:not(.in) .line-in { animation-play-state: paused; }
 
 @media (prefers-reduced-motion: reduce) {
+  .btn-brand::after { display: none; }
+  .read-bar, .site-header, .theme-switch svg { transition: none !important; }
   .xp, .a-grow, .a-grow-r, .pin, .rowin, .pop, .fadein, .sk, .page-in, .menu-in, .menu-in > * > *,
   .word, .hero-in, .from-left, .from-right, .breathe, .line-in, .live-dot::after { animation: none !important; }
   .draw { animation: none !important; stroke-dashoffset: 0; }

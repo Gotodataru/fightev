@@ -1,7 +1,7 @@
 import { useEffect, useLayoutEffect, useRef, useState, type ReactNode } from 'react'
 import { useData, useMedia, type CalBin, type Track } from '../data'
 import { useI18n, type Lang } from '../i18n'
-import { BRAND, CARD, Z300, Z400, Z500, Z600, Z700, cx, formatDate } from '../lib/fight'
+import { BRAND, CARD, FILL, FILL_DIM, Z300, Z400, Z500, Z600, cx, formatDate } from '../lib/fight'
 import { CountUp, Reveal, SplitWords } from '../lib/motion'
 
 const pct = (v: number) => `${Math.round(v * 100)}%`
@@ -41,10 +41,10 @@ function copy(lang: Lang, tr: Track) {
       s1sub: (m.rate <= coin.rate
         ? 'Пока модель не лучше монетки.'
         : m.rate < fav.rate
-          ? 'Модель лучше монетки, но пока уступает простому правилу «выбирай фаворита по линии».'
-          : 'Модель не уступает простому правилу «выбирай фаворита по линии».')
+          ? 'Модель лучше монетки, но пока уступает простому правилу «выбирай того, кого фаворитом считает рынок».'
+          : 'Модель не уступает простому правилу «выбирай того, кого фаворитом считает рынок».')
         + ` Выборка маленькая: реальная точность модели где-то между ${lo}% и ${hi}% (белая полоса).`,
-      rows: ['Модель fightev', 'Фаворит по линии', 'Монетка'],
+      rows: ['Модель fightev', 'Рыночный ориентир', 'Монетка'],
       of: (k: number, n: number) => `${k} из ${n}`,
       avg: 'в среднем',
       ci: `95% интервал: ${lo}–${hi}%`,
@@ -83,7 +83,7 @@ function copy(lang: Lang, tr: Track) {
       method: [
         ['Только то, что записано до боя.', 'Прогнозы берутся из журнала запусков, пересчёт задним числом не допускается.'],
         ['Три модели, одно среднее.', 'CatBoost, LightGBM и XGBoost обучены на официальной статистике боёв; на карточке — их среднее.'],
-        ['Фаворит по линии — только ориентир.', 'Коэффициенты используются здесь для сравнения точности и больше нигде на сайте.'],
+        ['Рыночный ориентир — только точка отсчёта.', 'Оценка рынка нужна здесь, чтобы понять, насколько модель вообще полезна, и больше нигде на сайте не используется.'],
         ['Страница обновляется сама', 'после каждого турнира, когда в базе появляются результаты.'],
       ],
     }
@@ -97,10 +97,10 @@ function copy(lang: Lang, tr: Track) {
     s1sub: (m.rate <= coin.rate
       ? 'So far the model is no better than a coin flip.'
       : m.rate < fav.rate
-        ? 'The model beats a coin flip but still trails the simple rule “pick the betting favourite”.'
-        : 'The model keeps up with the simple rule “pick the betting favourite”.')
+        ? 'The model beats a coin flip but still trails the simple rule “pick whoever the market makes the favourite”.'
+        : 'The model keeps up with the simple rule “pick whoever the market makes the favourite”.')
       + ` The sample is small: the true accuracy is somewhere between ${lo}% and ${hi}% (white bar).`,
-    rows: ['fightev model', 'Betting favourite', 'Coin flip'],
+    rows: ['fightev model', 'Market benchmark', 'Coin flip'],
     of: (k: number, n: number) => `${k} of ${n}`,
     avg: 'on average',
     ci: `95% interval: ${lo}–${hi}%`,
@@ -139,7 +139,7 @@ function copy(lang: Lang, tr: Track) {
     method: [
       ['Only what was recorded before the fight.', 'Forecasts come from the run log; nothing is recalculated after the fact.'],
       ['Three models, one average.', 'CatBoost, LightGBM and XGBoost are trained on official fight statistics; the card shows their average.'],
-      ['The betting favourite is only a benchmark.', 'Odds are used here to compare accuracy and nowhere else on the site.'],
+      ['The market benchmark is only a reference point.', 'The market view is here to show whether the model is useful at all, and is used nowhere else on the site.'],
       ['The page updates itself', 'after every event, once the results reach the database.'],
     ],
   }
@@ -159,21 +159,24 @@ function H2({ children, sub }: { children: ReactNode; sub?: string }) {
 }
 
 const Panel = ({ children, className }: { children: ReactNode; className?: string }) => (
-  <div className={cx('rounded-xl border border-line bg-card p-5 md:p-7', className)}>{children}</div>
+  <div className={cx('surface rounded-xl border border-line bg-card p-5 md:p-7', className)}>{children}</div>
 )
 
 // ── 1. model vs baselines ──────────────────────────────────────────────────────
 
-type BarRow = [label: string, rate: number, sub: string, color: string, ci: boolean]
+type BarRow = [label: string, rate: number, sub: string, color: string, ci: boolean, own?: boolean]
 
 function Bars({ rows, ci95, ciLabel }: { rows: BarRow[]; ci95?: [number, number]; ciLabel?: string }) {
   const [lo, hi] = ci95 ?? [0, 0]
   const whisker = 'absolute bg-zinc-50/75'
   return (
     <div>
-      {rows.map(([label, r, sub, col, ci], i) => (
+      {rows.map(([label, r, sub, col, ci, own], i) => (
         <div key={label} className="grid grid-cols-[minmax(0,1fr)_auto] items-center gap-x-4 gap-y-2 py-2.5 md:h-11 md:grid-cols-[150px_minmax(0,1fr)_128px] md:py-0">
-          <span className="text-[13px] text-zinc-300">{label}</span>
+          <span className={cx('flex items-center gap-2 text-[13px]', own ? 'font-semibold text-zinc-50' : 'text-zinc-300')}>
+            {own && <span className="h-2.5 w-[3px] shrink-0 rounded-sm bg-brand" aria-hidden />}
+            {label}
+          </span>
           <div className="relative col-span-2 row-start-2 h-5 md:col-span-1 md:row-start-auto">
             <div className="a-grow absolute inset-y-0 left-0 rounded-r" style={{ width: `${r * 100}%`, background: col, animationDelay: `${0.1 + i * 0.08}s` }} />
             {ci && (
@@ -205,9 +208,9 @@ function Bars({ rows, ci95, ciLabel }: { rows: BarRow[]; ci95?: [number, number]
 function CompareBars({ tr, c }: { tr: Track; c: Copy }) {
   return (
     <Bars ci95={tr.model.ci95 as [number, number]} ciLabel={c.ci} rows={[
-      [c.rows[0], tr.model.rate, c.of(tr.model.hits, tr.n_fights), BRAND, true],
-      [c.rows[1], tr.favourite.rate, c.of(tr.favourite.hits, tr.n_fights), Z400, false],
-      [c.rows[2], tr.coin.rate, c.avg, Z700, false],
+      [c.rows[0], tr.model.rate, c.of(tr.model.hits, tr.n_fights), tr.model.rate >= tr.favourite.rate ? BRAND : FILL, true, true],
+      [c.rows[1], tr.favourite.rate, c.of(tr.favourite.hits, tr.n_fights), tr.favourite.rate > tr.model.rate ? BRAND : FILL, false],
+      [c.rows[2], tr.coin.rate, c.avg, FILL_DIM, false],
     ]} />
   )
 }
@@ -216,10 +219,10 @@ function FinishBars({ tr, c }: { tr: Track; c: Copy }) {
   const fin = tr.finish
   const base = tr.ufc_finish_rate_24m.rate
   const rows: BarRow[] = [
-    [c.fin[0][0], fin.model_rate!, c.fin[0][1], BRAND, false],
-    [c.fin[1][0], fin.always_finish_rate!, c.fin[1][1], Z400, false],
+    [c.fin[0][0], fin.model_rate!, c.fin[0][1], fin.model_rate! >= fin.always_finish_rate! ? BRAND : FILL, false, true],
+    [c.fin[1][0], fin.always_finish_rate!, c.fin[1][1], fin.always_finish_rate! > fin.model_rate! ? BRAND : FILL, false],
   ]
-  if (base !== null) rows.push([c.fin[2][0], base, c.fin[2][1], Z700, false])
+  if (base !== null) rows.push([c.fin[2][0], base, c.fin[2][1], FILL_DIM, false])
   return (
     <>
       <Bars rows={rows} />
@@ -262,7 +265,7 @@ function CalibrationChart({ bins, c }: { bins: CalBin[]; c: Copy }) {
         <svg width={W} height={H} viewBox={`0 0 ${W} ${H}`} className="block max-w-full" role="img" aria-label={c.s2}>
           {[0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1].map(v => (
             <g key={v}>
-              <line x1={L} x2={W - R} y1={Y(v)} y2={Y(v)} stroke="#1f1f23" />
+              <line x1={L} x2={W - R} y1={Y(v)} y2={Y(v)} stroke="var(--c-grid)" />
               <text x={L - 10} y={Y(v) + 4} textAnchor="end" fill={Z500} style={mono}>{Math.round(v * 100)}%</text>
             </g>
           ))}
@@ -334,7 +337,7 @@ function EventDots({ tr, c, lang }: { tr: Track; c: Copy; lang: Lang }) {
   const loc = lang === 'ru' ? 'ru-RU' : 'en-US'
   const dot = (hit: boolean, k: number, animate = true) => (
     <span key={k} className={cx('h-3 w-3 rounded-full', animate && 'pop')}
-      style={{ ...(hit ? { background: BRAND } : { boxShadow: `inset 0 0 0 2px ${Z700}` }), '--d': `${150 + k * 45}ms` } as unknown as React.CSSProperties} />
+      style={{ ...(hit ? { background: BRAND } : { boxShadow: `inset 0 0 0 2px ${FILL_DIM}` }), '--d': `${150 + k * 45}ms` } as unknown as React.CSSProperties} />
   )
   return (
     <>

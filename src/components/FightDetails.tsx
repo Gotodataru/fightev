@@ -2,8 +2,8 @@ import { Link } from 'react-router-dom'
 import type { Fight, Fighter, Track } from '../data'
 import { useI18n } from '../i18n'
 import {
-  BRAND, Z300, Z500, Z600, Z700, Z800, cx, favourite, formatDate, lastName, lowData, modelSpread,
-  split, tapeRows, verdict,
+  BRAND, FG, FILL, FILL_DIM, ON_BRAND, Z300, Z400, Z500, Z600, Z700, Z800, cx, favourite, formatDate,
+  lastName, lowData, modelSpread, split, tapeRows, verdict,
 } from '../lib/fight'
 import { Pct, ProbBar, SectionLabel, Tag } from './ui'
 
@@ -19,11 +19,11 @@ export function ResultBadge({ fight }: { fight: Fight }) {
   const hit = (fight.p_win_f1 >= 0.5) === (r.winner === 1)
   return (
     <span className="pop inline-flex items-center gap-[5px] whitespace-nowrap rounded-full py-[3px] pl-[7px] pr-[9px] text-[11px] font-semibold"
-      style={{ background: hit ? BRAND : Z800, color: hit ? '#080808' : '#fafafa', '--d': '250ms' } as React.CSSProperties}>
+      style={{ background: hit ? BRAND : Z800, color: hit ? ON_BRAND : FG, '--d': '250ms' } as React.CSSProperties}>
       <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden>
         {hit
-          ? <path d="M3 7.5l2.5 2.5L11 4.5" stroke="#080808" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-          : <path d="M4 4l6 6M10 4l-6 6" stroke="#fafafa" strokeWidth="2" strokeLinecap="round" />}
+          ? <path d="M3 7.5l2.5 2.5L11 4.5" stroke={ON_BRAND} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+          : <path d="M4 4l6 6M10 4l-6 6" stroke={FG} strokeWidth="2" strokeLinecap="round" />}
       </svg>
       {hit ? t.hit : t.miss}
     </span>
@@ -134,8 +134,8 @@ export function TapeDesktop({ fight }: { fight: Fight }) {
   return (
     <div role="table" aria-label={t.tape}>
       {tapeRows(fight.fighter_1, fight.fighter_2, t, lang).map((r, k) => {
-        const c1 = r.adv === 1 ? '#fafafa' : r.adv === 0 ? Z300 : Z500
-        const c2 = r.adv === 2 ? '#fafafa' : r.adv === 0 ? Z300 : Z500
+        const c1 = r.adv === 1 ? FG : r.adv === 0 ? Z300 : Z500
+        const c2 = r.adv === 2 ? FG : r.adv === 0 ? Z300 : Z500
         const delay = `${(0.25 + k * 0.035).toFixed(3)}s`
         return (
           <div key={r.key} role="row" className="rowin grid h-[30px] grid-cols-[64px_minmax(0,1fr)_150px_minmax(0,1fr)_64px] items-center gap-3"
@@ -187,9 +187,9 @@ function FormChips({ f, align }: { f: Fighter; align: 'start' | 'end' }) {
   return (
     <ul className={cx('flex gap-1.5', align === 'end' && 'justify-end')}>
       {f.form.map((x, k) => {
-        const st = x.res === 'W' ? { background: BRAND, color: '#080808' }
-          : x.res === 'L' ? { background: Z800, color: '#a1a1aa' }
-          : { border: `1px solid ${Z700}`, color: '#a1a1aa' }
+        const st = x.res === 'W' ? { background: BRAND, color: ON_BRAND }
+          : x.res === 'L' ? { background: Z800, color: Z400 }
+          : { border: `1px solid ${Z700}`, color: Z400 }
         const date = formatDate(x.date, t.locale, { day: '2-digit', month: '2-digit', year: 'numeric' })
         const label = `${x.res} ${t.vs} ${x.opp} · ${x.method !== 'OTHER' ? t.method[x.method] + ' · ' : ''}${date}`
         return (
@@ -211,7 +211,7 @@ export function SidePanel({ f, align = 'start' }: { f: Fighter; align?: 'start' 
   const long = lm !== null && lm >= 9
   const w = f.ufc_wins
   const tot = w.KO + w.SUB + w.DEC
-  const segs = ([['KO', w.KO, Z300], ['SUB', w.SUB, Z500], ['DEC', w.DEC, Z700]] as const).filter(s => s[1] > 0)
+  const segs = ([['KO', w.KO, Z300], ['SUB', w.SUB, FILL], ['DEC', w.DEC, FILL_DIM]] as const).filter(s => s[1] > 0)
   return (
     <div className={cx('flex flex-col gap-[18px]', right && 'text-right')}>
       {(f.nickname || lm !== null) && (
