@@ -319,40 +319,47 @@ a:hover { color: rgb(var(--brand-hover)); }
 
 /* hero artwork: masked on every edge so it melts into the page instead of ending in a hard box */
 .hero-art { isolation: isolate; overflow: hidden; }
+/* the photo has to end nowhere: the mask is fully transparent well before the box edge,
+   so no side is ever cut in a straight line */
 .hero-art img {
-  -webkit-mask-image: radial-gradient(125% 108% at 74% 52%, #000 26%, rgb(0 0 0 / .75) 48%, transparent 82%);
-  mask-image: radial-gradient(125% 108% at 74% 52%, #000 26%, rgb(0 0 0 / .75) 48%, transparent 82%);
+  -webkit-mask-image: radial-gradient(88% 96% at 56% 46%, #000 12%, rgb(0 0 0 / .88) 34%, rgb(0 0 0 / .45) 58%, rgb(0 0 0 / .12) 76%, transparent 90%);
+  mask-image: radial-gradient(88% 96% at 56% 46%, #000 12%, rgb(0 0 0 / .88) 34%, rgb(0 0 0 / .45) 58%, rgb(0 0 0 / .12) 76%, transparent 90%);
 }
 .hero-art-m img {
   transform: scale(1.42); transform-origin: 50% 24%;
-  -webkit-mask-image: radial-gradient(92% 108% at 52% 42%, #000 24%, rgb(0 0 0 / .8) 52%, transparent 88%);
-  mask-image: radial-gradient(92% 108% at 52% 42%, #000 24%, rgb(0 0 0 / .8) 52%, transparent 88%);
+  -webkit-mask-image: radial-gradient(80% 92% at 50% 40%, #000 10%, rgb(0 0 0 / .9) 32%, rgb(0 0 0 / .5) 56%, rgb(0 0 0 / .14) 74%, transparent 90%);
+  mask-image: radial-gradient(80% 92% at 50% 40%, #000 10%, rgb(0 0 0 / .9) 32%, rgb(0 0 0 / .5) 56%, rgb(0 0 0 / .14) 74%, transparent 90%);
 }
+/* a vignette in the page colour closes whatever the mask leaves, on every side */
 .hero-art::after {
   content: ''; position: absolute; inset: 0; pointer-events: none;
   background:
-    linear-gradient(90deg, rgb(var(--bg)) 2%, rgb(var(--bg) / .5) 30%, transparent 60%),
-    linear-gradient(180deg, rgb(var(--bg)) 0%, rgb(var(--bg) / .35) 14%, transparent 34%),
-    linear-gradient(0deg, rgb(var(--bg)) 0%, rgb(var(--bg) / .35) 12%, transparent 30%),
-    radial-gradient(60% 55% at 72% 58%, rgb(var(--brand) / .13), transparent 72%);
+    radial-gradient(closest-side at 56% 46%, transparent 26%, rgb(var(--bg) / .28) 58%, rgb(var(--bg) / .8) 84%, rgb(var(--bg)) 100%),
+    linear-gradient(90deg, rgb(var(--bg)) 0%, rgb(var(--bg) / .55) 20%, transparent 48%),
+    linear-gradient(180deg, rgb(var(--bg)) 0%, rgb(var(--bg) / .4) 12%, transparent 30%),
+    linear-gradient(0deg, rgb(var(--bg)) 0%, rgb(var(--bg) / .4) 12%, transparent 30%),
+    radial-gradient(58% 52% at 68% 56%, rgb(var(--brand) / .12), transparent 72%);
 }
 .hero-art-m::after {
   background:
-    linear-gradient(180deg, rgb(var(--bg)) 0%, rgb(var(--bg) / .4) 10%, transparent 28%, rgb(var(--bg) / .72) 72%, rgb(var(--bg)) 94%),
-    radial-gradient(70% 60% at 55% 40%, rgb(var(--brand) / .13), transparent 72%);
+    radial-gradient(closest-side at 50% 40%, transparent 22%, rgb(var(--bg) / .3) 56%, rgb(var(--bg) / .82) 84%, rgb(var(--bg)) 100%),
+    linear-gradient(180deg, rgb(var(--bg)) 0%, rgb(var(--bg) / .45) 9%, transparent 26%, rgb(var(--bg) / .78) 74%, rgb(var(--bg)) 96%),
+    radial-gradient(70% 60% at 52% 38%, rgb(var(--brand) / .12), transparent 72%);
 }
 :root[data-theme="light"] .hero-art img { opacity: .88; }
 :root[data-theme="light"] .hero-art::after {
   background:
-    linear-gradient(90deg, rgb(var(--bg)) 6%, rgb(var(--bg) / .72) 34%, rgb(var(--bg) / .12) 62%, transparent 78%),
-    linear-gradient(180deg, rgb(var(--bg)) 0%, rgb(var(--bg) / .45) 16%, transparent 38%),
-    linear-gradient(0deg, rgb(var(--bg)) 0%, rgb(var(--bg) / .45) 14%, transparent 34%),
-    radial-gradient(60% 55% at 74% 60%, rgb(var(--brand) / .1), transparent 72%);
+    radial-gradient(closest-side at 56% 46%, transparent 24%, rgb(var(--bg) / .35) 56%, rgb(var(--bg) / .86) 84%, rgb(var(--bg)) 100%),
+    linear-gradient(90deg, rgb(var(--bg)) 4%, rgb(var(--bg) / .7) 26%, transparent 54%),
+    linear-gradient(180deg, rgb(var(--bg)) 0%, rgb(var(--bg) / .5) 14%, transparent 34%),
+    linear-gradient(0deg, rgb(var(--bg)) 0%, rgb(var(--bg) / .5) 14%, transparent 34%),
+    radial-gradient(58% 52% at 70% 58%, rgb(var(--brand) / .1), transparent 72%);
 }
 :root[data-theme="light"] .hero-art-m::after {
   background:
-    linear-gradient(180deg, rgb(var(--bg)) 0%, rgb(var(--bg) / .3) 10%, transparent 30%, rgb(var(--bg) / .85) 68%, rgb(var(--bg)) 88%),
-    radial-gradient(70% 60% at 55% 40%, rgb(var(--brand) / .1), transparent 72%);
+    radial-gradient(closest-side at 50% 40%, transparent 20%, rgb(var(--bg) / .34) 54%, rgb(var(--bg) / .88) 84%, rgb(var(--bg)) 100%),
+    linear-gradient(180deg, rgb(var(--bg)) 0%, rgb(var(--bg) / .4) 9%, transparent 26%, rgb(var(--bg) / .85) 70%, rgb(var(--bg)) 94%),
+    radial-gradient(70% 60% at 52% 38%, rgb(var(--brand) / .1), transparent 72%);
 }
 
 /* hero */
