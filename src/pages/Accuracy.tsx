@@ -67,9 +67,17 @@ function copy(lang: Lang, tr: Track) {
         ? 'Отдельная модель пыталась угадать, закончится ли бой досрочно. Она проиграла простому правилу, поэтому в карточках боя мы её не показываем — вместо прогноза там история самих бойцов и среднее по UFC.'
         : 'Отдельная модель пытается угадать, закончится ли бой досрочно. В карточках её нет: выборка слишком мала, чтобы доверять ей больше, чем истории самих бойцов и среднему по UFC.',
       fin: [
-        ['модель досрочки', `${fin.model_hits} из ${fin.n} угадано`],
-        ['правило «всегда досрочно»', heavy ? 'на тех же боях — выборке повезло с досрочками' : 'на тех же боях'],
-        ['боёв в UFC заканчиваются досрочно', 'за последние два года — это отметка на карточке боя'],
+        ['Модель досрочки', `${fin.model_hits} из ${fin.n} угадано`],
+        ['Правило «всегда досрочно»', heavy ? 'на тех же боях — выборке повезло с досрочками' : 'на тех же боях'],
+        ['Среднее по UFC', `досрочные финиши в ${tr.ufc_finish_rate_24m.n} боях за два года`],
+      ],
+      finNote: `Обе полосы посчитаны на одной и той же выборке — ${fin.n} ${ruFights(fin.n)} ${range}. Отметка «среднее по UFC» приводится для масштаба.`,
+      s6: 'Ответственность и статус проекта',
+      liability: [
+        ['Проект исследовательский.', `Модель обучена на открытой статистике UFCStats, а её прогнозы проверяются на боях ${range}: ${tr.n_fights} ${ruFights(tr.n_fights)} на ${events(tr.n_events)}. Выборка маленькая, выводы предварительные.`],
+        ['Сервис аналитический и информационный.', 'Мы не принимаем ставок, не продаём прогнозы и не советуем, что делать с этими цифрами.'],
+        ['Ответственность за решения — на том, кто их принимает.', 'Проект не отвечает за финансовые потери, возникшие из-за использования этих данных.'],
+        ['Прошлая точность не гарантирует будущую.', 'Обе модели ошибаются, и все их ошибки показаны на этой странице.'],
       ],
       s5: 'Как считаем',
       method: [
@@ -115,9 +123,17 @@ function copy(lang: Lang, tr: Track) {
       ? "A separate model tried to predict whether a fight ends inside the distance. It lost to a simple rule, so it isn't shown on fight cards — they show the fighters' own history and the UFC average instead."
       : "A separate model tries to predict whether a fight ends inside the distance. It isn't on the cards: the sample is too small to trust it over the fighters' own history and the UFC average.",
     fin: [
-      ['finish model', `${fin.model_hits} of ${fin.n} right`],
-      ['“always a finish” rule', heavy ? 'on the same fights — the sample happened to be finish-heavy' : 'on the same fights'],
-      ['of UFC fights end inside the distance', 'over the last two years — the tick on every fight card'],
+      ['Finish model', `${fin.model_hits} of ${fin.n} right`],
+      ['“Always a finish” rule', heavy ? 'on the same fights — the sample happened to be finish-heavy' : 'on the same fights'],
+      ['UFC average', `finishes across ${tr.ufc_finish_rate_24m.n} fights over two years`],
+    ],
+    finNote: `Both bars are measured on the same sample — ${fin.n} fights, ${range}. The UFC average is there for scale.`,
+    s6: 'Liability and project status',
+    liability: [
+      ['This is a research project.', `The model is trained on public UFCStats data and its forecasts are checked on fights ${range}: ${tr.n_fights} fights across ${events(tr.n_events)}. The sample is small and the conclusions are provisional.`],
+      ['The service is analytical and informational.', 'We take no bets, sell no picks and give no advice on what to do with these numbers.'],
+      ['Decisions are the reader’s own.', 'The project accepts no responsibility for financial losses arising from the use of this data.'],
+      ['Past accuracy does not guarantee future accuracy.', 'Both models get things wrong, and every miss is shown on this page.'],
     ],
     s5: 'Method',
     method: [
@@ -148,13 +164,10 @@ const Panel = ({ children, className }: { children: ReactNode; className?: strin
 
 // ── 1. model vs baselines ──────────────────────────────────────────────────────
 
-function CompareBars({ tr, c }: { tr: Track; c: Copy }) {
-  const [lo, hi] = tr.model.ci95
-  const rows: [string, number, string, string, boolean][] = [
-    [c.rows[0], tr.model.rate, c.of(tr.model.hits, tr.n_fights), BRAND, true],
-    [c.rows[1], tr.favourite.rate, c.of(tr.favourite.hits, tr.n_fights), Z400, false],
-    [c.rows[2], tr.coin.rate, c.avg, Z700, false],
-  ]
+type BarRow = [label: string, rate: number, sub: string, color: string, ci: boolean]
+
+function Bars({ rows, ci95, ciLabel }: { rows: BarRow[]; ci95?: [number, number]; ciLabel?: string }) {
+  const [lo, hi] = ci95 ?? [0, 0]
   const whisker = 'absolute bg-zinc-50/75'
   return (
     <div>
@@ -164,7 +177,7 @@ function CompareBars({ tr, c }: { tr: Track; c: Copy }) {
           <div className="relative col-span-2 row-start-2 h-5 md:col-span-1 md:row-start-auto">
             <div className="a-grow absolute inset-y-0 left-0 rounded-r" style={{ width: `${r * 100}%`, background: col, animationDelay: `${0.1 + i * 0.08}s` }} />
             {ci && (
-              <div title={c.ci} aria-label={c.ci} role="img" className="absolute inset-y-0" style={{ left: `${lo * 100}%`, width: `${(hi - lo) * 100}%` }}>
+              <div title={ciLabel} aria-label={ciLabel} role="img" className="absolute inset-y-0" style={{ left: `${lo * 100}%`, width: `${(hi - lo) * 100}%` }}>
                 <div className={cx(whisker, 'inset-x-0 top-1/2 -mt-px h-0.5')} />
                 <div className={cx(whisker, 'bottom-[3px] left-0 top-[3px] w-0.5')} />
                 <div className={cx(whisker, 'bottom-[3px] right-0 top-[3px] w-0.5')} />
@@ -186,6 +199,32 @@ function CompareBars({ tr, c }: { tr: Track; c: Copy }) {
         </div>
       </div>
     </div>
+  )
+}
+
+function CompareBars({ tr, c }: { tr: Track; c: Copy }) {
+  return (
+    <Bars ci95={tr.model.ci95 as [number, number]} ciLabel={c.ci} rows={[
+      [c.rows[0], tr.model.rate, c.of(tr.model.hits, tr.n_fights), BRAND, true],
+      [c.rows[1], tr.favourite.rate, c.of(tr.favourite.hits, tr.n_fights), Z400, false],
+      [c.rows[2], tr.coin.rate, c.avg, Z700, false],
+    ]} />
+  )
+}
+
+function FinishBars({ tr, c }: { tr: Track; c: Copy }) {
+  const fin = tr.finish
+  const base = tr.ufc_finish_rate_24m.rate
+  const rows: BarRow[] = [
+    [c.fin[0][0], fin.model_rate!, c.fin[0][1], BRAND, false],
+    [c.fin[1][0], fin.always_finish_rate!, c.fin[1][1], Z400, false],
+  ]
+  if (base !== null) rows.push([c.fin[2][0], base, c.fin[2][1], Z700, false])
+  return (
+    <>
+      <Bars rows={rows} />
+      <p className="mb-0 mt-4 text-xs leading-normal text-zinc-500">{c.finNote}</p>
+    </>
   )
 }
 
@@ -319,17 +358,6 @@ function EventDots({ tr, c, lang }: { tr: Track; c: Copy; lang: Lang }) {
   )
 }
 
-function Stat({ value, label, sub, delay = 0 }: { value: number; label: string; sub: string; delay?: number }) {
-  return (
-    <div className="flex flex-col gap-1.5">
-      <CountUp value={value * 100} delay={delay} format={v => `${Math.round(v)}%`}
-        className="text-4xl font-bold leading-none tracking-[-0.02em] text-zinc-50" />
-      <span className="text-[13px] text-zinc-300">{label}</span>
-      <span className="text-xs leading-normal text-zinc-500">{sub}</span>
-    </div>
-  )
-}
-
 // ── page ───────────────────────────────────────────────────────────────────────
 
 export default function Accuracy() {
@@ -350,7 +378,6 @@ export default function Accuracy() {
     return <div className="mx-auto max-w-[1024px] px-4 py-14 text-sm text-zinc-400 md:px-6">{msg}</div>
   }
   const fin = tr.finish
-  const base = tr.ufc_finish_rate_24m.rate
   return (
     <div className="mx-auto max-w-[1024px] px-4 pb-[90px] pt-10 md:px-6 md:pt-[52px]">
       <div className="eyebrow hero-in mb-3.5 text-brand">{c.eyebrow}</div>
@@ -380,13 +407,7 @@ export default function Accuracy() {
       {fin.n > 0 && fin.model_rate !== null && fin.always_finish_rate !== null && (
         <Reveal as="section" className="mt-[52px]">
           <H2 sub={c.s4sub}>{c.s4}</H2>
-          <Panel>
-            <div className="grid grid-cols-1 gap-7 sm:grid-cols-3 sm:gap-8">
-              <Stat value={fin.model_rate} label={c.fin[0][0]} sub={c.fin[0][1]} />
-              <Stat value={fin.always_finish_rate} label={c.fin[1][0]} sub={c.fin[1][1]} delay={150} />
-              {base !== null && <Stat value={base} label={c.fin[2][0]} sub={c.fin[2][1]} delay={300} />}
-            </div>
-          </Panel>
+          <Panel><FinishBars tr={tr} c={c} /></Panel>
         </Reveal>
       )}
 
@@ -395,6 +416,15 @@ export default function Accuracy() {
         <div className="grid grid-cols-1 gap-x-10 gap-y-3.5 text-[13px] leading-relaxed text-zinc-400 md:grid-cols-2">
           {c.method.map(([b, rest]) => <p key={b} className="m-0"><b className="font-semibold text-zinc-300">{b}</b> {rest}</p>)}
         </div>
+      </Reveal>
+
+      <Reveal as="section" className="mt-[52px]">
+        <H2>{c.s6}</H2>
+        <Panel>
+          <div className="grid grid-cols-1 gap-x-10 gap-y-3.5 text-[13px] leading-relaxed text-zinc-400 md:grid-cols-2">
+            {c.liability.map(([b, rest]) => <p key={b} className="m-0"><b className="font-semibold text-zinc-300">{b}</b> {rest}</p>)}
+          </div>
+        </Panel>
       </Reveal>
     </div>
   )

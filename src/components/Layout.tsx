@@ -48,7 +48,7 @@ export function Layout({ children }: { children: ReactNode }) {
   ]
 
   return (
-    <div className="min-h-screen bg-bg">
+    <div className="flex min-h-screen flex-col bg-bg">
       <a href="#main" className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-3 focus:z-50 focus:rounded-md focus:bg-zinc-900 focus:px-3 focus:py-2">
         {t.nav.skip}
       </a>
@@ -91,6 +91,18 @@ export function Layout({ children }: { children: ReactNode }) {
         )}
       </header>
       <main id="main" key={pathname} className="page-in">{children}</main>
+      <footer className="mt-auto border-t border-white/5">
+        <div className="mx-auto grid max-w-[1024px] gap-3 px-4 py-9 text-[12px] leading-[1.6] text-zinc-500 md:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] md:gap-x-10 md:px-6">
+          <p className="m-0">{t.footer.what}</p>
+          <p className="m-0">{t.footer.liability}</p>
+          <p className="m-0 md:col-span-2">
+            {t.footer.data}{' '}
+            <NavLink to="/accuracy" className="text-zinc-400 underline decoration-zinc-700 underline-offset-2 hover:text-zinc-200">
+              {t.footer.accuracy}
+            </NavLink>
+          </p>
+        </div>
+      </footer>
     </div>
   )
 }

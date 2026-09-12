@@ -104,6 +104,14 @@ const ru = {
   emptyText: 'Кард появится здесь, как только UFC опубликует пары. А пока можно посмотреть, как модель отработала прошлый турнир.',
   emptyCta: (name: string) => `Итоги ${name}`,
   updated: (d: string) => `Данные обновлены ${d}`,
+
+  // footer
+  footer: {
+    what: 'fightev — исследовательский аналитический проект: прогнозы ML-модели по открытой статистике UFCStats публикуются как есть, вместе с историей ошибок.',
+    liability: 'Это информационный ресурс. Он не даёт советов по ставкам и не несёт ответственности за решения, принятые на основе этих данных, и за возможные финансовые потери. Прошлая точность не гарантирует будущую.',
+    data: 'Данные о боях и бойцах — UFCStats. Проект не связан с UFC и не представляет его.',
+    accuracy: 'Точность модели и выборка →',
+  },
 }
 
 const verdictRu: Record<Verdict, string> = {
@@ -200,6 +208,13 @@ const en: Dict = {
   emptyText: 'The card will appear here as soon as the UFC confirms the bouts. Meanwhile, see how the model did at the last event.',
   emptyCta: (name: string) => `Results: ${name}`,
   updated: (d: string) => `Data updated ${d}`,
+
+  footer: {
+    what: 'fightev is a research project: forecasts from an ML model built on public UFCStats data, published as they are, together with the record of its misses.',
+    liability: 'This is an information resource. It gives no betting advice and takes no responsibility for decisions made on this data or for any financial losses. Past accuracy does not guarantee future accuracy.',
+    data: 'Fight and fighter data comes from UFCStats. The project is not affiliated with UFC and does not represent it.',
+    accuracy: 'Model accuracy and sample →',
+  },
 }
 
 const DICTS: Record<Lang, Dict> = { ru, en }
