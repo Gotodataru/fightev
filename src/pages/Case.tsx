@@ -3,16 +3,42 @@ import { useData } from '../data'
 import { CountUp, ReadingProgress, Reveal, SplitWords } from '../lib/motion'
 import { useI18n } from '../i18n'
 
-function Shot({ src, alt, tag, caption, delay = 0 }: { src: string; alt: string; tag: string; caption: string; delay?: number }) {
+/** A screenshot that scrolls itself inside a window frame — the page as a visitor sees it. */
+function Demo({ src, alt, tag, caption, height, dur, delay = 0 }: {
+  src: string; alt: string; tag: string; caption: string; height: number; dur: number; delay?: number
+}) {
   return (
     <Reveal delay={delay} className="flex flex-col gap-2.5">
       <figure className="m-0 flex flex-col gap-2.5">
         <div className="surface overflow-hidden rounded-xl border border-line bg-card">
-          <img src={src} alt={alt} width={1440} height={900} loading="lazy" decoding="async" className="block w-full" />
+          <div className="flex items-center gap-1.5 border-b border-line px-3 py-2" aria-hidden>
+            {['#f05d52', '#f5be4f', '#5fc45f'].map(c => (
+              <span key={c} className="h-2.5 w-2.5 rounded-full opacity-70" style={{ background: c }} />
+            ))}
+            <span className="ml-2 h-2 flex-1 rounded-full bg-zinc-800" />
+          </div>
+          <div className="demo-win" style={{ height, '--win': `${height}px`, '--dur': `${dur}s` } as React.CSSProperties}>
+            <img src={src} alt={alt} loading="lazy" decoding="async" />
+          </div>
         </div>
         <figcaption className="text-[13px] leading-normal text-zinc-400">
           <span className="mr-2 font-semibold text-zinc-300">{tag}</span>{caption}
         </figcaption>
+      </figure>
+    </Reveal>
+  )
+}
+
+/** The fight card opening and closing on a loop: the interaction the redesign is built around. */
+function CardDemo({ closed, open, alt, caption }: { closed: string; open: string; alt: string; caption: string }) {
+  return (
+    <Reveal className="flex flex-col gap-2.5">
+      <figure className="m-0 flex flex-col gap-2.5">
+        <div className="demo-card rounded-xl" style={{ '--h0': '84px', '--h1': '420px' } as React.CSSProperties}>
+          <img src={closed} alt={alt} loading="lazy" decoding="async" className="block w-full" />
+          <img src={open} alt="" aria-hidden loading="lazy" decoding="async" className="open block w-full" />
+        </div>
+        <figcaption className="text-[13px] leading-normal text-zinc-400">{caption}</figcaption>
       </figure>
     </Reveal>
   )
@@ -93,22 +119,43 @@ export default function Case() {
       </div>
 
       <div className="mt-11 grid grid-cols-1 gap-4 md:grid-cols-2">
-        <Shot
-          src={`${import.meta.env.BASE_URL}case/before.webp`}
+        <Demo
+          src={`${import.meta.env.BASE_URL}case/demo_old.webp`}
+          height={300} dur={26}
           tag={ru ? 'Было' : 'Before'}
-          alt={ru ? 'Прежний сайт: тёмный экран с заголовком «UFC Analytics. With proof.», кнопками «Free Vault» и «Go Pro» и счётчиками прибыли в юнитах'
-                  : 'The old site: a dark screen headlined “UFC Analytics. With proof.”, with “Free Vault” and “Go Pro” buttons and profit counters in units'}
-          caption={ru ? 'Витрина подписки: юниты прибыли, ROI и винрейт, две кнопки на оплату. О самих боях — ничего.'
-                      : 'A subscription storefront: profit in units, ROI and win rate, two buttons to pay. Nothing about the fights themselves.'} />
-        <Shot
-          src={`${import.meta.env.BASE_URL}case/after.webp`}
-          delay={90}
+          alt={ru ? 'Прежний сайт, прокрутка: заголовок «UFC Analytics. With proof.», счётчики прибыли, тарифы и кнопки оплаты'
+                  : 'The old site scrolling: the “UFC Analytics. With proof.” headline, profit counters, pricing and pay buttons'}
+          caption={ru ? 'Витрина подписки: юниты прибыли, ROI, тарифы. О самих боях — ничего.'
+                      : 'A subscription storefront: profit in units, ROI, pricing. Nothing about the fights themselves.'} />
+        <Demo
+          src={`${import.meta.env.BASE_URL}case/demo_new.webp`}
+          height={300} dur={20} delay={90}
           tag={ru ? 'Стало' : 'After'}
-          alt={ru ? 'Нынешний сайт: афиша турнира, под ней четыре показателя модели и начало карда с раскрытым главным боем'
-                  : 'The current site: the event poster, four model figures under it and the card below, with the headliner already open'}
-          caption={ru ? 'Афиша турнира, счёт модели сразу под ней и кард ниже: каждый бой раскрывается в разбор с прогнозом и статистикой.'
-                      : 'The event poster, the model’s record right under it and the card below: every fight opens into a breakdown with its forecast and stats.'} />
+          alt={ru ? 'Нынешний сайт, прокрутка: афиша турнира, показатели модели и кард из двенадцати боёв'
+                  : 'The current site scrolling: the event poster, the model’s figures and a card of twelve fights'}
+          caption={ru ? 'Афиша турнира, счёт модели и кард: двенадцать боёв, каждый со своим прогнозом.'
+                      : 'The event poster, the model’s record and the card: twelve fights, each with its own forecast.'} />
       </div>
+
+      <section className="mt-9">
+        <Reveal>
+          <h2 className="m-0 mb-1.5 text-[22px] font-bold tracking-[-0.015em] text-zinc-50">
+            {ru ? 'Главное действие — раскрыть бой' : 'The one action: open a fight'}
+          </h2>
+          <p className="mb-[18px] mt-0 max-w-[620px] text-[13px] leading-[1.55] text-zinc-400">
+            {ru
+              ? 'Строка боя показывает главное: кто фаворит и насколько. Клик разворачивает разбор — сравнение бойцов, прогноз на победу, досрочку и историю. Открыт всегда один бой.'
+              : 'A row shows the essentials: who the favourite is and by how much. A click unfolds the breakdown — the tape, the win forecast, the finish and the history. One fight is open at a time.'}
+          </p>
+        </Reveal>
+        <CardDemo
+          closed={`${import.meta.env.BASE_URL}case/demo_card_closed.webp`}
+          open={`${import.meta.env.BASE_URL}case/demo_card_open.webp`}
+          alt={ru ? 'Карточка боя: свёрнутая строка разворачивается в разбор с прогнозом и статистикой'
+                  : 'A fight card: the collapsed row unfolds into a breakdown with the forecast and stats'}
+          caption={ru ? 'Одна строка — один бой. Разбор появляется на месте, без перехода на отдельную страницу.'
+                      : 'One row, one fight. The breakdown appears in place, with no separate page to visit.'} />
+      </section>
 
       <div className="mt-11">
         <Para title={ru ? 'Задача' : 'Problem'}>

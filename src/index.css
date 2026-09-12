@@ -263,23 +263,55 @@ a:hover { color: rgb(var(--brand-hover)); }
   animation: sk 1.4s linear infinite;
 }
 
+/* ── case-study demos ────────────────────────────────────────────────────────
+   A window that scrolls its own screenshot, and a card that opens on a loop.
+   Both stay paused until the block is on screen (.io.in), and never run under
+   prefers-reduced-motion. */
+@keyframes demoScroll {
+  0%, 6% { transform: translateY(0); }
+  94%, 100% { transform: translateY(calc(var(--win) - 100%)); }
+}
+.demo-win { position: relative; overflow: hidden; }
+.demo-win img { display: block; width: 100%; animation: demoScroll var(--dur, 20s) ease-in-out infinite alternate; animation-play-state: paused; }
+.io.in .demo-win img { animation-play-state: running; }
+
+@keyframes demoOpen { 0%, 16% { height: var(--h0); } 44%, 100% { height: var(--h1); } }
+@keyframes demoSwap { 0%, 14% { opacity: 0; } 40%, 100% { opacity: 1; } }
+.demo-card { position: relative; overflow: hidden; height: var(--h0); animation: demoOpen 7s var(--ease) infinite alternate; animation-play-state: paused; }
+.demo-card .open { position: absolute; inset: 0 0 auto; opacity: 0; animation: demoSwap 7s var(--ease) infinite alternate; animation-play-state: paused; }
+.io.in .demo-card, .io.in .demo-card .open { animation-play-state: running; }
+
+/* the headliner sits apart from the rest of the card: a brand-tinted plate */
+.fight-card.headliner {
+  background-image: linear-gradient(150deg, rgb(var(--brand) / .07) 0%, transparent 42%);
+}
+.fight-card.headliner.closed:hover { border-color: rgb(var(--brand) / .5) !important; }
+
 /* panel modules: a deck. They overlap slightly, the one being read lifts to the front,
    and on open each slides out from under the one above it. */
-@keyframes stackOut { from { opacity: 0; transform: translateY(-18px) scale(.96); } to { opacity: 1; transform: scale(var(--s, .98)); } }
+@keyframes stackOut { from { opacity: 0; transform: translateY(-18px); } to { opacity: 1; transform: none; } }
 .stack-item {
-  --s: .98;
-  animation: stackOut .5s var(--ease) both; animation-delay: var(--d, 0ms);
+  --s: .985;
   transform: scale(var(--s));
-  transition: transform .35s var(--ease), box-shadow .35s var(--ease), border-color .25s ease;
+  transition: transform .4s var(--ease), box-shadow .4s var(--ease), border-color .3s ease;
+  will-change: transform;
 }
+/* the deal-in animation lives on an inner wrapper: the outer transform stays free for hover */
+.stack-in { animation: stackOut .5s var(--ease) both; animation-delay: var(--d, 0ms); }
 .stack-item.lead { --s: 1; }
 .stack-item + .stack-item { margin-top: -7px; }
 .stack-item:hover, .stack-item:focus-within {
-  --s: 1.025;
+  --s: 1.03;
   z-index: 40 !important;
-  border-color: rgb(var(--brand) / .38) !important;
-  box-shadow: 0 18px 44px -26px rgb(var(--shadow) / calc(var(--shadow-a) + .1)), 0 0 0 1px rgb(var(--brand) / .1);
+  border-color: rgb(var(--brand) / .45) !important;
+  box-shadow: 0 22px 50px -24px rgb(var(--shadow) / calc(var(--shadow-a) + .12)), 0 0 0 1px rgb(var(--brand) / .14);
 }
+.stack-item::after {
+  content: ''; position: absolute; inset: 0; border-radius: inherit; pointer-events: none;
+  background: linear-gradient(140deg, rgb(var(--brand) / .07), transparent 55%);
+  opacity: 0; transition: opacity .35s var(--ease);
+}
+.stack-item:hover::after, .stack-item:focus-within::after { opacity: 1; }
 @media (hover: none) {
   .stack-item + .stack-item { margin-top: 0; }
   .stack-item { --s: 1; }
@@ -288,26 +320,26 @@ a:hover { color: rgb(var(--brand-hover)); }
 /* hero artwork: masked on every edge so it melts into the page instead of ending in a hard box */
 .hero-art { isolation: isolate; }
 .hero-art img {
-  -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 46%), linear-gradient(180deg, transparent 0, #000 12%, #000 82%, transparent 100%);
-  mask-image: linear-gradient(90deg, transparent 0, #000 46%), linear-gradient(180deg, transparent 0, #000 12%, #000 82%, transparent 100%);
-  -webkit-mask-composite: source-in;
-  mask-composite: intersect;
+  -webkit-mask-image: radial-gradient(125% 108% at 74% 52%, #000 26%, rgb(0 0 0 / .75) 48%, transparent 82%);
+  mask-image: radial-gradient(125% 108% at 74% 52%, #000 26%, rgb(0 0 0 / .75) 48%, transparent 82%);
 }
-.hero-art-m img { transform: scale(1.42); transform-origin: 50% 24%; }
 .hero-art-m img {
-  -webkit-mask-image: linear-gradient(180deg, #000 46%, transparent 100%);
-  mask-image: linear-gradient(180deg, #000 46%, transparent 100%);
+  transform: scale(1.42); transform-origin: 50% 24%;
+  -webkit-mask-image: radial-gradient(92% 108% at 52% 42%, #000 24%, rgb(0 0 0 / .8) 52%, transparent 88%);
+  mask-image: radial-gradient(92% 108% at 52% 42%, #000 24%, rgb(0 0 0 / .8) 52%, transparent 88%);
 }
 .hero-art::after {
   content: ''; position: absolute; inset: 0; pointer-events: none;
   background:
-    linear-gradient(90deg, rgb(var(--bg)) 4%, rgb(var(--bg) / .45) 34%, transparent 62%),
-    radial-gradient(60% 55% at 72% 58%, rgb(var(--brand) / .14), transparent 72%);
+    linear-gradient(90deg, rgb(var(--bg)) 2%, rgb(var(--bg) / .5) 30%, transparent 60%),
+    linear-gradient(180deg, rgb(var(--bg)) 0%, rgb(var(--bg) / .35) 14%, transparent 34%),
+    linear-gradient(0deg, rgb(var(--bg)) 0%, rgb(var(--bg) / .35) 12%, transparent 30%),
+    radial-gradient(60% 55% at 72% 58%, rgb(var(--brand) / .13), transparent 72%);
 }
 .hero-art-m::after {
   background:
-    linear-gradient(180deg, transparent 30%, rgb(var(--bg) / .6) 72%, rgb(var(--bg)) 100%),
-    radial-gradient(70% 60% at 60% 40%, rgb(var(--brand) / .14), transparent 72%);
+    linear-gradient(180deg, rgb(var(--bg)) 0%, rgb(var(--bg) / .4) 12%, transparent 34%, rgb(var(--bg) / .65) 76%, rgb(var(--bg)) 100%),
+    radial-gradient(70% 60% at 55% 40%, rgb(var(--brand) / .13), transparent 72%);
 }
 
 /* hero */
@@ -334,7 +366,11 @@ a:hover { color: rgb(var(--brand-hover)); }
 @media (prefers-reduced-motion: reduce) {
   .btn-brand::after { display: none; }
   .read-bar, .site-header, .theme-switch svg { transition: none !important; }
-  .stack-item { animation: none !important; transform: none !important; transition: none !important; }
+  .demo-win img, .demo-card, .demo-card .open { animation: none !important; }
+  .demo-card { height: var(--h1) !important; }
+  .demo-card .open { opacity: 1 !important; }
+  .stack-item { transform: none !important; transition: none !important; }
+  .stack-in { animation: none !important; }
   .xp, .a-grow, .a-grow-r, .pin, .rowin, .pop, .fadein, .sk, .page-in, .menu-in, .menu-in > * > *,
   .word, .hero-in, .from-left, .from-right, .breathe, .line-in, .live-dot::after { animation: none !important; }
   .draw { animation: none !important; stroke-dashoffset: 0; }

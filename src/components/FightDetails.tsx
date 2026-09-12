@@ -68,9 +68,11 @@ function WinRow({ p1, f1, f2 }: { p1: number; f1: Fighter; f2: Fighter }) {
 export function Module({ title, extra, children, i = 0, lead = false }: { title: string; extra?: ReactNode; children: ReactNode; i?: number; lead?: boolean }) {
   return (
     <section className={cx('stack-item relative rounded-xl border border-line bg-mod px-4 py-3.5', lead && 'lead')}
-      style={{ zIndex: 30 - i, animationDelay: `${i * 90}ms` } as React.CSSProperties}>
-      <SectionLabel extra={extra}>{title}</SectionLabel>
-      {children}
+      style={{ zIndex: 30 - i } as React.CSSProperties}>
+      <div className="stack-in" style={{ '--d': `${i * 90}ms` } as React.CSSProperties}>
+        <SectionLabel extra={extra}>{title}</SectionLabel>
+        {children}
+      </div>
     </section>
   )
 }

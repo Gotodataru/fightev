@@ -99,13 +99,13 @@ function ResultCenter({ fight }: { fight: Fight }) {
 
 // ── desktop ────────────────────────────────────────────────────────────────────
 
-function DesktopSide({ f, open, right }: { f: Fighter; open: boolean; right?: boolean }) {
+function DesktopSide({ f, open, right, big }: { f: Fighter; open: boolean; right?: boolean; big?: boolean }) {
   const { t } = useI18n()
   return (
     <div className={cx('flex min-w-0 items-center gap-3.5', right && 'flex-row-reverse text-right')}>
-      {!open && <Avatar f={f} />}
+      {!open && <Avatar f={f} size={big ? 60 : undefined} />}
       <div className="min-w-0">
-        <div className="truncate text-[15px] font-semibold text-zinc-50">{f.name}</div>
+        <div className={cx('truncate font-semibold text-zinc-50', big ? 'text-[19px] tracking-[-0.01em]' : 'text-[15px]')}>{f.name}</div>
         <div className="mt-[3px] font-mono text-[11px] text-zinc-500">{record(f, t)}</div>
       </div>
     </div>
@@ -146,17 +146,17 @@ function DesktopPanel({ fight, track, index, total, onGo }: {
 
 // ── mobile ─────────────────────────────────────────────────────────────────────
 
-function MobileSide({ f, open, right }: { f: Fighter; open: boolean; right?: boolean }) {
+function MobileSide({ f, open, right, big }: { f: Fighter; open: boolean; right?: boolean; big?: boolean }) {
   const { t } = useI18n()
   const i = f.name.indexOf(' ')
   const first = i < 0 ? '' : f.name.slice(0, i)
   const last = i < 0 ? f.name : f.name.slice(i + 1)
   return (
     <div className={cx('flex min-w-0 flex-1 items-center gap-2.5', right && 'flex-row-reverse')}>
-      {!open && <Avatar f={f} size={44} />}
+      {!open && <Avatar f={f} size={big ? 52 : 44} />}
       <div className={cx('flex min-w-0 flex-1 flex-col gap-px', right && 'text-right')}>
         <div className="h-3.5 truncate text-[11px] leading-[14px] text-zinc-400">{first || ' '}</div>
-        <div className="truncate text-sm font-semibold leading-[18px] text-zinc-50">{last}</div>
+        <div className={cx('truncate font-semibold text-zinc-50', big ? 'text-[17px] leading-[21px]' : 'text-sm leading-[18px]')}>{last}</div>
         <div className="whitespace-nowrap font-mono text-[11px] leading-[14px] text-zinc-500">{record(f, t)}</div>
       </div>
     </div>
@@ -253,24 +253,33 @@ export const FightCard = forwardRef<HTMLDivElement, Props>(function FightCard(
   const toggle = solo ? undefined : onToggle
 
   return (
-    <div ref={ref} id={solo ? 'main-fight' : `fight-${index + 1}`} className={cx('fight-card surface scroll-mt-3 overflow-hidden rounded-xl bg-card', !open && 'closed')}
-      style={{ border: `1px solid ${open ? 'rgb(var(--brand) / 0.28)' : 'var(--c-line)'}`,
+    <div ref={ref} id={solo ? 'main-fight' : `fight-${index + 1}`}
+      className={cx('fight-card surface scroll-mt-3 overflow-hidden rounded-xl bg-card', !open && 'closed', fight.main_event && 'headliner')}
+      style={{ border: `1px solid ${open || fight.main_event ? 'rgb(var(--brand) / 0.28)' : 'var(--c-line)'}`,
                boxShadow: open ? '0 0 0 1px rgb(var(--brand) / 0.06), 0 24px 60px -30px rgb(var(--brand) / 0.25)' : undefined }}>
-      {label && <div className="eyebrow px-3.5 pt-3 text-zinc-500 md:px-5">{label}</div>}
+      {label && (
+        <div className="flex items-center gap-2 px-3.5 pt-3 md:px-5">
+          {fight.main_event
+            ? <span className="eyebrow inline-flex items-center gap-1.5 rounded-md border border-brand/30 bg-brand/10 px-2 py-1 text-brand">
+                <span className="h-1.5 w-1.5 rounded-full bg-brand" aria-hidden />{label}
+              </span>
+            : <span className="eyebrow text-zinc-500">{label}</span>}
+        </div>
+      )}
 
       {desktopRow ? (
         <div className={cx('grid grid-cols-[minmax(0,1fr)_240px_minmax(0,1fr)_20px] items-center gap-6 px-5 py-4 lg:grid-cols-[minmax(0,1fr)_290px_minmax(0,1fr)_20px] lg:gap-7', !solo && 'fight-row')}
           onClick={toggle}>
-          <DesktopSide f={f1} open={open} />
+          <DesktopSide f={f1} open={open} big={fight.main_event} />
           <div>{center}</div>
-          <DesktopSide f={f2} open={open} right />
+          <DesktopSide f={f2} open={open} right big={fight.main_event} />
           {!solo && <ToggleButton fight={fight} open={open} controls={panelId} onToggle={onToggle} />}
         </div>
       ) : (
         <div className={cx('flex min-h-11 flex-col gap-3 px-3.5 pb-3 pt-3.5', !solo && 'fight-row')} onClick={toggle}>
           <div className="flex items-center gap-2.5">
-            <MobileSide f={f1} open={open} />
-            <MobileSide f={f2} open={open} right />
+            <MobileSide f={f1} open={open} big={fight.main_event} />
+            <MobileSide f={f2} open={open} right big={fight.main_event} />
           </div>
           {open ? (
             <div className="flex items-center justify-between">
