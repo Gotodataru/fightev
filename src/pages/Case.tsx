@@ -11,12 +11,6 @@ function Demo({ src, alt, tag, caption, height, dur, delay = 0 }: {
     <Reveal delay={delay} className="flex flex-col gap-2.5">
       <figure className="m-0 flex flex-col gap-2.5">
         <div className="surface overflow-hidden rounded-xl border border-line bg-card">
-          <div className="flex items-center gap-1.5 border-b border-line px-3 py-2" aria-hidden>
-            {['#f05d52', '#f5be4f', '#5fc45f'].map(c => (
-              <span key={c} className="h-2.5 w-2.5 rounded-full opacity-70" style={{ background: c }} />
-            ))}
-            <span className="ml-2 h-2 flex-1 rounded-full bg-zinc-800" />
-          </div>
           <div className="demo-win" style={{ height, '--win': `${height}px`, '--dur': `${dur}s` } as React.CSSProperties}>
             <img src={src} alt={alt} loading="lazy" decoding="async" />
           </div>
@@ -97,7 +91,7 @@ export default function Case() {
   return (
     <article className="mx-auto max-w-[880px] px-4 pb-[90px] pt-10 md:px-6 md:pt-14">
       <ReadingProgress />
-      <div className="eyebrow hero-in mb-3.5 text-brand">{ru ? 'О проекте · кейс' : 'About · case study'}</div>
+      <div className="eyebrow hero-in mb-3.5 text-brand">{ru ? 'О проекте — кейс' : 'About — case study'}</div>
       <h1 className="m-0 text-[32px] font-bold leading-[1.1] tracking-[-0.025em] md:text-[44px]">
         <SplitWords text={ru ? 'Прогнозы, которые основаны на реальной статистике' : 'Forecasts grounded in real statistics'} delay={80} step={45} />
       </h1>
@@ -128,7 +122,7 @@ export default function Case() {
           caption={ru ? 'Витрина подписки: юниты прибыли, ROI, тарифы. О самих боях — ничего.'
                       : 'A subscription storefront: profit in units, ROI, pricing. Nothing about the fights themselves.'} />
         <Demo
-          src={`${import.meta.env.BASE_URL}case/demo_new.webp`}
+          src={`${import.meta.env.BASE_URL}case/demo_new${ru ? '' : '_en'}.webp`}
           height={300} dur={20} delay={90}
           tag={ru ? 'Стало' : 'After'}
           alt={ru ? 'Нынешний сайт, прокрутка: афиша турнира, показатели модели и кард из двенадцати боёв'
@@ -149,8 +143,8 @@ export default function Case() {
           </p>
         </Reveal>
         <CardDemo
-          closed={`${import.meta.env.BASE_URL}case/demo_card_closed.webp`}
-          open={`${import.meta.env.BASE_URL}case/demo_card_open.webp`}
+          closed={`${import.meta.env.BASE_URL}case/demo_card_closed${ru ? '' : '_en'}.webp`}
+          open={`${import.meta.env.BASE_URL}case/demo_card_open${ru ? '' : '_en'}.webp`}
           alt={ru ? 'Карточка боя: свёрнутая строка разворачивается в разбор с прогнозом и статистикой'
                   : 'A fight card: the collapsed row unfolds into a breakdown with the forecast and stats'}
           caption={ru ? 'Одна строка — один бой. Разбор появляется на месте, без перехода на отдельную страницу.'

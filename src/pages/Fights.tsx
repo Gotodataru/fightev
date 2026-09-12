@@ -15,11 +15,10 @@ function Hero({ card, track, onBreakdown, wide }: {
   const ev = card.event!
   const days = daysUntil(ev.date)
   const finished = card.fights.some(f => f.result)
-  const upcoming = days >= 0 && !finished
-  const eyebrow = days > 0 ? `${t.nextEvent} · ${t.inDays(days)}`
-    : days === 0 ? `${t.nextEvent} · ${t.today}`
-    : finished ? t.eventDone : t.eventPast
+  const when = !finished && days > 0 ? t.inDays(days) : !finished && days === 0 ? t.today : null
+  const eyebrow = when ? t.nextEvent : finished ? t.eventDone : t.eventPast
   const dateLine = capitalize(formatDate(ev.date, t.locale, { weekday: 'long', day: 'numeric', month: 'long' }))
+    + ' — ' + t.fights(card.fights.length)
   // the headliner may have no forecast (then the log starts with the co-main) — fall back to the first fight
   const heroIndex = Math.max(0, card.fights.findIndex(f => f.main_event))
   const parallax = useParallax(0.08, wide)
@@ -35,7 +34,7 @@ function Hero({ card, track, onBreakdown, wide }: {
   ]
 
   const artwork = (
-    <div className="hero-art pointer-events-none absolute inset-y-0 right-0 w-[64%] max-w-[1000px]"
+    <div className="hero-art pointer-events-none absolute inset-y-0 right-0 w-[58%] max-w-[760px]"
       style={{ transform: `translateY(${parallax}px)` }} aria-hidden>
       <img src={`${import.meta.env.BASE_URL}hero.webp`} alt="" width={1280} height={853} fetchPriority="high"
         className="h-full w-full object-cover object-[46%_26%]" />
@@ -55,8 +54,9 @@ function Hero({ card, track, onBreakdown, wide }: {
   )
 
   const eyebrowEl = (
-    <div className="eyebrow hero-in flex items-center gap-2 text-brand" style={d(0)}>
-      {upcoming && <span className="live-dot" aria-hidden />}{eyebrow}
+    <div className="eyebrow hero-in flex items-center gap-2.5 text-brand" style={d(0)}>
+      {eyebrow}
+      {when && <><span className="h-3 w-px bg-brand/40" aria-hidden />{when}</>}
     </div>
   )
   const buttons = (cls: string) => (
@@ -84,9 +84,7 @@ function Hero({ card, track, onBreakdown, wide }: {
           <h1 id="event-title" className="m-0 mt-2.5 text-[30px] font-bold leading-[1.1] tracking-[-0.02em]">
             <SplitWords text={ev.name} delay={120} />
           </h1>
-          <div className="hero-in mt-2.5 text-[13px] text-zinc-400" style={d(200 + words * 45)}>
-            {dateLine} · {t.fights(card.fights.length)}
-          </div>
+          <div className="hero-in mt-2.5 text-[13px] text-zinc-400" style={d(200 + words * 45)}>{dateLine}</div>
           {buttons('mt-5')}
           <div className="mt-7">{statRow}</div>
         </div>
@@ -97,19 +95,19 @@ function Hero({ card, track, onBreakdown, wide }: {
   return (
     <section className="relative flex min-h-[560px] items-center overflow-hidden border-b border-hair lg:min-h-[640px]"
       aria-labelledby="event-title">
-      {artwork}
-      <div className="relative mx-auto w-full max-w-[1024px] px-6 py-14">
+      <div className="relative mx-auto w-full max-w-[1240px] px-6">
+        {artwork}
+        <div className="relative py-14 xl:pl-[calc((100%-1024px)/2)]">
         <div className="max-w-[620px]">
           {eyebrowEl}
           <h1 id="event-title" className="m-0 mt-4 text-[46px] font-bold leading-[1.04] tracking-[-0.03em] lg:text-[58px]">
             <SplitWords text={ev.name} delay={100} />
           </h1>
-          <div className="hero-in mt-4 text-base text-zinc-400" style={d(200 + words * 45)}>
-            {dateLine} · {t.fights(card.fights.length)}
-          </div>
+          <div className="hero-in mt-4 text-base text-zinc-400" style={d(200 + words * 45)}>{dateLine}</div>
           {buttons('mt-8')}
         </div>
-        <div className="mt-12 max-w-[820px]">{statRow}</div>
+          <div className="mt-12 max-w-[820px]">{statRow}</div>
+        </div>
       </div>
     </section>
   )

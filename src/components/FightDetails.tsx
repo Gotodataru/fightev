@@ -36,8 +36,8 @@ export function resultText(fight: Fight, t: ReturnType<typeof useI18n>['t']): st
   if (!r || r.winner === 0) return null
   const w = lastName((r.winner === 1 ? fight.fighter_1 : fight.fighter_2).name)
   const m = t.method[r.method] ?? r.method
-  if (r.method === 'DEC' || !r.round) return `${w} · ${m}`
-  return `${w} · ${m}, ${t.roundN(r.round)}${r.time ? `, ${r.time}` : ''}`
+  if (r.method === 'DEC' || !r.round) return `${w} — ${m}`
+  return `${w} — ${m}, ${t.roundN(r.round)}${r.time ? `, ${r.time}` : ''}`
 }
 
 // ── prediction ─────────────────────────────────────────────────────────────────
@@ -139,7 +139,7 @@ export function PredictionBlock({ fight, track, first = 0 }: { fight: Fight; tra
         extra={lowData(fight) ? <Tag>{t.lowDataLong}</Tag> : undefined}>
       <div className="mb-3.5 flex flex-wrap items-center gap-x-3 gap-y-2">
         <span className="text-[17px] font-semibold tracking-[-0.01em] text-zinc-50">
-          {t.verdict(v)}{v !== 'even' && <> · {fav.name}</>}
+          {t.verdict(v)}{v !== 'even' && <> — {fav.name}</>}
         </span>
         {done && <ResultBadge fight={fight} />}
       </div>
@@ -234,7 +234,7 @@ function FormChips({ f, align }: { f: Fighter; align: 'start' | 'end' }) {
           : x.res === 'L' ? { background: Z800, color: Z400 }
           : { border: `1px solid ${Z700}`, color: Z400 }
         const date = formatDate(x.date, t.locale, { day: '2-digit', month: '2-digit', year: 'numeric' })
-        const label = `${x.res} ${t.vs} ${x.opp} · ${x.method !== 'OTHER' ? t.method[x.method] + ' · ' : ''}${date}`
+        const label = `${x.res} ${t.vs} ${x.opp}, ${x.method !== 'OTHER' ? t.method[x.method] + ', ' : ''}${date}`
         return (
           <li key={x.date + x.opp} title={label} aria-label={label} className="flex flex-col items-center gap-1">
             <span className="pop flex h-7 w-7 items-center justify-center rounded-[7px] font-mono text-xs font-bold"
@@ -261,10 +261,7 @@ export function SidePanel({ f, align = 'start' }: { f: Fighter; align?: 'start' 
         <div className={cx('flex min-h-[38px] flex-col gap-1 text-xs text-zinc-500', right ? 'items-end' : 'items-start')}>
           {f.nickname && <span>«{f.nickname}»</span>}
           {lm !== null && (
-            <span className={cx('inline-flex items-center gap-1.5', long && 'text-zinc-300')}>
-              {long && <span className="h-1.5 w-1.5 rounded-full bg-zinc-300" aria-hidden />}
-              {t.lastFight(lm)}
-            </span>
+            <span className={cx(long && 'font-medium text-zinc-300')}>{t.lastFight(lm)}</span>
           )}
         </div>
       )}
@@ -275,7 +272,7 @@ export function SidePanel({ f, align = 'start' }: { f: Fighter; align?: 'start' 
             <div className="a-grow flex h-1.5 gap-0.5 overflow-hidden rounded-full" aria-hidden>
               {segs.map(([k, v, c]) => <div key={k} style={{ width: `${(v / tot) * 100}%`, background: c }} />)}
             </div>
-            <div className="mt-[7px] font-mono text-[11px] text-zinc-400">{segs.map(([k, v]) => `${k} ${v}`).join(' · ')}</div>
+            <div className="mt-[7px] font-mono text-[11px] text-zinc-400">{segs.map(([k, v]) => `${k} ${v}`).join('   ')}</div>
           </>
         ) : <span className="text-[11px] text-zinc-600">{t.noWins}</span>}
       </div>

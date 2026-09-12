@@ -1,4 +1,4 @@
-import { forwardRef, useEffect, useId, useState, type ReactNode } from 'react'
+import { Fragment, forwardRef, useEffect, useId, useState, type ReactNode } from 'react'
 import { Link } from 'react-router-dom'
 import type { Fight, Fighter, Track } from '../data'
 import { useI18n } from '../i18n'
@@ -241,11 +241,12 @@ export const FightCard = forwardRef<HTMLDivElement, Props>(function FightCard(
   const { t } = useI18n()
   const panelId = useId()
   const f1 = fight.fighter_1, f2 = fight.fighter_2
-  const label = fight.main_event
-    ? `${fight.title_fight ? t.titleFight : t.mainEvent} · ${t.rounds(fight.num_rounds)}`
+  // label parts, joined by a hairline in the markup — no middots
+  const parts: string[] = fight.main_event
+    ? [fight.title_fight ? t.titleFight : t.mainEvent, t.rounds(fight.num_rounds)]
     : fight.num_rounds === 5 || fight.title_fight
-      ? `${fight.title_fight ? t.titleFight : ''}${fight.title_fight ? ' · ' : ''}${t.rounds(fight.num_rounds)}`
-      : null
+      ? [fight.title_fight ? t.titleFight : '', t.rounds(fight.num_rounds)].filter(Boolean)
+      : []
 
   const center = open
     ? null
@@ -257,13 +258,27 @@ export const FightCard = forwardRef<HTMLDivElement, Props>(function FightCard(
       className={cx('fight-card surface scroll-mt-3 overflow-hidden rounded-xl bg-card', !open && 'closed', fight.main_event && 'headliner')}
       style={{ border: `1px solid ${open || fight.main_event ? 'rgb(var(--brand) / 0.28)' : 'var(--c-line)'}`,
                boxShadow: open ? '0 0 0 1px rgb(var(--brand) / 0.06), 0 24px 60px -30px rgb(var(--brand) / 0.25)' : undefined }}>
-      {label && (
+      {parts.length > 0 && (
         <div className="flex items-center gap-2 px-3.5 pt-3 md:px-5">
-          {fight.main_event
-            ? <span className="eyebrow inline-flex items-center gap-1.5 rounded-md border border-brand/30 bg-brand/10 px-2 py-1 text-brand">
-                <span className="h-1.5 w-1.5 rounded-full bg-brand" aria-hidden />{label}
-              </span>
-            : <span className="eyebrow text-zinc-500">{label}</span>}
+          {fight.main_event ? (
+            <span className="inline-flex items-center gap-2.5 rounded-md border border-brand/30 bg-brand/10 px-2.5 py-1 text-[12px] font-semibold uppercase tracking-[0.1em] text-brand">
+              {parts.map((x, i) => (
+                <Fragment key={x}>
+                  {i > 0 && <span className="h-3 w-px bg-brand/35" aria-hidden />}
+                  {x}
+                </Fragment>
+              ))}
+            </span>
+          ) : (
+            <span className="inline-flex items-center gap-2 text-[11px] font-semibold uppercase tracking-[0.1em] text-zinc-500">
+              {parts.map((x, i) => (
+                <Fragment key={x}>
+                  {i > 0 && <span className="h-2.5 w-px bg-zinc-700" aria-hidden />}
+                  {x}
+                </Fragment>
+              ))}
+            </span>
+          )}
         </div>
       )}
 

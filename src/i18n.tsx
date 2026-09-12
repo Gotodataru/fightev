@@ -23,7 +23,7 @@ const ru = {
   // hero
   nextEvent: 'Ближайший турнир',
   eventDone: 'Турнир завершён',
-  eventPast: 'Турнир прошёл · результаты скоро',
+  eventPast: 'Турнир прошёл — результаты скоро',
   today: 'сегодня',
   inDays: (d: number) => `через ${d} ${ruPlural(d, 'день', 'дня', 'дней')}`,
   mainEvent: 'Главный бой',
@@ -142,7 +142,7 @@ const en: Dict = {
 
   nextEvent: 'Next event',
   eventDone: 'Event completed',
-  eventPast: 'Event finished · results soon',
+  eventPast: 'Event finished — results soon',
   today: 'today',
   inDays: (d: number) => (d === 1 ? 'tomorrow' : `in ${d} days`),
   mainEvent: 'Main event',
