@@ -122,9 +122,13 @@ function DesktopPanel({ fight, track }: { fight: Fight; track: Track }) {
           <Portrait f={fight.fighter_1} fav={p1 > 0.5} />
           <SidePanel f={fight.fighter_1} />
         </div>
-        <div className="flex flex-col gap-[30px] pt-2">
+        <div className="flex flex-col gap-2.5 pt-1">
           <PredictionBlock fight={fight} track={track} />
-          <div><SectionLabel>{t.tape}</SectionLabel><TapeDesktop fight={fight} /></div>
+          <section className="stack-item relative rounded-xl border border-line bg-zinc-900/50 px-4 py-3.5"
+            style={{ zIndex: 17, animationDelay: '270ms' }}>
+            <SectionLabel>{t.tape}</SectionLabel>
+            <TapeDesktop fight={fight} />
+          </section>
         </div>
         <div className="flex flex-col items-end gap-[18px]">
           <Portrait f={fight.fighter_2} fav={p1 < 0.5} />

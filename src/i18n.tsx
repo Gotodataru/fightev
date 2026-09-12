@@ -37,8 +37,6 @@ const ru = {
 
   // list
   card: 'Кард',
-  restTitle: 'Остальные бои',
-  ctaRest: 'Остальные бои',
   legend: 'зелёным — преимущество по модели или статистике',
   win: 'победа',
   predictionWas: 'прогноз был',
@@ -153,8 +151,6 @@ const en: Dict = {
   ctaAccuracy: 'How the model performed',
 
   card: 'Fight card',
-  restTitle: 'Rest of the card',
-  ctaRest: 'Rest of the card',
   legend: 'green marks the edge — by the model or the stats',
   win: 'win',
   predictionWas: 'forecast was',

@@ -43,9 +43,9 @@
   --glow-a: 0.12;            /* brand glow behind the hero */
   --glow-b: 0.16;            /* brand glow behind a favourite's portrait */
   --hairline-hover: 82 82 91;
-  --amb-a: 0.07;             /* ambient brand wash */
+  --amb-a: 0.05;             /* ambient brand wash */
   --sheen: 255 255 255;      /* lit upper edge of a surface */
-  --sheen-a: 0.035;
+  --sheen-a: 0.028;
 
   /* ready-made colours for SVG attributes and inline styles */
   --c-bg: rgb(var(--bg));
@@ -102,7 +102,7 @@
   --glow-a: 0.10;
   --glow-b: 0.12;
   --hairline-hover: 161 161 170;
-  --amb-a: 0.10;
+  --amb-a: 0.07;
   --sheen: 255 255 255;
   --sheen-a: 0.9;
 }
@@ -127,15 +127,16 @@ a:hover { color: rgb(var(--brand-hover)); }
 .ambient {
   position: fixed; inset: 0; pointer-events: none; z-index: 0;
   background:
-    radial-gradient(60% 42% at 78% -4%, rgb(var(--brand) / var(--amb-a)), transparent 70%),
-    radial-gradient(46% 34% at 4% 8%, rgb(var(--brand) / calc(var(--amb-a) * 0.55)), transparent 72%),
-    radial-gradient(80% 50% at 50% 108%, rgb(var(--brand) / calc(var(--amb-a) * 0.5)), transparent 72%);
+    radial-gradient(90% 70% at 82% -14%, rgb(var(--brand) / var(--amb-a)), transparent 78%),
+    radial-gradient(70% 55% at -6% 4%, rgb(var(--brand) / calc(var(--amb-a) * 0.45)), transparent 80%),
+    radial-gradient(120% 70% at 50% 116%, rgb(var(--brand) / calc(var(--amb-a) * 0.38)), transparent 78%);
+  filter: blur(12px);
 }
 .above { position: relative; z-index: 1; }
 
 /* surfaces get a top-down sheen and a lit upper edge */
 .surface {
-  background-image: linear-gradient(180deg, rgb(var(--sheen) / var(--sheen-a)) 0%, transparent 42%);
+  background-image: linear-gradient(180deg, rgb(var(--sheen) / var(--sheen-a)) 0%, transparent 58%);
   box-shadow: inset 0 1px 0 rgb(var(--sheen) / calc(var(--sheen-a) * 1.6));
 }
 
@@ -259,6 +260,24 @@ a:hover { color: rgb(var(--brand-hover)); }
   animation: sk 1.4s linear infinite;
 }
 
+/* panel modules: each slides down from under the one above, like cards dealt off a deck */
+@keyframes stackOut { from { opacity: 0; transform: translateY(-16px) scale(.985); } to { opacity: 1; transform: none; } }
+.stack-item { animation: stackOut .5s var(--ease) both; animation-delay: var(--d, 0ms); }
+.stack > .stack-item:first-child { animation-duration: .42s; }
+
+/* hero artwork: masked on every edge so it melts into the page instead of ending in a hard box */
+.hero-art { isolation: isolate; }
+.hero-art img {
+  -webkit-mask-image: radial-gradient(120% 100% at 50% 38%, #000 42%, transparent 88%);
+  mask-image: radial-gradient(120% 100% at 50% 38%, #000 42%, transparent 88%);
+}
+.hero-art::after {
+  content: ''; position: absolute; inset: 0; pointer-events: none;
+  background:
+    linear-gradient(180deg, rgb(var(--bg) / .35) 0%, transparent 30%, rgb(var(--bg) / .55) 100%),
+    radial-gradient(70% 60% at 68% 62%, rgb(var(--brand) / .16), transparent 70%);
+}
+
 /* hero */
 .word-mask { display: inline-block; overflow: hidden; vertical-align: top; padding-bottom: .06em; margin-bottom: -.06em; }
 .word { display: inline-block; animation: wordUp .8s var(--ease) both; animation-delay: var(--d, 0ms); }
@@ -283,6 +302,7 @@ a:hover { color: rgb(var(--brand-hover)); }
 @media (prefers-reduced-motion: reduce) {
   .btn-brand::after { display: none; }
   .read-bar, .site-header, .theme-switch svg { transition: none !important; }
+  .stack-item,
   .xp, .a-grow, .a-grow-r, .pin, .rowin, .pop, .fadein, .sk, .page-in, .menu-in, .menu-in > * > *,
   .word, .hero-in, .from-left, .from-right, .breathe, .line-in, .live-dot::after { animation: none !important; }
   .draw { animation: none !important; stroke-dashoffset: 0; }

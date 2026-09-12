@@ -1,17 +1,14 @@
 import { useCallback, useEffect, useRef, useState, type CSSProperties } from 'react'
 import { Link, useSearchParams } from 'react-router-dom'
 import { FightCard } from '../components/FightCard'
-import { Portrait } from '../components/ui'
 import { useData, useMedia, type Card, type Fight, type Track } from '../data'
 import { useI18n } from '../i18n'
-import { BRAND, Z600, capitalize, daysUntil, formatDate } from '../lib/fight'
+import { BRAND, Z600, capitalize, cx, daysUntil, formatDate } from '../lib/fight'
 import { Reveal, SplitWords, reducedMotion, useParallax } from '../lib/motion'
 
 // ── hero ───────────────────────────────────────────────────────────────────────
 
-function Hero({ card, main, track, wide, desktopPanel }: {
-  card: Card; main: Fight; track: Track; wide: boolean; desktopPanel: boolean
-}) {
+function Hero({ card, onBreakdown, wide }: { card: Card; onBreakdown: (i: number) => void; wide: boolean }) {
   const { t } = useI18n()
   const ev = card.event!
   const days = daysUntil(ev.date)
@@ -21,20 +18,18 @@ function Hero({ card, main, track, wide, desktopPanel }: {
     : days === 0 ? `${t.nextEvent} · ${t.today}`
     : finished ? t.eventDone : t.eventPast
   const dateLine = `${capitalize(formatDate(ev.date, t.locale, { weekday: 'long', day: 'numeric', month: 'long' }))} · ${t.fights(card.fights.length)}`
-  const p1 = main.p_win_f1
+  // the headliner may have no forecast (then the log starts with the co-main) — fall back to the first fight
+  const heroIndex = Math.max(0, card.fights.findIndex(f => f.main_event))
   const parallax = useParallax(0.1, wide)
   const d = (ms: number) => ({ '--d': `${ms}ms` }) as CSSProperties
   const words = ev.name.split(' ').length
 
-  // face-off: the two fighters slide in from their own sides
-  const portraits = (w: number, overlap: number) => (
-    <div className="mask-x flex w-full items-end justify-center" style={{ transform: `translateY(${parallax}px)` }}>
-      <div className="from-left min-w-0" style={{ width: w, marginRight: -overlap, ...d(150) }}>
-        <Portrait f={main.fighter_1} fav={p1 > 0.5} w={w} fade="var(--c-bg)" eager animate={false} />
-      </div>
-      <div className="from-right min-w-0" style={{ width: w, ...d(250) }}>
-        <Portrait f={main.fighter_2} fav={p1 < 0.5} w={w} fade="var(--c-bg)" eager animate={false} />
-      </div>
+  // one atmospheric shot instead of the face-off; it fades into the page on every edge
+  const artwork = (className: string) => (
+    <div className={cx('hero-art pointer-events-none relative overflow-hidden', className)}
+      style={{ transform: `translateY(${parallax}px)` }} aria-hidden>
+      <img src={`${import.meta.env.BASE_URL}hero.webp`} alt="" width={1280} height={853} decoding="async"
+        className="h-full w-full object-cover object-[52%_22%]" />
     </div>
   )
   const eyebrowEl = (cls: string) => (
@@ -48,21 +43,21 @@ function Hero({ card, main, track, wide, desktopPanel }: {
     return (
       <section className="relative overflow-hidden px-4 pb-[22px] pt-6" aria-labelledby="event-title">
         <div className="breathe pointer-events-none absolute left-1/2 top-10 -ml-[210px] h-[300px] w-[420px]" style={{ background: glow }} />
-        <div className="relative mx-auto max-w-[400px]">{portraits(170, 18)}</div>
+        {artwork('fadein mx-auto h-[190px] w-full max-w-[440px] rounded-2xl')}
         {eyebrowEl('relative mb-2.5 mt-[18px]')}
         <h1 id="event-title" className="relative m-0 text-[28px] font-bold leading-[1.12] tracking-[-0.02em]">
           <SplitWords text={ev.name} delay={120} />
         </h1>
         <div className="hero-in relative mt-2.5 text-[13px] text-zinc-400" style={d(200 + words * 55)}>{dateLine}</div>
         <div className="hero-in relative mt-[18px] flex flex-wrap gap-2.5" style={d(300 + words * 55)}>
-          <a href="#rest" className="btn btn-brand flex h-11 flex-1 items-center justify-center rounded-[10px] bg-brand px-4 text-sm font-bold text-onbrand hover:bg-brand-hover">
-            {t.ctaRest}
-          </a>
+          <button type="button" onClick={() => onBreakdown(heroIndex)}
+            className="btn btn-brand flex h-11 flex-1 items-center justify-center rounded-[10px] bg-brand px-4 text-sm font-bold text-onbrand hover:bg-brand-hover">
+            {t.ctaBreakdown}
+          </button>
           <Link to="/accuracy" className="btn flex h-11 items-center justify-center rounded-[10px] border border-zinc-800 px-4 text-sm font-semibold text-zinc-300 hover:border-zinc-600 hover:text-zinc-50">
             {t.ctaAccuracy}
           </Link>
         </div>
-        <div className="relative mt-5"><MainFight main={main} track={track} wide={wide} desktopPanel={desktopPanel} /></div>
       </section>
     )
   }
@@ -78,31 +73,18 @@ function Hero({ card, main, track, wide, desktopPanel }: {
           </h1>
           <div className="hero-in mt-3.5 text-sm text-zinc-400" style={d(180 + words * 55)}>{dateLine}</div>
           <div className="hero-in mt-7 flex flex-wrap gap-2.5" style={d(300 + words * 55)}>
-            <a href="#rest" className="btn btn-brand rounded-lg bg-brand px-[18px] py-[11px] text-[13px] font-bold text-onbrand hover:bg-brand-hover">
-              {t.ctaRest}
-            </a>
+            <button type="button" onClick={() => onBreakdown(heroIndex)}
+              className="btn btn-brand rounded-lg bg-brand px-[18px] py-[11px] text-[13px] font-bold text-onbrand hover:bg-brand-hover">
+              {t.ctaBreakdown}
+            </button>
             <Link to="/accuracy" className="btn rounded-lg border border-zinc-800 px-[18px] py-[11px] text-[13px] font-semibold text-zinc-300 hover:border-zinc-600 hover:text-zinc-50">
               {t.ctaAccuracy}
             </Link>
           </div>
         </div>
-        <div className="flex h-[330px] w-full items-end">{portraits(250, 26)}</div>
-      </div>
-      <div className="relative mx-auto max-w-[1024px] px-6 pb-12">
-        <MainFight main={main} track={track} wide={wide} desktopPanel={desktopPanel} />
+        {artwork('fadein h-[300px] w-full self-stretch rounded-2xl lg:h-[340px]')}
       </div>
     </section>
-  )
-}
-
-/** The headliner, opened and unclickable: this is the page's centrepiece, not a list row. */
-function MainFight({ main, track, wide, desktopPanel }: { main: Fight; track: Track; wide: boolean; desktopPanel: boolean }) {
-  return (
-    <Reveal still>
-      <FightCard fight={main} index={0} total={1} open solo track={track}
-        desktopRow={wide} desktopPanel={desktopPanel} instantClose
-        onToggle={() => {}} onGo={() => {}} />
-    </Reveal>
   )
 }
 
@@ -215,9 +197,9 @@ function CardList({ card, fights, track, desktopRow, desktopPanel, nav }: {
   const { open, select, refs, animatedClose } = nav
   const n = fights.length
   return (
-    <div id="rest" className="mx-auto max-w-[1024px] scroll-mt-16 px-3 pb-20 pt-2 md:px-6 md:pt-9">
+    <div className="mx-auto max-w-[1024px] px-3 pb-20 pt-2 md:px-6 md:pt-9">
       <Reveal className="mb-3 flex flex-wrap items-center justify-between gap-x-4 gap-y-2 px-1 md:px-0">
-        <h2 className="m-0 text-xs font-medium text-zinc-300">{t.restTitle}</h2>
+        <h2 className="m-0 text-xs font-medium text-zinc-300">{t.card}</h2>
         <span className="flex items-center gap-2 text-[11px] text-zinc-500">
           <span className="h-2.5 w-2.5 rounded-[3px]" style={{ background: BRAND }} aria-hidden />{t.legend}
         </span>
@@ -247,10 +229,7 @@ export default function Fights() {
   const desktopPanel = useMedia('(min-width: 1024px)')
 
   const card = data.status === 'ok' ? data.data.card : null
-  // the headliner may have no forecast (then the log starts with the co-main) — fall back to the first fight
-  const mainIndex = card?.fights.length ? Math.max(0, card.fights.findIndex(f => f.main_event)) : -1
-  const rest = card ? card.fights.filter((_, i) => i !== mainIndex) : []
-  const nav = useOpenFight(rest)
+  const nav = useOpenFight(card?.fights ?? [])
   useEffect(() => { document.title = `fightev — ${t.nav.fights}` }, [t])
 
   if (data.status === 'loading') return <Skeleton desktop={desktopRow} />
@@ -277,8 +256,8 @@ export default function Fights() {
   }
   return (
     <>
-      <Hero card={card} main={card.fights[mainIndex]} track={track} wide={desktopRow} desktopPanel={desktopPanel} />
-      <CardList card={card} fights={rest} track={track} desktopRow={desktopRow} desktopPanel={desktopPanel} nav={nav} />
+      <Hero card={card} wide={desktopRow} onBreakdown={i => nav.select(i, 'nav')} />
+      <CardList card={card} fights={card.fights} track={track} desktopRow={desktopRow} desktopPanel={desktopPanel} nav={nav} />
     </>
   )
 }
