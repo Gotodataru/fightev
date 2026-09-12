@@ -3,9 +3,19 @@ import { useData } from '../data'
 import { CountUp, Reveal, SplitWords } from '../lib/motion'
 import { useI18n } from '../i18n'
 
-/** Placeholder the author fills in later — rendered visibly so it can't ship by accident unnoticed. */
-function Ph({ children }: { children: ReactNode }) {
-  return <span className="whitespace-nowrap rounded-md border border-dashed border-brand/50 px-[7px] py-px text-brand">[{children}]</span>
+function Shot({ src, alt, tag, caption, delay = 0 }: { src: string; alt: string; tag: string; caption: string; delay?: number }) {
+  return (
+    <Reveal delay={delay} className="flex flex-col gap-2.5">
+      <figure className="m-0 flex flex-col gap-2.5">
+        <div className="overflow-hidden rounded-xl border border-line bg-card">
+          <img src={src} alt={alt} width={1440} height={900} loading="lazy" decoding="async" className="block w-full" />
+        </div>
+        <figcaption className="text-[13px] leading-normal text-zinc-400">
+          <span className="mr-2 font-semibold text-zinc-300">{tag}</span>{caption}
+        </figcaption>
+      </figure>
+    </Reveal>
+  )
 }
 
 function Stat({ value, label, sub, delay = 0 }: { value: number | null; label: string; sub: string; delay?: number }) {
@@ -70,8 +80,7 @@ export default function Case() {
           : 'fightev is UFC fight analytics on real data: the next event’s card, fighter stats and an ML forecast with an honest accuracy record.'}
       </p>
       <div className="hero-in mt-[22px] flex flex-wrap gap-x-7 gap-y-2.5 text-[13px] text-zinc-500" style={{ '--d': '520ms' } as React.CSSProperties}>
-        <span>{ru ? 'Роль' : 'Role'}: <Ph>{ru ? 'твоя роль' : 'your role'}</Ph></span>
-        <span>{ru ? 'Сроки' : 'Timeline'}: <Ph>{ru ? 'сроки' : 'timeline'}</Ph></span>
+        <span>{ru ? 'Роль' : 'Role'}: {ru ? 'продукт, дизайн, фронтенд, данные' : 'product, design, front-end, data'}</span>
         <span>{ru ? 'Стек' : 'Stack'}: React, Tailwind, Python, SQLite</span>
       </div>
 
@@ -82,9 +91,23 @@ export default function Case() {
         <Stat value={7} delay={240} label={ru ? 'состояний' : 'states'} sub={ru ? 'от «нет фото» до промаха модели' : 'from “no photo” to a model miss'} />
       </div>
 
-      <Reveal className="mt-11 flex h-[220px] items-center justify-center rounded-xl border border-dashed border-zinc-700 text-[13px] text-zinc-500 md:h-[300px]">
-        <Ph>{ru ? 'скриншот: было → стало' : 'screenshot: before → after'}</Ph>
-      </Reveal>
+      <div className="mt-11 grid grid-cols-1 gap-4 md:grid-cols-2">
+        <Shot
+          src={`${import.meta.env.BASE_URL}case/before.webp`}
+          tag={ru ? 'Было' : 'Before'}
+          alt={ru ? 'Прежний сайт: тёмный экран с заголовком «UFC Analytics. With proof.», кнопками «Free Vault» и «Go Pro» и счётчиками прибыли в юнитах'
+                  : 'The old site: a dark screen headlined “UFC Analytics. With proof.”, with “Free Vault” and “Go Pro” buttons and profit counters in units'}
+          caption={ru ? 'Витрина подписки: юниты прибыли, ROI и винрейт, две кнопки на оплату. О самих боях — ничего.'
+                      : 'A subscription storefront: profit in units, ROI and win rate, two buttons to pay. Nothing about the fights themselves.'} />
+        <Shot
+          src={`${import.meta.env.BASE_URL}case/after.webp`}
+          delay={90}
+          tag={ru ? 'Стало' : 'After'}
+          alt={ru ? 'Нынешний сайт: главный бой турнира с фото соперников, вероятность 56 % и раскрытая карточка боя'
+                  : 'The current site: the main event with both fighters’ photos, a 56% probability and an opened fight card'}
+          caption={ru ? 'Кард ближайшего турнира: главный бой, вероятности словами и цифрами, рядом — сколько прогнозов модель уже угадала.'
+                      : 'The next event’s card: the main fight, probabilities in words and numbers, and how many forecasts the model has got right so far.'} />
+      </div>
 
       <div className="mt-11">
         <Para title={ru ? 'Задача' : 'Problem'}>
@@ -93,8 +116,9 @@ export default function Case() {
             : 'The site used to be a storefront for a paid subscription: betting stats and Telegram links. The project became free, and the job changed: a fan sees the event card in seconds, opens any fight and understands how far the forecast can be trusted.'}
         </Para>
         <Para title={ru ? 'Для кого' : 'Audience'}>
-          {ru ? 'Болельщик UFC, который перед турниром хочет быстро понять расклад. Это гипотеза — ' : 'A UFC fan who wants a quick read on the card before an event. This is a hypothesis — '}
-          <Ph>{ru ? 'подтвердить интервью или тестом' : 'validate with interviews or a test'}</Ph>.
+          {ru
+            ? 'Болельщик UFC, который перед турниром хочет быстро понять расклад: кто фаворит, за счёт чего и насколько уверенно. Это рабочая гипотеза об аудитории, а не вывод из интервью.'
+            : 'A UFC fan who wants a quick read on the card before an event: who the favourite is, why, and how confidently. That is a working hypothesis about the audience, not a finding from interviews.'}
         </Para>
         <Para title={ru ? 'Ограничения' : 'Constraints'}>
           {ru
@@ -141,11 +165,9 @@ export default function Case() {
 
       <div className="mt-11">
         <Para title={ru ? 'Что дальше' : 'Next'}>
-          {ru ? 'Юзабилити-тест с 5 болельщиками ' : 'A usability test with 5 fans '}
-          <Ph>{ru ? 'результаты' : 'results'}</Ph>
           {ru
-            ? '. Калибровка модели, чтобы уверенные проценты значили то, что обещают. Уведомление о начале турнира.'
-            : '. Calibrating the model so confident percentages mean what they promise. A reminder when the event starts.'}
+            ? 'Калибровка модели, чтобы уверенные проценты значили то, что обещают. Уведомление о начале турнира.'
+            : 'Calibrating the model so confident percentages mean what they promise. A reminder when the event starts.'}
         </Para>
       </div>
     </article>
