@@ -73,7 +73,7 @@ export default function Case() {
       <ReadingProgress />
       <div className="eyebrow hero-in mb-3.5 text-brand">{ru ? 'О проекте · кейс' : 'About · case study'}</div>
       <h1 className="m-0 text-[32px] font-bold leading-[1.1] tracking-[-0.025em] md:text-[44px]">
-        <SplitWords text={ru ? 'Как показать прогноз, которому не стоит верить вслепую' : "How to show a forecast you shouldn't trust blindly"} delay={80} step={45} />
+        <SplitWords text={ru ? 'Прогнозы, которые основаны на реальной статистике' : 'Forecasts grounded in real statistics'} delay={80} step={45} />
       </h1>
       <p className="hero-in mb-0 mt-[18px] text-base leading-[1.65] text-zinc-400" style={{ '--d': '420ms' } as React.CSSProperties}>
         {ru

@@ -3,7 +3,7 @@ import type { Fight, Fighter, Track } from '../data'
 import { useI18n } from '../i18n'
 import {
   BRAND, FG, FILL, FILL_DIM, ON_BRAND, Z300, Z400, Z500, Z600, Z700, Z800, cx, favourite, formatDate,
-  lastName, lowData, modelSpread, split, tapeRows, verdict,
+  lastName, lowData, split, tapeRows, verdict,
 } from '../lib/fight'
 import { Pct, ProbBar, SectionLabel, Tag } from './ui'
 
@@ -41,13 +41,20 @@ export function resultText(fight: Fight, t: ReturnType<typeof useI18n>['t']): st
 
 // ── prediction ─────────────────────────────────────────────────────────────────
 
-function WinRow({ p1 }: { p1: number }) {
+function WinRow({ p1, f1, f2 }: { p1: number; f1: Fighter; f2: Fighter }) {
   const [a, b] = split(p1)
+  const { t } = useI18n()
   return (
-    <div className="grid grid-cols-[44px_minmax(0,1fr)_44px] items-center gap-3">
-      <Pct v={a} fav={a > b} size={16} />
-      <ProbBar p1={p1} height={8} animate />
-      <Pct v={b} fav={b > a} size={16} className="text-right" />
+    <div>
+      <div className="grid grid-cols-[44px_minmax(0,1fr)_44px] items-center gap-3">
+        <Pct v={a} fav={a > b} size={16} />
+        <ProbBar p1={p1} height={8} animate />
+        <Pct v={b} fav={b > a} size={16} className="text-right" />
+      </div>
+      {/* spell the forecast out, so the bar is never the only place it is stated */}
+      <p className="m-0 mt-2 text-xs leading-normal text-zinc-500">
+        {t.forecastLine(lastName(f1.name), a, lastName(f2.name), b)}
+      </p>
     </div>
   )
 }
@@ -83,7 +90,6 @@ export function PredictionBlock({ fight, track }: { fight: Fight; track: Track }
   const { t } = useI18n()
   const v = verdict(fight.p_win_f1)
   const fav = favourite(fight)
-  const ms = modelSpread(fight)
   const done = fight.result
   return (
     <div>
@@ -96,14 +102,9 @@ export function PredictionBlock({ fight, track }: { fight: Fight; track: Track }
         </span>
         {done && <ResultBadge fight={fight} />}
       </div>
-      <WinRow p1={fight.p_win_f1} />
+      <WinRow p1={fight.p_win_f1} f1={fight.fighter_1} f2={fight.fighter_2} />
       <div className="mt-3 flex flex-col gap-1 text-xs leading-normal text-zinc-500">
         {done && resultText(fight, t) && <div className="text-zinc-400">{resultText(fight, t)}</div>}
-        {ms && (
-          <div>
-            {ms.vals.map(([k, v]) => `${k} ${v}`).join(' · ')} — {ms.spread <= 3 ? t.modelsAgree : t.modelsSpread(ms.spread)}
-          </div>
-        )}
         {track.n_fights > 0 && (
           <div>
             {t.trackLine(track.model.hits, track.n_fights, track.n_events)} <Link to="/accuracy">{t.howCounted}</Link>

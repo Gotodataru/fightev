@@ -54,17 +54,6 @@ export const lastName = (name: string) => {
   return i < 0 ? name : name.slice(i + 1)
 }
 
-export function modelSpread(f: Fight): { vals: [string, number][]; spread: number } | null {
-  if (!f.models) return null
-  const names: Record<string, string> = { catboost: 'CatBoost', lightgbm: 'LightGBM', xgboost: 'XGBoost' }
-  const vals = Object.entries(f.models)
-    .filter((e): e is [string, number] => typeof e[1] === 'number')
-    .map(([k, v]) => [names[k] ?? k, Math.round(v * 100)] as [string, number])
-  if (vals.length < 2) return null
-  const nums = vals.map(v => v[1])
-  return { vals, spread: Math.max(...nums) - Math.min(...nums) }
-}
-
 // ── tale of the tape ───────────────────────────────────────────────────────────
 
 export interface TapeRow { key: string; label: string; t1: string; t2: string; adv: 0 | 1 | 2; bars: boolean; w1: number; w2: number }

@@ -59,8 +59,8 @@ const ru = {
 
   // prediction
   winForecast: 'Прогноз на победу',
-  modelsAgree: 'три модели согласны',
-  modelsSpread: (d: number) => `три модели расходятся на ${d} п.п.`,
+  forecastLine: (n1: string, p1: number, n2: string, p2: number) =>
+    `Прогноз модели: ${n1} ${p1}%, ${n2} ${p2}%.`,
   trackLine: (k: number, n: number, e: number) =>
     `Модель угадала ${k} из ${n} победителей за ${e} ${ruPlural(e, 'турнир', 'турнира', 'турниров')}.`,
   howCounted: 'Как считали →',
@@ -82,9 +82,9 @@ const ru = {
 
   // side panel
   lastFight: (m: number) => (m < 1 ? 'Последний бой меньше месяца назад' : `Последний бой ${Math.round(m)} мес назад`),
-  howWins: 'Как побеждает в UFC',
+  howWins: 'Победы',
   noWins: 'Побед в UFC пока нет',
-  zones: 'Куда бьёт',
+  zones: 'Статистика по ударам',
   zoneNames: { head: 'Голова', body: 'Корпус', leg: 'Ноги' },
   notEnough: 'Мало данных',
   last5: 'Последние 5 боёв',
@@ -167,8 +167,8 @@ const en: Dict = {
   roundN: (r: number) => `round ${r}`,
 
   winForecast: 'Win probability',
-  modelsAgree: 'all three models agree',
-  modelsSpread: (d: number) => `the three models differ by ${d} pts`,
+  forecastLine: (n1: string, p1: number, n2: string, p2: number) =>
+    `Model forecast: ${n1} ${p1}%, ${n2} ${p2}%.`,
   trackLine: (k: number, n: number, e: number) =>
     `The model picked ${k} of ${n} winners across ${e} ${e === 1 ? 'event' : 'events'}.`,
   howCounted: 'How we count →',
@@ -188,9 +188,9 @@ const en: Dict = {
   noStats: 'Neither fighter has detailed numbers yet — usually newcomers with one or two UFC bouts. The forecast leans on the general profile and is less reliable.',
 
   lastFight: (m: number) => (m < 1 ? 'Last fought less than a month ago' : `Last fought ${Math.round(m)} mo ago`),
-  howWins: 'How they win in the UFC',
+  howWins: 'Wins',
   noWins: 'No UFC wins yet',
-  zones: 'Where they strike',
+  zones: 'Striking breakdown',
   zoneNames: { head: 'Head', body: 'Body', leg: 'Legs' },
   notEnough: 'Not enough data',
   last5: 'Last 5 fights',
