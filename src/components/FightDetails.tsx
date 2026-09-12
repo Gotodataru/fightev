@@ -53,7 +53,10 @@ function WinRow({ p1, f1, f2 }: { p1: number; f1: Fighter; f2: Fighter }) {
       </div>
       {/* spell the forecast out, so the bar is never the only place it is stated */}
       <p className="m-0 mt-2 text-xs leading-normal text-zinc-500">
-        {t.forecastLine(lastName(f1.name), a, lastName(f2.name), b)}
+        <b className="font-semibold text-zinc-300">{t.forecastLabel}:</b>{' '}
+        <span className={a >= b ? 'font-semibold text-zinc-50' : undefined}>{lastName(f1.name)} {a}%</span>
+        {', '}
+        <span className={b > a ? 'font-semibold text-zinc-50' : undefined}>{lastName(f2.name)} {b}%</span>
       </p>
     </div>
   )
@@ -62,9 +65,30 @@ function WinRow({ p1, f1, f2 }: { p1: number; f1: Fighter; f2: Fighter }) {
 function FinishBlock({ fight, track }: { fight: Fight; track: Track }) {
   const { t } = useI18n()
   const base = track.ufc_finish_rate_24m.rate !== null ? Math.round(track.ufc_finish_rate_24m.rate * 100) : null
+  const fin = fight.p_finish !== null ? Math.round(fight.p_finish * 100) : null
   return (
     <div>
       <SectionLabel>{t.finishTitle}</SectionLabel>
+      {fin !== null && (
+        <div className="mb-4">
+          <div className="flex flex-col gap-1.5">
+            {([[t.finishEarly, fin, fin >= 50], [t.finishDecision, 100 - fin, fin < 50]] as const).map(([label, v, lead], j) => (
+              <div key={label} className="grid grid-cols-[minmax(0,1fr)_auto] items-center gap-3">
+                <span className={cx('text-[13px]', lead ? 'font-semibold text-zinc-50' : 'text-zinc-400')}>{label}</span>
+                <span className="flex items-center gap-2.5">
+                  <span className="relative h-1.5 w-[90px] rounded-full bg-zinc-900 sm:w-[130px]">
+                    <span className="a-grow absolute inset-y-0 left-0 rounded-full"
+                      style={{ width: `${v}%`, background: lead ? BRAND : FILL, animationDelay: `${0.25 + j * 0.1}s` }} />
+                  </span>
+                  <span className={cx('w-9 text-right font-mono text-[13px]', lead ? 'font-semibold text-zinc-50' : 'text-zinc-400')}>{v}%</span>
+                </span>
+              </div>
+            ))}
+          </div>
+          <p className="m-0 mt-2 text-xs leading-normal text-zinc-500">{t.finishModelNote}</p>
+        </div>
+      )}
+      {fin !== null && <SectionLabel>{t.fightHistory}</SectionLabel>}
       {[fight.fighter_1, fight.fighter_2].map((f, j) => {
         const n = f.decided_fights, k = f.finish_fights
         const pct = n ? Math.round((k / n) * 100) : 0

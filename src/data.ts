@@ -30,6 +30,8 @@ export interface FightResult { winner: 0 | 1 | 2; method: Method; round: number 
 export interface Fight {
   order: number; main_event: boolean; num_rounds: number; title_fight: boolean
   p_win_f1: number
+  /** the finish model's probability that the fight ends inside the distance */
+  p_finish: number | null
   models: { catboost?: number; lightgbm?: number; xgboost?: number } | null
   fighter_1: Fighter; fighter_2: Fighter
   result: FightResult | null

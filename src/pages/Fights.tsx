@@ -2,19 +2,18 @@ import { useCallback, useEffect, useRef, useState, type CSSProperties } from 're
 import { Link, useSearchParams } from 'react-router-dom'
 import { FightCard } from '../components/FightCard'
 import { Portrait } from '../components/ui'
-import { useData, useMedia, type Card, type Track } from '../data'
+import { useData, useMedia, type Card, type Fight, type Track } from '../data'
 import { useI18n } from '../i18n'
 import { BRAND, Z600, capitalize, daysUntil, formatDate } from '../lib/fight'
 import { Reveal, SplitWords, reducedMotion, useParallax } from '../lib/motion'
 
 // ── hero ───────────────────────────────────────────────────────────────────────
 
-function Hero({ card, onBreakdown, wide }: { card: Card; onBreakdown: (i: number) => void; wide: boolean }) {
+function Hero({ card, main, track, wide, desktopPanel }: {
+  card: Card; main: Fight; track: Track; wide: boolean; desktopPanel: boolean
+}) {
   const { t } = useI18n()
   const ev = card.event!
-  // the headliner may have no forecast (then the log starts with the co-main) — fall back to the first fight
-  const heroIndex = Math.max(0, card.fights.findIndex(f => f.main_event))
-  const main = card.fights[heroIndex]
   const days = daysUntil(ev.date)
   const finished = card.fights.some(f => f.result)
   const upcoming = days >= 0 && !finished
@@ -23,7 +22,6 @@ function Hero({ card, onBreakdown, wide }: { card: Card; onBreakdown: (i: number
     : finished ? t.eventDone : t.eventPast
   const dateLine = `${capitalize(formatDate(ev.date, t.locale, { weekday: 'long', day: 'numeric', month: 'long' }))} · ${t.fights(card.fights.length)}`
   const p1 = main.p_win_f1
-  const cta = main.main_event ? t.ctaBreakdown : t.ctaFight
   const parallax = useParallax(0.1, wide)
   const d = (ms: number) => ({ '--d': `${ms}ms` }) as CSSProperties
   const words = ev.name.split(' ').length
@@ -56,10 +54,15 @@ function Hero({ card, onBreakdown, wide }: { card: Card; onBreakdown: (i: number
           <SplitWords text={ev.name} delay={120} />
         </h1>
         <div className="hero-in relative mt-2.5 text-[13px] text-zinc-400" style={d(200 + words * 55)}>{dateLine}</div>
-        <button type="button" onClick={() => onBreakdown(heroIndex)} style={d(300 + words * 55)}
-          className="btn btn-brand hero-in relative mt-[18px] flex h-12 w-full items-center justify-center rounded-[10px] bg-brand text-sm font-bold text-onbrand hover:bg-brand-hover">
-          {cta}
-        </button>
+        <div className="hero-in relative mt-[18px] flex flex-wrap gap-2.5" style={d(300 + words * 55)}>
+          <a href="#rest" className="btn btn-brand flex h-11 flex-1 items-center justify-center rounded-[10px] bg-brand px-4 text-sm font-bold text-onbrand hover:bg-brand-hover">
+            {t.ctaRest}
+          </a>
+          <Link to="/accuracy" className="btn flex h-11 items-center justify-center rounded-[10px] border border-zinc-800 px-4 text-sm font-semibold text-zinc-300 hover:border-zinc-600 hover:text-zinc-50">
+            {t.ctaAccuracy}
+          </Link>
+        </div>
+        <div className="relative mt-5"><MainFight main={main} track={track} wide={wide} desktopPanel={desktopPanel} /></div>
       </section>
     )
   }
@@ -75,10 +78,9 @@ function Hero({ card, onBreakdown, wide }: { card: Card; onBreakdown: (i: number
           </h1>
           <div className="hero-in mt-3.5 text-sm text-zinc-400" style={d(180 + words * 55)}>{dateLine}</div>
           <div className="hero-in mt-7 flex flex-wrap gap-2.5" style={d(300 + words * 55)}>
-            <button type="button" onClick={() => onBreakdown(heroIndex)}
-              className="btn btn-brand rounded-lg bg-brand px-[18px] py-[11px] text-[13px] font-bold text-onbrand hover:bg-brand-hover">
-              {cta}
-            </button>
+            <a href="#rest" className="btn btn-brand rounded-lg bg-brand px-[18px] py-[11px] text-[13px] font-bold text-onbrand hover:bg-brand-hover">
+              {t.ctaRest}
+            </a>
             <Link to="/accuracy" className="btn rounded-lg border border-zinc-800 px-[18px] py-[11px] text-[13px] font-semibold text-zinc-300 hover:border-zinc-600 hover:text-zinc-50">
               {t.ctaAccuracy}
             </Link>
@@ -86,7 +88,21 @@ function Hero({ card, onBreakdown, wide }: { card: Card; onBreakdown: (i: number
         </div>
         <div className="flex h-[330px] w-full items-end">{portraits(250, 26)}</div>
       </div>
+      <div className="relative mx-auto max-w-[1024px] px-6 pb-12">
+        <MainFight main={main} track={track} wide={wide} desktopPanel={desktopPanel} />
+      </div>
     </section>
+  )
+}
+
+/** The headliner, opened and unclickable: this is the page's centrepiece, not a list row. */
+function MainFight({ main, track, wide, desktopPanel }: { main: Fight; track: Track; wide: boolean; desktopPanel: boolean }) {
+  return (
+    <Reveal still>
+      <FightCard fight={main} index={0} total={1} open solo track={track}
+        desktopRow={wide} desktopPanel={desktopPanel} instantClose
+        onToggle={() => {}} onGo={() => {}} />
+    </Reveal>
   )
 }
 
@@ -147,13 +163,13 @@ function Message({ title, text, children }: { title: string; text: string; child
 // ── page ───────────────────────────────────────────────────────────────────────
 
 /** Which fight is expanded — mirrored to ?fight=N so a breakdown can be linked to. */
-function useOpenFight(card: Card | null, desktopPanel: boolean) {
+function useOpenFight(fights: Fight[]) {
   const [params, setParams] = useSearchParams()
-  const n = card?.fights.length ?? 0
+  const n = fights.length
   const fromUrl = Number(params.get('fight'))
   const urlIndex = fromUrl >= 1 && fromUrl <= n ? fromUrl - 1 : null
-  // desktop opens the main event by default (as in the mockup); phones start with a scannable list
-  const fallback = desktopPanel && card && !card.fights.some(f => f.result) ? Math.max(0, card.fights.findIndex(f => f.main_event)) : -1
+  // the headliner is open in the hero, so the list itself starts closed and scannable
+  const fallback = -1
   const [open, setOpen] = useState<number | null>(null)
   const current = open ?? urlIndex ?? fallback
   const refs = useRef<(HTMLDivElement | null)[]>([])
@@ -191,22 +207,23 @@ function useOpenFight(card: Card | null, desktopPanel: boolean) {
   return { open: current, select, refs, animatedClose }
 }
 
-function CardList({ card, track, desktopRow, desktopPanel, nav }: {
-  card: Card; track: Track; desktopRow: boolean; desktopPanel: boolean; nav: ReturnType<typeof useOpenFight>
+function CardList({ card, fights, track, desktopRow, desktopPanel, nav }: {
+  card: Card; fights: Fight[]; track: Track; desktopRow: boolean; desktopPanel: boolean
+  nav: ReturnType<typeof useOpenFight>
 }) {
   const { t } = useI18n()
   const { open, select, refs, animatedClose } = nav
-  const n = card.fights.length
+  const n = fights.length
   return (
-    <div className="mx-auto max-w-[1024px] px-3 pb-20 pt-2 md:px-6 md:pt-9">
+    <div id="rest" className="mx-auto max-w-[1024px] scroll-mt-16 px-3 pb-20 pt-2 md:px-6 md:pt-9">
       <Reveal className="mb-3 flex flex-wrap items-center justify-between gap-x-4 gap-y-2 px-1 md:px-0">
-        <h2 className="m-0 text-xs font-medium text-zinc-300">{t.card}</h2>
+        <h2 className="m-0 text-xs font-medium text-zinc-300">{t.restTitle}</h2>
         <span className="flex items-center gap-2 text-[11px] text-zinc-500">
           <span className="h-2.5 w-2.5 rounded-[3px]" style={{ background: BRAND }} aria-hidden />{t.legend}
         </span>
       </Reveal>
       <div className="flex flex-col gap-2">
-        {card.fights.map((f, i) => (
+        {fights.map((f, i) => (
           // cards rise in one after another; bars and percentages inside wait for their card
           <Reveal key={`${f.fighter_1.slug}-${f.fighter_2.slug}`} delay={Math.min(i, 6) * 60}>
             <FightCard ref={el => { refs.current[i] = el }}
@@ -229,7 +246,11 @@ export default function Fights() {
   const desktopRow = useMedia('(min-width: 768px)')
   const desktopPanel = useMedia('(min-width: 1024px)')
 
-  const nav = useOpenFight(data.status === 'ok' ? data.data.card : null, desktopPanel)
+  const card = data.status === 'ok' ? data.data.card : null
+  // the headliner may have no forecast (then the log starts with the co-main) — fall back to the first fight
+  const mainIndex = card?.fights.length ? Math.max(0, card.fights.findIndex(f => f.main_event)) : -1
+  const rest = card ? card.fights.filter((_, i) => i !== mainIndex) : []
+  const nav = useOpenFight(rest)
   useEffect(() => { document.title = `fightev — ${t.nav.fights}` }, [t])
 
   if (data.status === 'loading') return <Skeleton desktop={desktopRow} />
@@ -241,8 +262,8 @@ export default function Fights() {
       </Message>
     )
   }
-  const { card, track } = data.data
-  if (!card.event || !card.fights.length) {
+  const { track } = data.data
+  if (!card || !card.event || !card.fights.length) {
     const last = track.events?.[track.events.length - 1]
     return (
       <Message title={t.emptyTitle} text={t.emptyText}>
@@ -256,8 +277,8 @@ export default function Fights() {
   }
   return (
     <>
-      <Hero card={card} wide={desktopRow} onBreakdown={i => nav.select(i, 'nav')} />
-      <CardList card={card} track={track} desktopRow={desktopRow} desktopPanel={desktopPanel} nav={nav} />
+      <Hero card={card} main={card.fights[mainIndex]} track={track} wide={desktopRow} desktopPanel={desktopPanel} />
+      <CardList card={card} fights={rest} track={track} desktopRow={desktopRow} desktopPanel={desktopPanel} nav={nav} />
     </>
   )
 }

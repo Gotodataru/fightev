@@ -64,14 +64,15 @@ function copy(lang: Lang, tr: Track) {
       hit: 'угадал', miss: 'ошибся',
       s4: 'Досрочно или решение',
       s4sub: finishLost
-        ? 'Отдельная модель пыталась угадать, закончится ли бой досрочно. Она проиграла простому правилу, поэтому в карточках боя мы её не показываем — вместо прогноза там история самих бойцов и среднее по UFC.'
-        : 'Отдельная модель пытается угадать, закончится ли бой досрочно. В карточках её нет: выборка слишком мала, чтобы доверять ей больше, чем истории самих бойцов и среднему по UFC.',
+        ? 'Отдельная модель угадывает, закончится ли бой досрочно. Её прогноз стоит в карточке боя, но на проверенных боях она проиграла простому правилу «всегда досрочно» — рядом с прогнозом об этом сказано, и история самих бойцов там же.'
+        : 'Отдельная модель угадывает, закончится ли бой досрочно. Её прогноз стоит в карточке боя рядом с историей самих бойцов; выборка пока мала, поэтому доверять ему стоит с оглядкой.',
       fin: [
         ['Модель досрочки', `${fin.model_hits} из ${fin.n} угадано`],
-        ['Правило «всегда досрочно»', heavy ? 'на тех же боях — выборке повезло с досрочками' : 'на тех же боях'],
+        ['Правило «всегда досрочно»', 'на тех же боях'],
         ['Среднее по UFC', `досрочные финиши в ${tr.ufc_finish_rate_24m.n} боях за два года`],
       ],
-      finNote: `Обе полосы посчитаны на одной и той же выборке — ${fin.n} ${ruFights(fin.n)} ${range}. Отметка «среднее по UFC» приводится для масштаба.`,
+      finNote: `Обе полосы посчитаны на одной и той же выборке — ${fin.n} ${ruFights(fin.n)} ${range}. Отметка «среднее по UFC» приводится для масштаба.`
+        + (heavy ? ' На этой выборке досрочных финишей оказалось больше обычного, поэтому правилу здесь особенно повезло.' : ''),
       s6: 'Ответственность и статус проекта',
       liability: [
         ['Проект исследовательский.', `Модель обучена на открытой статистике боёв, а её прогнозы проверяются на боях ${range}: ${tr.n_fights} ${ruFights(tr.n_fights)} на ${events(tr.n_events)}. Выборка маленькая, выводы предварительные.`],
@@ -120,14 +121,15 @@ function copy(lang: Lang, tr: Track) {
     hit: 'right', miss: 'wrong',
     s4: 'Finish or decision',
     s4sub: finishLost
-      ? "A separate model tried to predict whether a fight ends inside the distance. It lost to a simple rule, so it isn't shown on fight cards — they show the fighters' own history and the UFC average instead."
-      : "A separate model tries to predict whether a fight ends inside the distance. It isn't on the cards: the sample is too small to trust it over the fighters' own history and the UFC average.",
+      ? 'A separate model predicts whether a fight ends inside the distance. Its forecast sits on every fight card, but on checked fights it lost to the simple “always a finish” rule — the card says so next to the number, with the fighters’ own history beside it.'
+      : 'A separate model predicts whether a fight ends inside the distance. Its forecast sits on every fight card next to the fighters’ own history; the sample is still small, so read it with care.',
     fin: [
       ['Finish model', `${fin.model_hits} of ${fin.n} right`],
-      ['“Always a finish” rule', heavy ? 'on the same fights — the sample happened to be finish-heavy' : 'on the same fights'],
+      ['“Always a finish” rule', 'on the same fights'],
       ['UFC average', `finishes across ${tr.ufc_finish_rate_24m.n} fights over two years`],
     ],
-    finNote: `Both bars are measured on the same sample — ${fin.n} fights, ${range}. The UFC average is there for scale.`,
+    finNote: `Both bars are measured on the same sample — ${fin.n} fights, ${range}. The UFC average is there for scale.`
+      + (heavy ? ' This sample happened to be finish-heavy, so the rule had it especially easy here.' : ''),
     s6: 'Liability and project status',
     liability: [
       ['This is a research project.', `The model is trained on public fight statistics and its forecasts are checked on fights ${range}: ${tr.n_fights} fights across ${events(tr.n_events)}. The sample is small and the conclusions are provisional.`],
@@ -172,7 +174,7 @@ function Bars({ rows, ci95, ciLabel }: { rows: BarRow[]; ci95?: [number, number]
   return (
     <div>
       {rows.map(([label, r, sub, col, ci, own], i) => (
-        <div key={label} className="grid grid-cols-[minmax(0,1fr)_auto] items-center gap-x-4 gap-y-2 py-2.5 md:h-11 md:grid-cols-[150px_minmax(0,1fr)_128px] md:py-0">
+        <div key={label} className="grid grid-cols-[minmax(0,1fr)_auto] items-center gap-x-4 gap-y-2 py-2.5 md:min-h-11 md:grid-cols-[150px_minmax(0,1fr)_180px]">
           <span className={cx('flex items-center gap-2 text-[13px]', own ? 'font-semibold text-zinc-50' : 'text-zinc-300')}>
             {own && <span className="h-2.5 w-[3px] shrink-0 rounded-sm bg-brand" aria-hidden />}
             {label}
@@ -187,13 +189,14 @@ function Bars({ rows, ci95, ciLabel }: { rows: BarRow[]; ci95?: [number, number]
               </div>
             )}
           </div>
-          <div className="text-right">
+          {/* value over its own caption: a long caption wraps inside the panel instead of running past its edge */}
+          <div className="flex flex-col items-end text-right">
             <CountUp value={r * 100} delay={i * 80} format={v => `${Math.round(v)}%`} className="text-[15px] font-semibold text-zinc-50" />
-            <span className="ml-1.5 whitespace-nowrap text-[11px] text-zinc-500">{sub}</span>
+            <span className="text-[11px] leading-snug text-zinc-500">{sub}</span>
           </div>
         </div>
       ))}
-      <div className="mt-1.5 grid grid-cols-1 gap-4 md:grid-cols-[150px_minmax(0,1fr)_128px]" aria-hidden>
+      <div className="mt-1.5 grid grid-cols-1 gap-4 md:grid-cols-[150px_minmax(0,1fr)_180px]" aria-hidden>
         <span className="hidden md:block" />
         <div className="relative mx-2 h-3.5 md:mx-0">
           {[0, 25, 50, 75, 100].map(v => (

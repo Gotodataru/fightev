@@ -148,8 +148,8 @@ export default function Case() {
           </Decision>
           <Decision n={4} title={ru ? 'Точность — отдельной страницей' : 'Accuracy gets its own page'}>
             {ru
-              ? 'Калибровка, интервалы и промахи на виду. Модель досрочки проиграла простому правилу — и её убрали из карточек.'
-              : 'Calibration, intervals and misses are in plain sight. The finish model lost to a simple rule — so it was taken off the cards.'}
+              ? 'Калибровка, интервалы и промахи на виду. Модель досрочки проигрывает простому правилу — это видно на графике, и рядом с её прогнозом об этом сказано прямо.'
+              : 'Calibration, intervals and misses are in plain sight. The finish model trails a simple rule — the chart shows it, and the card says so next to its forecast.'}
           </Decision>
           <Decision n={5} title={ru ? 'Без ставок' : 'No betting'}>
             {ru

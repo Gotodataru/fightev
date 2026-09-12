@@ -18,6 +18,7 @@ interface Props {
   instantClose: boolean    // another fight took over: collapse without animating (keeps scroll stable)
   onToggle: () => void
   onGo: (i: number) => void
+  solo?: boolean           // the headliner in the hero: always open, nothing to toggle or page through
 }
 
 // ── shared bits ────────────────────────────────────────────────────────────────
@@ -227,7 +228,7 @@ function CompactPanel({ fight, track, desktopRow }: { fight: Fight; track: Track
 // ── card ───────────────────────────────────────────────────────────────────────
 
 export const FightCard = forwardRef<HTMLDivElement, Props>(function FightCard(
-  { fight, index, total, open, track, desktopRow, desktopPanel, instantClose, onToggle, onGo }, ref,
+  { fight, index, total, open, track, desktopRow, desktopPanel, instantClose, onToggle, onGo, solo = false }, ref,
 ) {
   const { t } = useI18n()
   const panelId = useId()
@@ -238,35 +239,36 @@ export const FightCard = forwardRef<HTMLDivElement, Props>(function FightCard(
       ? `${fight.title_fight ? t.titleFight : ''}${fight.title_fight ? ' · ' : ''}${t.rounds(fight.num_rounds)}`
       : null
 
-  const center = open
+  const center = open && !solo
     ? <FightNav index={index} total={total} onGo={onGo} size={desktopRow ? 32 : 40} />
     : fight.result ? <ResultCenter fight={fight} /> : <ProbCenter fight={fight} />
+  const toggle = solo ? undefined : onToggle
 
   return (
-    <div ref={ref} id={`fight-${index + 1}`} className={cx('fight-card surface scroll-mt-3 overflow-hidden rounded-xl bg-card', !open && 'closed')}
+    <div ref={ref} id={solo ? 'main-fight' : `fight-${index + 1}`} className={cx('fight-card surface scroll-mt-3 overflow-hidden rounded-xl bg-card', !open && 'closed')}
       style={{ border: `1px solid ${open ? 'rgb(var(--brand) / 0.28)' : 'var(--c-line)'}`,
                boxShadow: open ? '0 0 0 1px rgb(var(--brand) / 0.06), 0 24px 60px -30px rgb(var(--brand) / 0.25)' : undefined }}>
       {label && <div className="eyebrow px-3.5 pt-3 text-zinc-500 md:px-5">{label}</div>}
 
       {desktopRow ? (
-        <div className="fight-row grid grid-cols-[minmax(0,1fr)_240px_minmax(0,1fr)_20px] items-center gap-6 px-5 py-4 lg:grid-cols-[minmax(0,1fr)_290px_minmax(0,1fr)_20px] lg:gap-7"
-          onClick={onToggle}>
+        <div className={cx('grid grid-cols-[minmax(0,1fr)_240px_minmax(0,1fr)_20px] items-center gap-6 px-5 py-4 lg:grid-cols-[minmax(0,1fr)_290px_minmax(0,1fr)_20px] lg:gap-7', !solo && 'fight-row')}
+          onClick={toggle}>
           <DesktopSide f={f1} open={open} />
           <div>{center}</div>
           <DesktopSide f={f2} open={open} right />
-          <ToggleButton fight={fight} open={open} controls={panelId} onToggle={onToggle} />
+          {!solo && <ToggleButton fight={fight} open={open} controls={panelId} onToggle={onToggle} />}
         </div>
       ) : (
-        <div className="fight-row flex min-h-11 flex-col gap-3 px-3.5 pb-3 pt-3.5" onClick={onToggle}>
+        <div className={cx('flex min-h-11 flex-col gap-3 px-3.5 pb-3 pt-3.5', !solo && 'fight-row')} onClick={toggle}>
           <div className="flex items-center gap-2.5">
             <MobileSide f={f1} open={open} />
             <MobileSide f={f2} open={open} right />
           </div>
           {open ? (
             <div className="flex items-center justify-between">
-              <div className="w-5" />
+              {!solo && <div className="w-5" />}
               {center}
-              <ToggleButton fight={fight} open={open} controls={panelId} onToggle={onToggle} />
+              {!solo && <ToggleButton fight={fight} open={open} controls={panelId} onToggle={onToggle} />}
             </div>
           ) : fight.result ? (
             <div className="flex items-center gap-2.5">

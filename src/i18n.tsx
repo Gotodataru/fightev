@@ -37,6 +37,8 @@ const ru = {
 
   // list
   card: 'Кард',
+  restTitle: 'Остальные бои',
+  ctaRest: 'Остальные бои',
   legend: 'зелёным — преимущество по модели или статистике',
   win: 'победа',
   predictionWas: 'прогноз был',
@@ -59,8 +61,12 @@ const ru = {
 
   // prediction
   winForecast: 'Прогноз на победу',
-  forecastLine: (n1: string, p1: number, n2: string, p2: number) =>
-    `Прогноз модели: ${n1} ${p1}%, ${n2} ${p2}%.`,
+  forecastLabel: 'Прогноз модели',
+  finishForecast: 'Прогноз на исход',
+  finishEarly: 'Бой закончится досрочно',
+  finishDecision: 'Бой закончится решением',
+  finishModelNote: 'Это отдельная модель досрочки. На проверенных боях она уступает простому правилу — сверяйтесь со страницей точности.',
+  fightHistory: 'История бойцов',
   trackLine: (k: number, n: number, e: number) =>
     `Модель угадала ${k} из ${n} победителей за ${e} ${ruPlural(e, 'турнир', 'турнира', 'турниров')}.`,
   howCounted: 'Как считали →',
@@ -147,6 +153,8 @@ const en: Dict = {
   ctaAccuracy: 'How the model performed',
 
   card: 'Fight card',
+  restTitle: 'Rest of the card',
+  ctaRest: 'Rest of the card',
   legend: 'green marks the edge — by the model or the stats',
   win: 'win',
   predictionWas: 'forecast was',
@@ -167,8 +175,12 @@ const en: Dict = {
   roundN: (r: number) => `round ${r}`,
 
   winForecast: 'Win probability',
-  forecastLine: (n1: string, p1: number, n2: string, p2: number) =>
-    `Model forecast: ${n1} ${p1}%, ${n2} ${p2}%.`,
+  forecastLabel: 'Model forecast',
+  finishForecast: 'How it ends',
+  finishEarly: 'The fight ends inside the distance',
+  finishDecision: 'The fight goes to a decision',
+  finishModelNote: 'This is the separate finish model. On checked fights it trails a simple rule — see the accuracy page.',
+  fightHistory: 'Fighter history',
   trackLine: (k: number, n: number, e: number) =>
     `The model picked ${k} of ${n} winners across ${e} ${e === 1 ? 'event' : 'events'}.`,
   howCounted: 'How we count →',
