@@ -11,6 +11,7 @@ export default {
         line: 'rgb(var(--line-c) / var(--line-a))',
         hair: 'rgb(var(--hair-c) / var(--hair-a))',
         onbrand: 'rgb(var(--on-brand) / <alpha-value>)',
+        mod: 'rgb(var(--mod) / <alpha-value>)',
         brand: {
           DEFAULT: 'rgb(var(--brand) / <alpha-value>)',
           hover: 'rgb(var(--brand-hover) / <alpha-value>)',

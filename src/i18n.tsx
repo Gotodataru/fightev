@@ -37,6 +37,10 @@ const ru = {
 
   // list
   card: 'Кард',
+  statFights: 'боёв в карде',
+  statChecked: 'прогнозов сверено',
+  statAccuracy: 'точность модели',
+  statEvents: 'турниров в истории',
   legend: 'зелёным — преимущество по модели или статистике',
   win: 'победа',
   predictionWas: 'прогноз был',
@@ -151,6 +155,10 @@ const en: Dict = {
   ctaAccuracy: 'How the model performed',
 
   card: 'Fight card',
+  statFights: 'fights on the card',
+  statChecked: 'forecasts checked',
+  statAccuracy: 'model accuracy',
+  statEvents: 'events on record',
   legend: 'green marks the edge — by the model or the stats',
   win: 'win',
   predictionWas: 'forecast was',

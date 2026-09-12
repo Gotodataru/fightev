@@ -34,6 +34,7 @@
   --grid: 31 31 35;          /* chart gridlines */
   --fill: 161 161 170;       /* neutral bar on a surface */
   --fill-dim: 63 63 70;      /* the quietest bar */
+  --mod: 19 19 22;           /* a module's own surface, above the card */
   --wash: 255 255 255;       /* hover wash over a surface */
   --wash-a: 0.025;
   --shadow: 0 0 0;
@@ -63,6 +64,7 @@
   --c-grid: rgb(var(--grid));
   --c-fill: rgb(var(--fill));
   --c-fill-dim: rgb(var(--fill-dim));
+  --c-mod: rgb(var(--mod));
   --c-line: rgb(var(--line-c) / var(--line-a));
 }
 
@@ -93,6 +95,7 @@
   --grid: 228 228 231;
   --fill: 161 161 170;
   --fill-dim: 212 212 216;
+  --mod: 244 244 246;
   --wash: 24 24 27;
   --wash-a: 0.04;
   --shadow: 24 24 27;
@@ -260,22 +263,50 @@ a:hover { color: rgb(var(--brand-hover)); }
   animation: sk 1.4s linear infinite;
 }
 
-/* panel modules: each slides down from under the one above, like cards dealt off a deck */
-@keyframes stackOut { from { opacity: 0; transform: translateY(-16px) scale(.985); } to { opacity: 1; transform: none; } }
-.stack-item { animation: stackOut .5s var(--ease) both; animation-delay: var(--d, 0ms); }
-.stack > .stack-item:first-child { animation-duration: .42s; }
+/* panel modules: a deck. They overlap slightly, the one being read lifts to the front,
+   and on open each slides out from under the one above it. */
+@keyframes stackOut { from { opacity: 0; transform: translateY(-18px) scale(.96); } to { opacity: 1; transform: scale(var(--s, .98)); } }
+.stack-item {
+  --s: .98;
+  animation: stackOut .5s var(--ease) both; animation-delay: var(--d, 0ms);
+  transform: scale(var(--s));
+  transition: transform .35s var(--ease), box-shadow .35s var(--ease), border-color .25s ease;
+}
+.stack-item.lead { --s: 1; }
+.stack-item + .stack-item { margin-top: -7px; }
+.stack-item:hover, .stack-item:focus-within {
+  --s: 1.025;
+  z-index: 40 !important;
+  border-color: rgb(var(--brand) / .38) !important;
+  box-shadow: 0 18px 44px -26px rgb(var(--shadow) / calc(var(--shadow-a) + .1)), 0 0 0 1px rgb(var(--brand) / .1);
+}
+@media (hover: none) {
+  .stack-item + .stack-item { margin-top: 0; }
+  .stack-item { --s: 1; }
+}
 
 /* hero artwork: masked on every edge so it melts into the page instead of ending in a hard box */
 .hero-art { isolation: isolate; }
 .hero-art img {
-  -webkit-mask-image: radial-gradient(120% 100% at 50% 38%, #000 42%, transparent 88%);
-  mask-image: radial-gradient(120% 100% at 50% 38%, #000 42%, transparent 88%);
+  -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 46%), linear-gradient(180deg, transparent 0, #000 12%, #000 82%, transparent 100%);
+  mask-image: linear-gradient(90deg, transparent 0, #000 46%), linear-gradient(180deg, transparent 0, #000 12%, #000 82%, transparent 100%);
+  -webkit-mask-composite: source-in;
+  mask-composite: intersect;
+}
+.hero-art-m img {
+  -webkit-mask-image: linear-gradient(180deg, #000 46%, transparent 100%);
+  mask-image: linear-gradient(180deg, #000 46%, transparent 100%);
 }
 .hero-art::after {
   content: ''; position: absolute; inset: 0; pointer-events: none;
   background:
-    linear-gradient(180deg, rgb(var(--bg) / .35) 0%, transparent 30%, rgb(var(--bg) / .55) 100%),
-    radial-gradient(70% 60% at 68% 62%, rgb(var(--brand) / .16), transparent 70%);
+    linear-gradient(90deg, rgb(var(--bg)) 4%, rgb(var(--bg) / .45) 34%, transparent 62%),
+    radial-gradient(60% 55% at 72% 58%, rgb(var(--brand) / .14), transparent 72%);
+}
+.hero-art-m::after {
+  background:
+    linear-gradient(180deg, transparent 30%, rgb(var(--bg) / .6) 72%, rgb(var(--bg)) 100%),
+    radial-gradient(70% 60% at 60% 40%, rgb(var(--brand) / .14), transparent 72%);
 }
 
 /* hero */
@@ -302,7 +333,7 @@ a:hover { color: rgb(var(--brand-hover)); }
 @media (prefers-reduced-motion: reduce) {
   .btn-brand::after { display: none; }
   .read-bar, .site-header, .theme-switch svg { transition: none !important; }
-  .stack-item,
+  .stack-item { animation: none !important; transform: none !important; transition: none !important; }
   .xp, .a-grow, .a-grow-r, .pin, .rowin, .pop, .fadein, .sk, .page-in, .menu-in, .menu-in > * > *,
   .word, .hero-in, .from-left, .from-right, .breathe, .line-in, .live-dot::after { animation: none !important; }
   .draw { animation: none !important; stroke-dashoffset: 0; }

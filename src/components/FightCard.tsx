@@ -124,7 +124,7 @@ function DesktopPanel({ fight, track }: { fight: Fight; track: Track }) {
         </div>
         <div className="flex flex-col gap-2.5 pt-1">
           <PredictionBlock fight={fight} track={track} />
-          <section className="stack-item relative rounded-xl border border-line bg-zinc-900/50 px-4 py-3.5"
+          <section className="stack-item relative rounded-xl border border-line bg-mod px-4 py-3.5"
             style={{ zIndex: 17, animationDelay: '270ms' }}>
             <SectionLabel>{t.tape}</SectionLabel>
             <TapeDesktop fight={fight} />

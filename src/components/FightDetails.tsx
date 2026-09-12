@@ -67,7 +67,7 @@ function WinRow({ p1, f1, f2 }: { p1: number; f1: Fighter; f2: Fighter }) {
  *  out from under the block above it, so a long panel reads as a deck, not a wall. */
 function Module({ title, extra, children, i = 0 }: { title: string; extra?: ReactNode; children: ReactNode; i?: number }) {
   return (
-    <section className="stack-item relative rounded-xl border border-line bg-zinc-900/50 px-4 py-3.5"
+    <section className={cx('stack-item relative rounded-xl border border-line bg-mod px-4 py-3.5', i === 0 && 'lead')}
       style={{ zIndex: 20 - i, animationDelay: `${i * 90}ms` } as React.CSSProperties}>
       <SectionLabel extra={extra}>{title}</SectionLabel>
       {children}
@@ -104,16 +104,19 @@ function FinishBlock({ fight, track }: { fight: Fight; track: Track }) {
       {[fight.fighter_1, fight.fighter_2].map((f, j) => {
         const n = f.decided_fights, k = f.finish_fights
         const pct = n ? Math.round((k / n) * 100) : 0
+        const other = j === 0 ? fight.fighter_2 : fight.fighter_1
+        const otherPct = other.decided_fights ? (other.finish_fights / other.decided_fights) * 100 : 0
+        const ahead = n > 0 && pct > otherPct
         return (
           <div key={f.slug} className="grid h-[26px] grid-cols-[minmax(72px,112px)_minmax(0,1fr)_56px] items-center gap-3">
-            <span className="truncate text-xs text-zinc-300">{lastName(f.name)}</span>
+            <span className={cx('truncate text-xs', ahead ? 'font-semibold text-zinc-50' : 'text-zinc-300')}>{lastName(f.name)}</span>
             <div className="relative h-1.5 rounded-full bg-zinc-900">
-              {n > 0 && <div className="a-grow h-1.5 rounded-full" style={{ width: `${pct}%`, background: Z300, animationDelay: `${0.3 + j * 0.1}s` }} />}
+              {n > 0 && <div className="a-grow h-1.5 rounded-full" style={{ width: `${pct}%`, background: ahead ? BRAND : FILL, animationDelay: `${0.3 + j * 0.1}s` }} />}
               {base !== null && (
                 <div className="absolute -top-1 h-3.5 w-0.5 rounded-[1px]" style={{ left: `${base}%`, background: Z500 }} aria-hidden />
               )}
             </div>
-            <span className="text-right font-mono text-xs text-zinc-400">{n ? t.of(k, n) : t.noFights}</span>
+            <span className={cx('text-right font-mono text-xs', ahead ? 'font-semibold text-zinc-50' : 'text-zinc-400')}>{n ? t.of(k, n) : t.noFights}</span>
           </div>
         )
       })}
