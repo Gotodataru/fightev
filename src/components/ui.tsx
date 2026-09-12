@@ -7,7 +7,7 @@ import { CountUp } from '../lib/motion'
 export function SectionLabel({ children, extra, className, end }: { children: ReactNode; extra?: ReactNode; className?: string; end?: boolean }) {
   return (
     <div className={cx('mb-3 flex flex-wrap items-center gap-x-3 gap-y-2', end ? 'justify-end' : 'justify-between', className)}>
-      <span className="eyebrow text-zinc-600">{children}</span>
+      <span className="eyebrow text-zinc-500">{children}</span>
       {extra}
     </div>
   )

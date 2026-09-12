@@ -75,11 +75,11 @@ function Hero({ card, track, onBreakdown, wide }: {
   if (!wide) {
     return (
       <section className="relative overflow-hidden border-b border-hair" aria-labelledby="event-title">
-        <div className="hero-art hero-art-m fadein relative h-[230px] w-full" aria-hidden>
+        <div className="hero-art hero-art-m fadein relative h-[240px] w-full" aria-hidden>
           <img src={`${import.meta.env.BASE_URL}hero.webp`} alt="" width={1280} height={853} fetchPriority="high"
             className="h-full w-full object-cover object-[46%_24%]" />
         </div>
-        <div className="relative -mt-10 px-4 pb-8">
+        <div className="relative px-4 pb-8 pt-1">
           {eyebrowEl}
           <h1 id="event-title" className="m-0 mt-2.5 text-[30px] font-bold leading-[1.1] tracking-[-0.02em]">
             <SplitWords text={ev.name} delay={120} />

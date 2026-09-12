@@ -165,10 +165,10 @@ function MobileSide({ f, open, right, big }: { f: Fighter; open: boolean; right?
 
 function Tabs({ fight, track, desktopRow }: { fight: Fight; track: Track; desktopRow: boolean }) {
   const { t } = useI18n()
-  const [tab, setTab] = useState<'p' | 'c' | 's'>('p')
+  const [tab, setTab] = useState<'p' | 'c' | 's'>('c')
   const id = useId()
-  useEffect(() => setTab('p'), [fight])
-  const keys = ['p', 'c', 's'] as const
+  useEffect(() => setTab('c'), [fight])
+  const keys = ['c', 's', 'p'] as const
   const panel: Record<typeof tab, ReactNode> = {
     p: <PredictionBlock fight={fight} track={track} />,
     c: desktopRow ? <TapeDesktop fight={fight} /> : <TapeMobile fight={fight} />,

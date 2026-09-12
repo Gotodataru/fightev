@@ -212,9 +212,9 @@ export function TapeMobile({ fight }: { fight: Fight }) {
       {tapeRows(fight.fighter_1, fight.fighter_2, t, lang).map(r => (
         <div key={r.key} role="row" className="grid min-h-9 grid-cols-[6px_72px_minmax(0,1fr)_72px_6px] items-center gap-2 border-b border-zinc-900">
           {dot(r.adv === 1)}
-          <span role="cell" className="tnum font-mono text-[13px]" style={{ color: r.adv === 1 ? '#fafafa' : r.adv === 0 ? Z300 : Z500 }}>{r.t1}</span>
+          <span role="cell" className="tnum font-mono text-[13px]" style={{ color: r.adv === 1 ? FG : r.adv === 0 ? Z300 : Z500 }}>{r.t1}</span>
           <span role="rowheader" className="text-center text-xs text-zinc-500">{r.label}</span>
-          <span role="cell" className="tnum text-right font-mono text-[13px]" style={{ color: r.adv === 2 ? '#fafafa' : r.adv === 0 ? Z300 : Z500 }}>{r.t2}</span>
+          <span role="cell" className="tnum text-right font-mono text-[13px]" style={{ color: r.adv === 2 ? FG : r.adv === 0 ? Z300 : Z500 }}>{r.t2}</span>
           {dot(r.adv === 2)}
         </div>
       ))}
