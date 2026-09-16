@@ -1,0 +1,159 @@
+{
+ "period": {
+  "from": "2026-06-14",
+  "to": "2026-09-12"
+ },
+ "n_fights": 77,
+ "n_events": 11,
+ "model": {
+  "hits": 50,
+  "rate": 0.649,
+  "ci95": [
+   0.538,
+   0.747
+  ]
+ },
+ "favourite": {
+  "hits": 54,
+  "rate": 0.701
+ },
+ "coin": {
+  "rate": 0.5
+ },
+ "calibration": [
+  {
+   "label": "50–55%",
+   "n": 32,
+   "hits": 19,
+   "avg_conf": 0.526,
+   "hit_rate": 0.594,
+   "ci95": [
+    0.423,
+    0.745
+   ]
+  },
+  {
+   "label": "55–60%",
+   "n": 20,
+   "hits": 17,
+   "avg_conf": 0.571,
+   "hit_rate": 0.85,
+   "ci95": [
+    0.64,
+    0.948
+   ]
+  },
+  {
+   "label": "60–65%",
+   "n": 13,
+   "hits": 8,
+   "avg_conf": 0.627,
+   "hit_rate": 0.615,
+   "ci95": [
+    0.355,
+    0.823
+   ]
+  },
+  {
+   "label": "65%+",
+   "n": 12,
+   "hits": 6,
+   "avg_conf": 0.692,
+   "hit_rate": 0.5,
+   "ci95": [
+    0.254,
+    0.746
+   ]
+  }
+ ],
+ "events": [
+  {
+   "date": "2026-06-14",
+   "name": "UFC Freedom 250",
+   "n": 5,
+   "hit": 4,
+   "fav_hit": 3
+  },
+  {
+   "date": "2026-06-20",
+   "name": "UFC Fight Night: Kape vs. Horiguchi",
+   "n": 6,
+   "hit": 2,
+   "fav_hit": 3
+  },
+  {
+   "date": "2026-06-27",
+   "name": "UFC Fight Night: Fiziev vs. Torres",
+   "n": 4,
+   "hit": 1,
+   "fav_hit": 4
+  },
+  {
+   "date": "2026-07-11",
+   "name": "UFC 329: McGregor vs. Holloway 2",
+   "n": 7,
+   "hit": 4,
+   "fav_hit": 4
+  },
+  {
+   "date": "2026-07-18",
+   "name": "UFC Fight Night: Du Plessis vs. Usman",
+   "n": 5,
+   "hit": 4,
+   "fav_hit": 5
+  },
+  {
+   "date": "2026-07-25",
+   "name": "UFC Fight Night: Ankalaev vs. Guskov",
+   "n": 5,
+   "hit": 4,
+   "fav_hit": 5
+  },
+  {
+   "date": "2026-08-09",
+   "name": "UFC Fight Night: Gamrot vs. Salkilld",
+   "n": 4,
+   "hit": 2,
+   "fav_hit": 4
+  },
+  {
+   "date": "2026-08-22",
+   "name": "UFC Fight Night: Hernandez vs. Rodrigues",
+   "n": 9,
+   "hit": 5,
+   "fav_hit": 5
+  },
+  {
+   "date": "2026-08-29",
+   "name": "UFC Fight Night: Nurmagomedov vs. Song",
+   "n": 9,
+   "hit": 7,
+   "fav_hit": 6
+  },
+  {
+   "date": "2026-09-05",
+   "name": "UFC Fight Night: Hooker vs. Parnasse",
+   "n": 11,
+   "hit": 7,
+   "fav_hit": 7
+  },
+  {
+   "date": "2026-09-12",
+   "name": "Noche UFC: Silva vs. Delgado",
+   "n": 12,
+   "hit": 10,
+   "fav_hit": 8
+  }
+ ],
+ "finish": {
+  "n": 77,
+  "model_hits": 44,
+  "model_rate": 0.571,
+  "always_finish_rate": 0.623
+ },
+ "ufc_finish_rate_24m": {
+  "n": 980,
+  "rate": 0.536
+ },
+ "generated_at": "2026-09-16T08:16:57+00:00"
+}

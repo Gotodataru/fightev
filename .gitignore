@@ -1,0 +1,10 @@
+*.log
+.DS_Store
+dist-preview
+# the private build carries ufc.com portraits — it must never reach the repo
+dist-photos/
+dist/
+node_modules/
+
+# fighter photographs are ufc.com's, not ours to republish — see PHOTOS_PUBLISHED in src/data.ts
+public/data/photos/
