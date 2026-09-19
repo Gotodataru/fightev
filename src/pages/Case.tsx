@@ -6,6 +6,11 @@ import { useTheme } from '../theme'
 
 const asset = (p: string) => `${import.meta.env.BASE_URL}${p}`
 
+const REPO = 'https://github.com/Gotodataru/fightev'
+const FIGMA_FILE = 'https://www.figma.com/design/bIwVloPsRonv9hVuh1oFAp/FightEV'
+// starts on the desktop card, where every fight opens and closes
+const FIGMA_PROTO = 'https://www.figma.com/proto/bIwVloPsRonv9hVuh1oFAp/FightEV?node-id=4-1805&starting-point-node-id=4%3A1805'
+
 /**
  * A frame the reader can open at full size. The shots are taken at 1600 px and shown in a
  * 430 px column, where the text on them is about four pixels tall — evidence nobody could
@@ -193,17 +198,32 @@ export default function Case() {
           : 'The project went free, so the site had nothing left to sell. The new job: show how the card looks in seconds — without letting anyone overrate the forecast.'}
       </p>
 
-      <div className="hero-in mt-7 grid grid-cols-1 gap-x-8 gap-y-3 border-y border-hair py-5 text-[13px] sm:grid-cols-3" style={{ '--d': '520ms' } as React.CSSProperties}>
-        {([
-          [ru ? 'Роль' : 'Role', ru ? 'Один человек: продукт, дизайн, фронтенд, данные' : 'One person: product, design, front-end, data'],
-          [ru ? 'Период' : 'When', ru ? 'Сентябрь 2026' : 'September 2026'],
-          [ru ? 'Стек' : 'Stack', 'React, Tailwind, Python, SQLite'],
-        ] as const).map(([k, v]) => (
-          <div key={k} className="flex flex-col gap-1">
-            <span className="eyebrow text-zinc-500">{k}</span>
-            <span className="leading-snug text-zinc-200">{v}</span>
-          </div>
-        ))}
+      <div className="hero-in mt-7 flex flex-col gap-4 border-y border-hair py-5 text-[13px]" style={{ '--d': '520ms' } as React.CSSProperties}>
+        <div className="grid grid-cols-1 gap-x-8 gap-y-3 sm:grid-cols-3">
+          {([
+            [ru ? 'Роль' : 'Role', ru ? 'Один человек: продукт, дизайн, фронтенд, данные' : 'One person: product, design, front-end, data'],
+            [ru ? 'Период' : 'When', ru ? 'Сентябрь 2026' : 'September 2026'],
+            [ru ? 'Стек' : 'Stack', 'React, Tailwind, Python, SQLite'],
+          ] as const).map(([k, v]) => (
+            <div key={k} className="flex flex-col gap-1">
+              <span className="eyebrow text-zinc-500">{k}</span>
+              <span className="leading-snug text-zinc-200">{v}</span>
+            </div>
+          ))}
+        </div>
+        {/* the work behind the page, one click away: the Figma file, its prototype, the code, the test protocol */}
+        <div className="flex flex-wrap gap-x-5 gap-y-2 font-medium">
+          {([
+            [ru ? 'Figma: дизайн-система и экраны' : 'Figma: design system and screens', FIGMA_FILE],
+            [ru ? 'Прототип в Figma' : 'Figma prototype', FIGMA_PROTO],
+            [ru ? 'Код на GitHub' : 'Source on GitHub', REPO],
+            [ru ? 'Протокол теста' : 'Test protocol', `${REPO}/blob/main/research/README.md`],
+          ] as const).map(([label, href]) => (
+            <a key={href} href={href} target="_blank" rel="noopener noreferrer" className="whitespace-nowrap">
+              {label} <span aria-hidden>↗</span>
+            </a>
+          ))}
+        </div>
       </div>
 
       {/* figures about the design work — not about whichever event UFC scheduled this week */}
