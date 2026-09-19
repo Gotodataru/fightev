@@ -344,8 +344,8 @@ export default function Case() {
             alt={ru ? 'Сначала первым шло сравнение: строка ведь уже показала проценты. Но при раскрытии строка сворачивается в шапку, и прогноз пропадал с экрана ровно тогда, когда о нём спросили.'
                     : 'The tape used to come first, since the row had already shown the percentages. But opening a fight folds the row into a header, so the forecast left the screen at the very moment it was asked for.'}>
             {ru
-              ? 'Порядок в разборе один на всех ширинах: прогноз на победу и досрочку, затем сравнение, затем стиль. На телефоне это вкладки, и открывается «Прогноз». Именные плашки на телефоне убраны: без фото они повторяли фамилии из шапки и отнимали около 170 px до первой цифры.'
-              : 'The breakdown reads in one order at every width: the win and finish forecasts, then the tape, then style. On a phone these are tabs, and “Forecast” opens. The nameplates are gone on phones: without photos they repeated the surnames in the header and cost about 170 px before the first number.'}
+              ? 'Первым в разборе идёт прогноз на победу и досрочку, под ним сравнение; стиль бойцов на десктопе стоит колонками по бокам, на телефоне — третьей вкладкой. На телефоне открывается вкладка «Прогноз». Именные плашки на телефоне убраны: без фото они повторяли фамилии из шапки и отодвигали вкладки на 102 px (замер на 360 px).'
+              : 'The breakdown leads with the win and finish forecasts, with the tape below; each fighter’s style sits in side columns on desktop and in a third tab on a phone. On a phone the “Forecast” tab opens. The nameplates are gone on phones: without photos they repeated the surnames in the header and pushed the tabs 102 px down (measured at 360 px).'}
           </Decision>
         </div>
       </section>

@@ -238,7 +238,7 @@ function CompactPanel({ fight, track, desktopRow, index, total, onGo }: {
   return (
     <div className="flex flex-col gap-5 px-3.5 pb-[18px] pt-4 md:px-5">
       {/* Without photographs the plates only repeated the names the header above already
-          sets — about 170 px of a phone screen before the first number. A photograph is
+          sets — 102 px of a phone screen (measured at 360) before the tabs. A photograph is
           new information; a second copy of the surname is not. */}
       {PHOTOS_PUBLISHED && (
         <div className="grid grid-cols-2 gap-5">
