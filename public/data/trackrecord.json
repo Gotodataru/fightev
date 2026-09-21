@@ -1,21 +1,21 @@
 {
  "period": {
   "from": "2026-06-14",
-  "to": "2026-09-12"
+  "to": "2026-09-19"
  },
- "n_fights": 77,
- "n_events": 11,
+ "n_fights": 81,
+ "n_events": 12,
  "model": {
-  "hits": 50,
-  "rate": 0.649,
+  "hits": 51,
+  "rate": 0.63,
   "ci95": [
-   0.538,
-   0.747
+   0.521,
+   0.727
   ]
  },
  "favourite": {
-  "hits": 54,
-  "rate": 0.701
+  "hits": 57,
+  "rate": 0.704
  },
  "coin": {
   "rate": 0.5
@@ -23,46 +23,46 @@
  "calibration": [
   {
    "label": "50–55%",
-   "n": 32,
-   "hits": 19,
-   "avg_conf": 0.526,
-   "hit_rate": 0.594,
+   "n": 36,
+   "hits": 21,
+   "avg_conf": 0.525,
+   "hit_rate": 0.583,
    "ci95": [
-    0.423,
-    0.745
+    0.422,
+    0.729
    ]
   },
   {
    "label": "55–60%",
-   "n": 20,
-   "hits": 17,
-   "avg_conf": 0.571,
-   "hit_rate": 0.85,
+   "n": 19,
+   "hits": 16,
+   "avg_conf": 0.57,
+   "hit_rate": 0.842,
    "ci95": [
-    0.64,
-    0.948
+    0.624,
+    0.945
    ]
   },
   {
    "label": "60–65%",
-   "n": 13,
-   "hits": 8,
-   "avg_conf": 0.627,
-   "hit_rate": 0.615,
+   "n": 14,
+   "hits": 7,
+   "avg_conf": 0.624,
+   "hit_rate": 0.5,
    "ci95": [
-    0.355,
-    0.823
+    0.268,
+    0.732
    ]
   },
   {
    "label": "65%+",
    "n": 12,
-   "hits": 6,
-   "avg_conf": 0.692,
-   "hit_rate": 0.5,
+   "hits": 7,
+   "avg_conf": 0.689,
+   "hit_rate": 0.583,
    "ci95": [
-    0.254,
-    0.746
+    0.32,
+    0.807
    ]
   }
  ],
@@ -126,16 +126,16 @@
   {
    "date": "2026-08-29",
    "name": "UFC Fight Night: Nurmagomedov vs. Song",
-   "n": 9,
-   "hit": 7,
-   "fav_hit": 6
+   "n": 6,
+   "hit": 4,
+   "fav_hit": 4
   },
   {
    "date": "2026-09-05",
    "name": "UFC Fight Night: Hooker vs. Parnasse",
-   "n": 11,
-   "hit": 7,
-   "fav_hit": 7
+   "n": 7,
+   "hit": 5,
+   "fav_hit": 5
   },
   {
    "date": "2026-09-12",
@@ -143,17 +143,24 @@
    "n": 12,
    "hit": 10,
    "fav_hit": 8
+  },
+  {
+   "date": "2026-09-19",
+   "name": "UFC 331: Van vs. Pantoja 2",
+   "n": 11,
+   "hit": 6,
+   "fav_hit": 7
   }
  ],
  "finish": {
-  "n": 77,
-  "model_hits": 44,
-  "model_rate": 0.571,
-  "always_finish_rate": 0.623
+  "n": 81,
+  "model_hits": 45,
+  "model_rate": 0.556,
+  "always_finish_rate": 0.63
  },
  "ufc_finish_rate_24m": {
-  "n": 980,
-  "rate": 0.536
+  "n": 992,
+  "rate": 0.537
  },
- "generated_at": "2026-09-16T08:16:57+00:00"
+ "generated_at": "2026-09-21T05:48:54+00:00"
 }
