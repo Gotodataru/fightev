@@ -172,7 +172,12 @@
     "finish_fights": 5,
     "decided_fights": 15
    },
-   "result": null
+   "result": {
+    "winner": 1,
+    "method": "KO",
+    "round": 5,
+    "time": "1:38"
+   }
   },
   {
    "order": 1,
@@ -326,7 +331,12 @@
     "finish_fights": 1,
     "decided_fights": 3
    },
-   "result": null
+   "result": {
+    "winner": 1,
+    "method": "DEC",
+    "round": 3,
+    "time": "5:00"
+   }
   },
   {
    "order": 2,
@@ -487,7 +497,12 @@
     "finish_fights": 2,
     "decided_fights": 5
    },
-   "result": null
+   "result": {
+    "winner": 1,
+    "method": "SUB",
+    "round": 2,
+    "time": "4:07"
+   }
   },
   {
    "order": 3,
@@ -606,7 +621,12 @@
     "finish_fights": 0,
     "decided_fights": 1
    },
-   "result": null
+   "result": {
+    "winner": 2,
+    "method": "KO",
+    "round": 3,
+    "time": "1:47"
+   }
   },
   {
    "order": 4,
@@ -774,7 +794,12 @@
     "finish_fights": 6,
     "decided_fights": 15
    },
-   "result": null
+   "result": {
+    "winner": 1,
+    "method": "OTHER",
+    "round": 0,
+    "time": "0:00"
+   }
   },
   {
    "order": 5,
@@ -942,7 +967,12 @@
     "finish_fights": 2,
     "decided_fights": 7
    },
-   "result": null
+   "result": {
+    "winner": 2,
+    "method": "DEC",
+    "round": 3,
+    "time": "5:00"
+   }
   },
   {
    "order": 6,
@@ -1110,178 +1140,15 @@
     "finish_fights": 1,
     "decided_fights": 8
    },
-   "result": null
+   "result": {
+    "winner": 2,
+    "method": "DEC",
+    "round": 3,
+    "time": "5:00"
+   }
   },
   {
    "order": 7,
-   "main_event": false,
-   "num_rounds": 3,
-   "title_fight": false,
-   "p_win_f1": 0.5109,
-   "p_finish": 0.4821,
-   "models": {
-    "catboost": 0.4365,
-    "lightgbm": 0.5371,
-    "xgboost": 0.5592
-   },
-   "fighter_1": {
-    "name": "Mickey Gall",
-    "slug": "mickey_gall",
-    "photo": true,
-    "nickname": null,
-    "record": [
-     7,
-     7,
-     0
-    ],
-    "ufc_record": null,
-    "ufc_fights": 12,
-    "form": [
-     {
-      "date": "2024-11-16",
-      "opp": "Ramiz Brahimaj",
-      "res": "L",
-      "method": "KO",
-      "round": 1
-     },
-     {
-      "date": "2024-06-01",
-      "opp": "Bassil Hafez",
-      "res": "L",
-      "method": "DEC",
-      "round": 3
-     },
-     {
-      "date": "2022-04-09",
-      "opp": "Mike Malott",
-      "res": "L",
-      "method": "KO",
-      "round": 1
-     },
-     {
-      "date": "2021-12-04",
-      "opp": "Alex Morono",
-      "res": "L",
-      "method": "DEC",
-      "round": 3
-     },
-     {
-      "date": "2021-07-24",
-      "opp": "Jordan Williams",
-      "res": "W",
-      "method": "SUB",
-      "round": 1
-     }
-    ],
-    "stats": {
-     "height_in": 74,
-     "reach_in": 74,
-     "stance": "Switch",
-     "age": 34,
-     "slpm": 3.5,
-     "str_acc": 49.0,
-     "sapm": 4.72,
-     "str_def": 49.0,
-     "td_avg": 1.15,
-     "td_acc": 32.0,
-     "td_def": 37.0,
-     "sub_avg": 1.6
-    },
-    "zones": {
-     "head": 76,
-     "body": 16,
-     "leg": 8
-    },
-    "ufc_wins": {
-     "KO": 0,
-     "SUB": 5,
-     "DEC": 1
-    },
-    "layoff_months": 22.3,
-    "finish_fights": 7,
-    "decided_fights": 12
-   },
-   "fighter_2": {
-    "name": "Sedriques Dumas",
-    "slug": "sedriques_dumas",
-    "photo": true,
-    "nickname": "The Reaper",
-    "record": [
-     10,
-     5,
-     0
-    ],
-    "ufc_record": null,
-    "ufc_fights": 9,
-    "form": [
-     {
-      "date": "2026-04-25",
-      "opp": "Jackson Mcvey",
-      "res": "L",
-      "method": "SUB",
-      "round": 1
-     },
-     {
-      "date": "2025-11-01",
-      "opp": "Donte Johnson",
-      "res": "L",
-      "method": "SUB",
-      "round": 2
-     },
-     {
-      "date": "2025-09-13",
-      "opp": "Zach Reese",
-      "res": "L",
-      "method": "OTHER",
-      "round": 0
-     },
-     {
-      "date": "2025-04-12",
-      "opp": "Michal Oleksiejczuk",
-      "res": "L",
-      "method": "KO",
-      "round": 1
-     },
-     {
-      "date": "2024-08-03",
-      "opp": "Denis Tiuliulin",
-      "res": "W",
-      "method": "DEC",
-      "round": 3
-     }
-    ],
-    "stats": {
-     "height_in": 74,
-     "reach_in": 79,
-     "stance": "Orthodox",
-     "age": 31,
-     "slpm": 1.97,
-     "str_acc": 44.0,
-     "sapm": 2.64,
-     "str_def": 53.0,
-     "td_avg": 1.3,
-     "td_acc": 31.0,
-     "td_def": 33.0,
-     "sub_avg": 0.2
-    },
-    "zones": {
-     "head": 59,
-     "body": 24,
-     "leg": 17
-    },
-    "ufc_wins": {
-     "KO": 0,
-     "SUB": 0,
-     "DEC": 3
-    },
-    "layoff_months": 5.1,
-    "finish_fights": 5,
-    "decided_fights": 9
-   },
-   "result": null
-  },
-  {
-   "order": 8,
    "main_event": false,
    "num_rounds": 3,
    "title_fight": false,
@@ -1446,8 +1313,13 @@
     "finish_fights": 3,
     "decided_fights": 5
    },
-   "result": null
+   "result": {
+    "winner": 2,
+    "method": "KO",
+    "round": 1,
+    "time": "1:02"
+   }
   }
  ],
- "generated_at": "2026-09-22T15:02:20+00:00"
+ "generated_at": "2026-09-27T06:46:04+00:00"
 }

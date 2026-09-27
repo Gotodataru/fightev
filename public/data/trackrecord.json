@@ -1,21 +1,21 @@
 {
  "period": {
   "from": "2026-06-14",
-  "to": "2026-09-19"
+  "to": "2026-09-26"
  },
- "n_fights": 81,
- "n_events": 12,
+ "n_fights": 89,
+ "n_events": 13,
  "model": {
-  "hits": 51,
-  "rate": 0.63,
+  "hits": 58,
+  "rate": 0.652,
   "ci95": [
-   0.521,
-   0.727
+   0.548,
+   0.743
   ]
  },
  "favourite": {
-  "hits": 57,
-  "rate": 0.704
+  "hits": 62,
+  "rate": 0.697
  },
  "coin": {
   "rate": 0.5
@@ -23,35 +23,35 @@
  "calibration": [
   {
    "label": "50–55%",
-   "n": 36,
-   "hits": 21,
-   "avg_conf": 0.525,
-   "hit_rate": 0.583,
+   "n": 40,
+   "hits": 24,
+   "avg_conf": 0.526,
+   "hit_rate": 0.6,
    "ci95": [
-    0.422,
-    0.729
+    0.446,
+    0.737
    ]
   },
   {
    "label": "55–60%",
-   "n": 19,
-   "hits": 16,
-   "avg_conf": 0.57,
-   "hit_rate": 0.842,
+   "n": 22,
+   "hits": 19,
+   "avg_conf": 0.571,
+   "hit_rate": 0.864,
    "ci95": [
-    0.624,
-    0.945
+    0.667,
+    0.953
    ]
   },
   {
    "label": "60–65%",
-   "n": 14,
-   "hits": 7,
+   "n": 15,
+   "hits": 8,
    "avg_conf": 0.624,
-   "hit_rate": 0.5,
+   "hit_rate": 0.533,
    "ci95": [
-    0.268,
-    0.732
+    0.301,
+    0.752
    ]
   },
   {
@@ -150,17 +150,24 @@
    "n": 11,
    "hit": 6,
    "fav_hit": 7
+  },
+  {
+   "date": "2026-09-26",
+   "name": "UFC Fight Night: Rosas Jr. vs. Barcelos",
+   "n": 8,
+   "hit": 7,
+   "fav_hit": 5
   }
  ],
  "finish": {
-  "n": 81,
-  "model_hits": 45,
-  "model_rate": 0.556,
-  "always_finish_rate": 0.63
+  "n": 89,
+  "model_hits": 51,
+  "model_rate": 0.573,
+  "always_finish_rate": 0.629
  },
  "ufc_finish_rate_24m": {
-  "n": 992,
-  "rate": 0.537
+  "n": 1004,
+  "rate": 0.54
  },
- "generated_at": "2026-09-22T15:02:20+00:00"
+ "generated_at": "2026-09-27T06:46:04+00:00"
 }
