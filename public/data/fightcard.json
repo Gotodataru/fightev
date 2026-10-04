@@ -172,7 +172,12 @@
     "finish_fights": 2,
     "decided_fights": 6
    },
-   "result": null
+   "result": {
+    "winner": 1,
+    "method": "DEC",
+    "round": 5,
+    "time": "5:00"
+   }
   },
   {
    "order": 1,
@@ -266,7 +271,7 @@
    "fighter_2": {
     "name": "Payton Talbott",
     "slug": "payton_talbott",
-    "photo": false,
+    "photo": true,
     "nickname": null,
     "record": [
      11,
@@ -340,7 +345,12 @@
     "finish_fights": 3,
     "decided_fights": 6
    },
-   "result": null
+   "result": {
+    "winner": 2,
+    "method": "KO",
+    "round": 1,
+    "time": "2:09"
+   }
   },
   {
    "order": 2,
@@ -508,7 +518,12 @@
     "finish_fights": 1,
     "decided_fights": 6
    },
-   "result": null
+   "result": {
+    "winner": 2,
+    "method": "KO",
+    "round": 1,
+    "time": "4:08"
+   }
   },
   {
    "order": 3,
@@ -676,7 +691,12 @@
     "finish_fights": 7,
     "decided_fights": 12
    },
-   "result": null
+   "result": {
+    "winner": 2,
+    "method": "KO",
+    "round": 1,
+    "time": "3:12"
+   }
   },
   {
    "order": 4,
@@ -693,7 +713,7 @@
    "fighter_1": {
     "name": "Imanol Rodriguez",
     "slug": "imanol_rodriguez",
-    "photo": false,
+    "photo": true,
     "nickname": null,
     "record": null,
     "ufc_record": [
@@ -728,7 +748,7 @@
    "fighter_2": {
     "name": "Alden Coria",
     "slug": "alden_coria",
-    "photo": false,
+    "photo": true,
     "nickname": null,
     "record": null,
     "ufc_record": [
@@ -774,7 +794,12 @@
     "finish_fights": 1,
     "decided_fights": 3
    },
-   "result": null
+   "result": {
+    "winner": 1,
+    "method": "KO",
+    "round": 1,
+    "time": "3:11"
+   }
   },
   {
    "order": 5,
@@ -791,7 +816,7 @@
    "fighter_1": {
     "name": "Damian Pinas",
     "slug": "damian_pinas",
-    "photo": false,
+    "photo": true,
     "nickname": null,
     "record": null,
     "ufc_record": [
@@ -893,164 +918,15 @@
     "finish_fights": 2,
     "decided_fights": 3
    },
-   "result": null
+   "result": {
+    "winner": 1,
+    "method": "KO",
+    "round": 1,
+    "time": "1:15"
+   }
   },
   {
    "order": 6,
-   "main_event": false,
-   "num_rounds": 3,
-   "title_fight": false,
-   "p_win_f1": 0.3849,
-   "p_finish": 0.5292,
-   "models": {
-    "catboost": 0.4022,
-    "lightgbm": 0.3777,
-    "xgboost": 0.3747
-   },
-   "fighter_1": {
-    "name": "Marcus McGhee",
-    "slug": "marcus_mcghee",
-    "photo": true,
-    "nickname": "The Maniac",
-    "record": [
-     11,
-     2,
-     0
-    ],
-    "ufc_record": null,
-    "ufc_fights": 6,
-    "form": [
-     {
-      "date": "2026-06-06",
-      "opp": "John Yannis",
-      "res": "W",
-      "method": "DEC",
-      "round": 3
-     },
-     {
-      "date": "2025-07-26",
-      "opp": "Petr Yan",
-      "res": "L",
-      "method": "DEC",
-      "round": 3
-     },
-     {
-      "date": "2024-11-16",
-      "opp": "Jonathan Martinez",
-      "res": "W",
-      "method": "DEC",
-      "round": 3
-     },
-     {
-      "date": "2024-01-13",
-      "opp": "Gaston Bolanos",
-      "res": "W",
-      "method": "KO",
-      "round": 2
-     },
-     {
-      "date": "2023-08-12",
-      "opp": "JP Buys",
-      "res": "W",
-      "method": "KO",
-      "round": 1
-     }
-    ],
-    "stats": {
-     "height_in": 68,
-     "reach_in": 69,
-     "stance": "Orthodox",
-     "age": 36,
-     "slpm": 5.44,
-     "str_acc": 43.0,
-     "sapm": 3.64,
-     "str_def": 56.0,
-     "td_avg": 0.24,
-     "td_acc": 11.0,
-     "td_def": 90.0,
-     "sub_avg": 0.2
-    },
-    "zones": {
-     "head": 71,
-     "body": 13,
-     "leg": 16
-    },
-    "ufc_wins": {
-     "KO": 2,
-     "SUB": 1,
-     "DEC": 2
-    },
-    "layoff_months": 3.9,
-    "finish_fights": 3,
-    "decided_fights": 6
-   },
-   "fighter_2": {
-    "name": "Benardo Sopaj",
-    "slug": "benardo_sopaj",
-    "photo": true,
-    "nickname": "Lion King",
-    "record": [
-     13,
-     3,
-     0
-    ],
-    "ufc_record": null,
-    "ufc_fights": 3,
-    "form": [
-     {
-      "date": "2026-05-16",
-      "opp": "Timmy Cuamba",
-      "res": "W",
-      "method": "SUB",
-      "round": 2
-     },
-     {
-      "date": "2025-01-18",
-      "opp": "Ricky Turcios",
-      "res": "W",
-      "method": "DEC",
-      "round": 3
-     },
-     {
-      "date": "2024-03-02",
-      "opp": "Vinicius Oliveira",
-      "res": "L",
-      "method": "KO",
-      "round": 3
-     }
-    ],
-    "stats": {
-     "height_in": 66,
-     "reach_in": 66,
-     "stance": "Orthodox",
-     "age": 26,
-     "slpm": 4.39,
-     "str_acc": 58.0,
-     "sapm": 4.69,
-     "str_def": 52.0,
-     "td_avg": 2.43,
-     "td_acc": 60.0,
-     "td_def": 76.0,
-     "sub_avg": 0.8
-    },
-    "zones": {
-     "head": 55,
-     "body": 23,
-     "leg": 22
-    },
-    "ufc_wins": {
-     "KO": 0,
-     "SUB": 1,
-     "DEC": 1
-    },
-    "layoff_months": 4.6,
-    "finish_fights": 2,
-    "decided_fights": 3
-   },
-   "result": null
-  },
-  {
-   "order": 7,
    "main_event": false,
    "num_rounds": 3,
    "title_fight": false,
@@ -1208,10 +1084,15 @@
     "finish_fights": 1,
     "decided_fights": 4
    },
-   "result": null
+   "result": {
+    "winner": 1,
+    "method": "KO",
+    "round": 1,
+    "time": "3:35"
+   }
   },
   {
-   "order": 8,
+   "order": 7,
    "main_event": false,
    "num_rounds": 3,
    "title_fight": false,
@@ -1376,10 +1257,15 @@
     "finish_fights": 9,
     "decided_fights": 17
    },
-   "result": null
+   "result": {
+    "winner": 2,
+    "method": "KO",
+    "round": 2,
+    "time": "3:12"
+   }
   },
   {
-   "order": 9,
+   "order": 8,
    "main_event": false,
    "num_rounds": 3,
    "title_fight": false,
@@ -1544,8 +1430,146 @@
     "finish_fights": 1,
     "decided_fights": 6
    },
+   "result": {
+    "winner": 2,
+    "method": "DEC",
+    "round": 3,
+    "time": "5:00"
+   }
+  },
+  {
+   "order": 9,
+   "main_event": false,
+   "num_rounds": 3,
+   "title_fight": false,
+   "p_win_f1": 0.5683,
+   "p_finish": 0.5159,
+   "models": {
+    "catboost": 0.5782,
+    "lightgbm": 0.5468,
+    "xgboost": 0.5798
+   },
+   "fighter_1": {
+    "name": "Court McGee",
+    "slug": "court_mcgee",
+    "photo": true,
+    "nickname": "The Crusher",
+    "record": [
+     23,
+     14,
+     0
+    ],
+    "ufc_record": null,
+    "ufc_fights": 23,
+    "form": [
+     {
+      "date": "2025-06-14",
+      "opp": "Michael Chiesa",
+      "res": "L",
+      "method": "DEC",
+      "round": 3
+     },
+     {
+      "date": "2024-10-05",
+      "opp": "Tim Means",
+      "res": "W",
+      "method": "SUB",
+      "round": 1
+     },
+     {
+      "date": "2024-04-06",
+      "opp": "Alex Morono",
+      "res": "L",
+      "method": "DEC",
+      "round": 3
+     },
+     {
+      "date": "2022-06-18",
+      "opp": "Jeremiah Wells",
+      "res": "L",
+      "method": "KO",
+      "round": 1
+     },
+     {
+      "date": "2022-01-15",
+      "opp": "Ramiz Brahimaj",
+      "res": "W",
+      "method": "DEC",
+      "round": 3
+     }
+    ],
+    "stats": {
+     "height_in": 71,
+     "reach_in": 75,
+     "stance": "Orthodox",
+     "age": 41,
+     "slpm": 4.5,
+     "str_acc": 36.0,
+     "sapm": 3.65,
+     "str_def": 60.0,
+     "td_avg": 1.78,
+     "td_acc": 24.0,
+     "td_def": 70.0,
+     "sub_avg": 0.5
+    },
+    "zones": {
+     "head": 62,
+     "body": 21,
+     "leg": 17
+    },
+    "ufc_wins": {
+     "KO": 0,
+     "SUB": 3,
+     "DEC": 8
+    },
+    "layoff_months": 15.7,
+    "finish_fights": 5,
+    "decided_fights": 23
+   },
+   "fighter_2": {
+    "name": "Eric Nolan",
+    "slug": "eric_nolan",
+    "photo": true,
+    "nickname": null,
+    "record": null,
+    "ufc_record": [
+     0,
+     2
+    ],
+    "ufc_fights": 2,
+    "form": [
+     {
+      "date": "2026-06-27",
+      "opp": "Farman Hasanov",
+      "res": "L",
+      "method": "DEC",
+      "round": 3
+     },
+     {
+      "date": "2025-08-16",
+      "opp": "Baisangur Susurkaev",
+      "res": "L",
+      "method": "SUB",
+      "round": 2
+     }
+    ],
+    "stats": null,
+    "zones": {
+     "head": 84,
+     "body": 16,
+     "leg": 0
+    },
+    "ufc_wins": {
+     "KO": 0,
+     "SUB": 0,
+     "DEC": 0
+    },
+    "layoff_months": 3.2,
+    "finish_fights": 1,
+    "decided_fights": 2
+   },
    "result": null
   }
  ],
- "generated_at": "2026-09-30T07:29:51+00:00"
+ "generated_at": "2026-10-04T07:08:37+00:00"
 }

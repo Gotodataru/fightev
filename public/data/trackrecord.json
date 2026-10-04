@@ -1,21 +1,21 @@
 {
  "period": {
   "from": "2026-06-14",
-  "to": "2026-09-26"
+  "to": "2026-10-03"
  },
- "n_fights": 89,
- "n_events": 13,
+ "n_fights": 98,
+ "n_events": 14,
  "model": {
-  "hits": 58,
-  "rate": 0.652,
+  "hits": 65,
+  "rate": 0.663,
   "ci95": [
-   0.548,
-   0.743
+   0.565,
+   0.749
   ]
  },
  "favourite": {
-  "hits": 62,
-  "rate": 0.697
+  "hits": 70,
+  "rate": 0.714
  },
  "coin": {
   "rate": 0.5
@@ -23,46 +23,46 @@
  "calibration": [
   {
    "label": "50–55%",
-   "n": 40,
-   "hits": 24,
-   "avg_conf": 0.526,
-   "hit_rate": 0.6,
+   "n": 43,
+   "hits": 26,
+   "avg_conf": 0.527,
+   "hit_rate": 0.605,
    "ci95": [
-    0.446,
-    0.737
+    0.456,
+    0.736
    ]
   },
   {
    "label": "55–60%",
-   "n": 22,
-   "hits": 19,
-   "avg_conf": 0.571,
-   "hit_rate": 0.864,
+   "n": 24,
+   "hits": 21,
+   "avg_conf": 0.57,
+   "hit_rate": 0.875,
    "ci95": [
-    0.667,
-    0.953
+    0.69,
+    0.957
    ]
   },
   {
    "label": "60–65%",
-   "n": 15,
+   "n": 16,
    "hits": 8,
    "avg_conf": 0.624,
-   "hit_rate": 0.533,
+   "hit_rate": 0.5,
    "ci95": [
-    0.301,
-    0.752
+    0.28,
+    0.72
    ]
   },
   {
    "label": "65%+",
-   "n": 12,
-   "hits": 7,
-   "avg_conf": 0.689,
-   "hit_rate": 0.583,
+   "n": 15,
+   "hits": 10,
+   "avg_conf": 0.693,
+   "hit_rate": 0.667,
    "ci95": [
-    0.32,
-    0.807
+    0.417,
+    0.848
    ]
   }
  ],
@@ -157,17 +157,24 @@
    "n": 8,
    "hit": 7,
    "fav_hit": 5
+  },
+  {
+   "date": "2026-10-03",
+   "name": "UFC 332: Silva vs. Wang",
+   "n": 9,
+   "hit": 7,
+   "fav_hit": 8
   }
  ],
  "finish": {
-  "n": 89,
-  "model_hits": 51,
-  "model_rate": 0.573,
-  "always_finish_rate": 0.629
+  "n": 98,
+  "model_hits": 56,
+  "model_rate": 0.571,
+  "always_finish_rate": 0.643
  },
  "ufc_finish_rate_24m": {
-  "n": 992,
-  "rate": 0.541
+  "n": 1005,
+  "rate": 0.544
  },
- "generated_at": "2026-09-30T07:29:51+00:00"
+ "generated_at": "2026-10-04T07:08:37+00:00"
 }
