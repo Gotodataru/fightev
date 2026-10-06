@@ -173,8 +173,8 @@
   "always_finish_rate": 0.643
  },
  "ufc_finish_rate_24m": {
-  "n": 1005,
-  "rate": 0.544
+  "n": 995,
+  "rate": 0.546
  },
- "generated_at": "2026-10-04T07:08:37+00:00"
+ "generated_at": "2026-10-06T15:04:33+00:00"
 }
