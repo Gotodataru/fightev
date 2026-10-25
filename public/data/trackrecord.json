@@ -1,21 +1,21 @@
 {
  "period": {
   "from": "2026-06-14",
-  "to": "2026-10-17"
+  "to": "2026-10-24"
  },
- "n_fights": 110,
- "n_events": 16,
+ "n_fights": 122,
+ "n_events": 17,
  "model": {
-  "hits": 70,
-  "rate": 0.636,
+  "hits": 77,
+  "rate": 0.631,
   "ci95": [
    0.543,
-   0.72
+   0.712
   ]
  },
  "favourite": {
-  "hits": 75,
-  "rate": 0.682
+  "hits": 84,
+  "rate": 0.689
  },
  "coin": {
   "rate": 0.5
@@ -23,35 +23,35 @@
  "calibration": [
   {
    "label": "50–55%",
-   "n": 47,
-   "hits": 29,
-   "avg_conf": 0.525,
-   "hit_rate": 0.617,
+   "n": 51,
+   "hits": 31,
+   "avg_conf": 0.526,
+   "hit_rate": 0.608,
    "ci95": [
-    0.474,
-    0.742
+    0.471,
+    0.73
    ]
   },
   {
    "label": "55–60%",
-   "n": 27,
-   "hits": 22,
-   "avg_conf": 0.571,
-   "hit_rate": 0.815,
+   "n": 31,
+   "hits": 23,
+   "avg_conf": 0.572,
+   "hit_rate": 0.742,
    "ci95": [
-    0.633,
-    0.918
+    0.568,
+    0.863
    ]
   },
   {
    "label": "60–65%",
-   "n": 19,
-   "hits": 9,
+   "n": 23,
+   "hits": 13,
    "avg_conf": 0.623,
-   "hit_rate": 0.474,
+   "hit_rate": 0.565,
    "ci95": [
-    0.273,
-    0.683
+    0.368,
+    0.744
    ]
   },
   {
@@ -178,17 +178,24 @@
    "n": 6,
    "hit": 2,
    "fav_hit": 3
+  },
+  {
+   "date": "2026-10-24",
+   "name": "UFC 333: Volkanovski vs. Evloev",
+   "n": 12,
+   "hit": 7,
+   "fav_hit": 9
   }
  ],
  "finish": {
-  "n": 110,
-  "model_hits": 64,
+  "n": 122,
+  "model_hits": 71,
   "model_rate": 0.582,
-  "always_finish_rate": 0.664
+  "always_finish_rate": 0.648
  },
  "ufc_finish_rate_24m": {
-  "n": 990,
-  "rate": 0.557
+  "n": 1004,
+  "rate": 0.556
  },
- "generated_at": "2026-10-20T15:04:31+00:00"
+ "generated_at": "2026-10-25T12:12:24+00:00"
 }
