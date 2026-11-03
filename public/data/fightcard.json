@@ -172,7 +172,12 @@
     "finish_fights": 2,
     "decided_fights": 6
    },
-   "result": null
+   "result": {
+    "winner": 2,
+    "method": "KO",
+    "round": 3,
+    "time": "1:28"
+   }
   },
   {
    "order": 1,
@@ -333,7 +338,12 @@
     "finish_fights": 4,
     "decided_fights": 4
    },
-   "result": null
+   "result": {
+    "winner": 2,
+    "method": "DEC",
+    "round": 3,
+    "time": "5:00"
+   }
   },
   {
    "order": 2,
@@ -501,7 +511,12 @@
     "finish_fights": 9,
     "decided_fights": 13
    },
-   "result": null
+   "result": {
+    "winner": 2,
+    "method": "DEC",
+    "round": 3,
+    "time": "5:00"
+   }
   },
   {
    "order": 3,
@@ -588,7 +603,12 @@
     "finish_fights": 0,
     "decided_fights": 1
    },
-   "result": null
+   "result": {
+    "winner": 1,
+    "method": "KO",
+    "round": 3,
+    "time": "2:11"
+   }
   },
   {
    "order": 4,
@@ -835,7 +855,12 @@
     "finish_fights": 1,
     "decided_fights": 4
    },
-   "result": null
+   "result": {
+    "winner": 1,
+    "method": "KO",
+    "round": 1,
+    "time": "1:31"
+   }
   },
   {
    "order": 6,
@@ -1125,8 +1150,13 @@
     "finish_fights": 7,
     "decided_fights": 12
    },
-   "result": null
+   "result": {
+    "winner": 1,
+    "method": "DEC",
+    "round": 3,
+    "time": "5:00"
+   }
   }
  ],
- "generated_at": "2026-10-28T09:23:59+00:00"
+ "generated_at": "2026-11-03T07:55:07+00:00"
 }

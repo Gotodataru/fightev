@@ -1,21 +1,21 @@
 {
  "period": {
   "from": "2026-06-14",
-  "to": "2026-10-24"
+  "to": "2026-10-31"
  },
- "n_fights": 122,
- "n_events": 17,
+ "n_fights": 128,
+ "n_events": 18,
  "model": {
-  "hits": 77,
-  "rate": 0.631,
+  "hits": 81,
+  "rate": 0.633,
   "ci95": [
-   0.543,
-   0.712
+   0.547,
+   0.711
   ]
  },
  "favourite": {
-  "hits": 84,
-  "rate": 0.689
+  "hits": 88,
+  "rate": 0.688
  },
  "coin": {
   "rate": 0.5
@@ -23,35 +23,35 @@
  "calibration": [
   {
    "label": "50–55%",
-   "n": 51,
-   "hits": 31,
-   "avg_conf": 0.526,
-   "hit_rate": 0.608,
+   "n": 54,
+   "hits": 33,
+   "avg_conf": 0.525,
+   "hit_rate": 0.611,
    "ci95": [
-    0.471,
+    0.478,
     0.73
    ]
   },
   {
    "label": "55–60%",
-   "n": 31,
-   "hits": 23,
-   "avg_conf": 0.572,
-   "hit_rate": 0.742,
+   "n": 32,
+   "hits": 24,
+   "avg_conf": 0.573,
+   "hit_rate": 0.75,
    "ci95": [
-    0.568,
-    0.863
+    0.579,
+    0.867
    ]
   },
   {
    "label": "60–65%",
-   "n": 23,
-   "hits": 13,
+   "n": 25,
+   "hits": 14,
    "avg_conf": 0.623,
-   "hit_rate": 0.565,
+   "hit_rate": 0.56,
    "ci95": [
-    0.368,
-    0.744
+    0.371,
+    0.733
    ]
   },
   {
@@ -185,17 +185,24 @@
    "n": 12,
    "hit": 7,
    "fav_hit": 9
+  },
+  {
+   "date": "2026-10-31",
+   "name": "UFC Fight Night: Moicano vs. Nolan",
+   "n": 6,
+   "hit": 4,
+   "fav_hit": 4
   }
  ],
  "finish": {
-  "n": 122,
-  "model_hits": 71,
-  "model_rate": 0.582,
-  "always_finish_rate": 0.648
+  "n": 128,
+  "model_hits": 73,
+  "model_rate": 0.57,
+  "always_finish_rate": 0.641
  },
  "ufc_finish_rate_24m": {
-  "n": 991,
-  "rate": 0.556
+  "n": 990,
+  "rate": 0.559
  },
- "generated_at": "2026-10-28T09:23:59+00:00"
+ "generated_at": "2026-11-03T07:55:07+00:00"
 }
