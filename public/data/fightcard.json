@@ -68,9 +68,9 @@
     ],
     "stats": null,
     "zones": {
-     "head": 61,
-     "body": 18,
-     "leg": 21
+     "head": 71,
+     "body": 14,
+     "leg": 15
     },
     "ufc_wins": {
      "KO": 5,
@@ -145,9 +145,9 @@
      "sub_avg": 0.7
     },
     "zones": {
-     "head": 50,
-     "body": 14,
-     "leg": 36
+     "head": 46,
+     "body": 11,
+     "leg": 43
     },
     "ufc_wins": {
      "KO": 7,
@@ -158,7 +158,12 @@
     "finish_fights": 12,
     "decided_fights": 16
    },
-   "result": null
+   "result": {
+    "winner": 2,
+    "method": "KO",
+    "round": 3,
+    "time": "2:27"
+   }
   },
   {
    "order": 1,
@@ -236,9 +241,9 @@
      "sub_avg": 0.7
     },
     "zones": {
-     "head": 43,
-     "body": 32,
-     "leg": 25
+     "head": 50,
+     "body": 30,
+     "leg": 20
     },
     "ufc_wins": {
      "KO": 1,
@@ -313,9 +318,9 @@
      "sub_avg": 1.4
     },
     "zones": {
-     "head": 77,
-     "body": 18,
-     "leg": 5
+     "head": 80,
+     "body": 16,
+     "leg": 4
     },
     "ufc_wins": {
      "KO": 1,
@@ -326,7 +331,12 @@
     "finish_fights": 4,
     "decided_fights": 13
    },
-   "result": null
+   "result": {
+    "winner": 1,
+    "method": "DEC",
+    "round": 3,
+    "time": "5:00"
+   }
   },
   {
    "order": 2,
@@ -351,7 +361,7 @@
      0
     ],
     "ufc_record": null,
-    "ufc_fights": 15,
+    "ufc_fights": 16,
     "form": [
      {
       "date": "2026-04-25",
@@ -404,18 +414,18 @@
      "sub_avg": 0.2
     },
     "zones": {
-     "head": 46,
-     "body": 28,
-     "leg": 26
+     "head": 40,
+     "body": 33,
+     "leg": 27
     },
     "ufc_wins": {
      "KO": 3,
-     "SUB": 0,
+     "SUB": 1,
      "DEC": 5
     },
     "layoff_months": 6.4,
-    "finish_fights": 7,
-    "decided_fights": 15
+    "finish_fights": 8,
+    "decided_fights": 16
    },
    "fighter_2": {
     "name": "Elijah Smith",
@@ -428,7 +438,7 @@
      0
     ],
     "ufc_record": null,
-    "ufc_fights": 2,
+    "ufc_fights": 3,
     "form": [
      {
       "date": "2026-03-14",
@@ -443,6 +453,13 @@
       "res": "W",
       "method": "KO",
       "round": 1
+     },
+     {
+      "date": "2025-02-15",
+      "opp": "Vince Morales",
+      "res": "W",
+      "method": "DEC",
+      "round": 3
      }
     ],
     "stats": {
@@ -460,20 +477,25 @@
      "sub_avg": 1.1
     },
     "zones": {
-     "head": 92,
-     "body": 6,
-     "leg": 2
+     "head": 84,
+     "body": 5,
+     "leg": 11
     },
     "ufc_wins": {
      "KO": 1,
      "SUB": 1,
-     "DEC": 0
+     "DEC": 1
     },
     "layoff_months": 7.8,
     "finish_fights": 2,
-    "decided_fights": 2
+    "decided_fights": 3
    },
-   "result": null
+   "result": {
+    "winner": 2,
+    "method": "KO",
+    "round": 1,
+    "time": "1:00"
+   }
   },
   {
    "order": 3,
@@ -538,8 +560,8 @@
     },
     "zones": {
      "head": 79,
-     "body": 13,
-     "leg": 8
+     "body": 9,
+     "leg": 12
     },
     "ufc_wins": {
      "KO": 0,
@@ -561,7 +583,7 @@
      0
     ],
     "ufc_record": null,
-    "ufc_fights": 8,
+    "ufc_fights": 9,
     "form": [
      {
       "date": "2023-12-02",
@@ -614,9 +636,9 @@
      "sub_avg": 0.8
     },
     "zones": {
-     "head": 65,
-     "body": 21,
-     "leg": 14
+     "head": 59,
+     "body": 20,
+     "leg": 21
     },
     "ufc_wins": {
      "KO": 0,
@@ -624,10 +646,15 @@
      "DEC": 2
     },
     "layoff_months": 35.2,
-    "finish_fights": 3,
-    "decided_fights": 8
+    "finish_fights": 4,
+    "decided_fights": 9
    },
-   "result": null
+   "result": {
+    "winner": 1,
+    "method": "DEC",
+    "round": 3,
+    "time": "5:00"
+   }
   },
   {
    "order": 4,
@@ -741,8 +768,8 @@
     },
     "zones": {
      "head": 64,
-     "body": 22,
-     "leg": 14
+     "body": 20,
+     "leg": 16
     },
     "ufc_wins": {
      "KO": 1,
@@ -753,7 +780,12 @@
     "finish_fights": 7,
     "decided_fights": 13
    },
-   "result": null
+   "result": {
+    "winner": 2,
+    "method": "KO",
+    "round": 2,
+    "time": "4:39"
+   }
   },
   {
    "order": 5,
@@ -831,9 +863,9 @@
      "sub_avg": 1.6
     },
     "zones": {
-     "head": 41,
-     "body": 27,
-     "leg": 32
+     "head": 42,
+     "body": 23,
+     "leg": 35
     },
     "ufc_wins": {
      "KO": 0,
@@ -908,9 +940,9 @@
      "sub_avg": 0.2
     },
     "zones": {
-     "head": 57,
-     "body": 28,
-     "leg": 15
+     "head": 65,
+     "body": 21,
+     "leg": 14
     },
     "ufc_wins": {
      "KO": 0,
@@ -921,7 +953,12 @@
     "finish_fights": 2,
     "decided_fights": 6
    },
-   "result": null
+   "result": {
+    "winner": 1,
+    "method": "DEC",
+    "round": 3,
+    "time": "5:00"
+   }
   },
   {
    "order": 6,
@@ -1001,7 +1038,12 @@
     "finish_fights": 1,
     "decided_fights": 1
    },
-   "result": null
+   "result": {
+    "winner": 2,
+    "method": "DEC",
+    "round": 3,
+    "time": "5:00"
+   }
   },
   {
    "order": 7,
@@ -1095,8 +1137,13 @@
     "finish_fights": 1,
     "decided_fights": 1
    },
-   "result": null
+   "result": {
+    "winner": 2,
+    "method": "DEC",
+    "round": 3,
+    "time": "5:00"
+   }
   }
  ],
- "generated_at": "2026-11-03T15:02:48+00:00"
+ "generated_at": "2026-11-09T07:02:46+00:00"
 }
